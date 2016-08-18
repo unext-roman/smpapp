@@ -20,9 +20,11 @@ load "funcHistoryPlay.rb"
 load "funcMylistPlay.rb"
 load "funcSendToDB.rb"
 
+	host = ARGV[0]
+	port = ARGV[1]
 
 	# Create client using defaults or using hostname and port number
-	client = Mobile::Client.new('127.0.0.1', 8889, true)
+	client = Mobile::Client.new(host, port, true)
 	client.setProjectBaseDirectory("/Users/admin/workspace/PR_Regression")
 
 	$obj_login = Login.new
