@@ -67,15 +67,15 @@ load "funcSendToDB.rb"
 		  	#puts ($obj_utili.setProgressValue("progress", "30"))
 		  	
 		  	#puts "::MSG:: Execution starting time : #{$obj_utili.getTime}"
-
-		  	foo = ($obj_login.testLogin(client,"roman","qatest1"))
+			puts ($obj_login.testLogin(client,"roman","qatest1"))
+		  	#foo = ($obj_login.testLogin(client,"roman","qatest1"))
 
 			puts "==================================================================================="
 		  	puts "TEST RESULTS SENT TO DB"
 		  	puts "==================================================================================="
 
-		  	puts "Result : TESTCASE 2"
-			puts "#{foo.execution_time}, #{foo.test_device}, #{foo.testcase_num}, #{foo.testcase_summary}, #{foo.test_result}, #{foo.err_message}, #{foo.comment}"
+		  	#puts "Result : TESTCASE 2"
+			#puts "#{foo.execution_time}, #{foo.test_device}, #{foo.testcase_num}, #{foo.testcase_summary}, #{foo.test_result}, #{foo.err_message}, #{foo.comment}"
 			#puts ($obj_snddb.insertIntoReleaseTestEachFunc(foo.execution_time, foo.testcase_num, foo.testcase_summary, foo.test_result, foo.capture_url, foo.err_message, foo.comment))
 	
 			#puts "Result : TESTCASE 3"
