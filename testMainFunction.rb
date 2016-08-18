@@ -24,7 +24,7 @@ load "funcSendToDB.rb"
 	port = ARGV[1]
 
 	# Create client using defaults or using hostname and port number
-	client = Mobile::Client.new(host, port, true)
+	client = Mobile::Client.new("#{host}", "#{port}", true)
 	client.setProjectBaseDirectory("/Users/admin/workspace/PR_Regression")
 
 	$obj_login = Login.new
