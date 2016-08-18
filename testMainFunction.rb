@@ -76,7 +76,7 @@ load "funcSinglePlay.rb"
 
 		  	puts "Result : TESTCASE 2"
 			puts "#{foo.execution_time}, #{foo.test_device}, #{foo.testcase_num}, #{foo.testcase_summary}, #{foo.test_result}, #{foo.err_message}, #{foo.comment}"
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc(foo.execution_time, foo.testcase_num, foo.testcase_summary, foo.test_result, foo.capture_url, foo.err_message, foo.comment))
+			#puts ($obj_snddb.insertIntoReleaseTestEachFunc(foo.execution_time, foo.testcase_num, foo.testcase_summary, foo.test_result, foo.capture_url, foo.err_message, foo.comment))
 	
 			#puts "Result : TESTCASE 3"
 			#puts "#{$foo1.test_device}, #{$foo1.testcase_num}, #{$foo1.testcase_summary}, #{$foo1.test_result}, #{$foo1.err_message}, #{$foo1.comment}"
