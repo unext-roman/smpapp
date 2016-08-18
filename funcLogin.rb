@@ -49,7 +49,7 @@ class Login
 			if client.isElementFound("NATIVE", "text=ログアウト", 0)
 				$comment = "::MSG:: 既にログイン済み!!! 結果をOKにする"
 				$finishedTest = $finishedTest + 1
-				#$foo1 = ($obj_snglp.testSinglePlay(client))
+				$foo1 = ($obj_snglp.testSinglePlay(client))
 			else
 				client.elementListSelect("", "text=ログイン", 0, false)
 				client.click("NATIVE", "text=ログイン", 0, 1)
@@ -76,7 +76,7 @@ class Login
 						puts "Result is -> " + $result
 						puts "Pass count is -> #{$totalTest} / #{$passCount}"
 						$finishedTest = $finishedTest + 1
-						#$foo1 = ($obj_snglp.testSinglePlay(client))
+						$foo1 = ($obj_snglp.testSinglePlay(client))
 					else
 						puts "::MSG:: ログイン失敗しました「Wrong credentials, Test aborted」"
 						$result = $resultNG
