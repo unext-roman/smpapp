@@ -19,7 +19,7 @@ class Utility
 	attr_accessor :progress, :key_progress
 
 	def initialize
-		@CONFIG_FILE_PATH = "/Users/admin/Desktop/auto_scripts/input.txt"		
+		@CONFIG_FILE_PATH = "https://github.com/unext-roman/smpapp/input.txt"		
 		@key_progress = "progress"
 	end
 
