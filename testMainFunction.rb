@@ -28,7 +28,7 @@ load "funcSinglePlay.rb"
 	client.setProjectBaseDirectory("/Users/admin/workspace/PR_Regression")
 
 	$obj_login = Login.new
-	$obj_snddb = SendResultsToDB.new
+	#$obj_snddb = SendResultsToDB.new
 		
 	#individual test
 	#$obj_mylst = MyList.new
