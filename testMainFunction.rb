@@ -11,14 +11,14 @@ load "constItems.rb"
 load "releaseTest_info.rb"
 load "utilitiesFunc.rb"
 load "funcLogin.rb"
-load "funcLogout.rb"
+#load "funcLogout.rb"
 load "funcSinglePlay.rb"
-load "funcContinuePlay.rb"
-load "funcBuyPPV.rb"
-load "funcPurchasedPlay.rb"
-load "funcHistoryPlay.rb"
-load "funcMylistPlay.rb"
-load "funcSendToDB.rb"
+#load "funcContinuePlay.rb"
+#load "funcBuyPPV.rb"
+#load "funcPurchasedPlay.rb"
+#load "funcHistoryPlay.rb"
+#load "funcMylistPlay.rb"
+#load "funcSendToDB.rb"
 
 	host = ARGV[0]
 	port = ARGV[1]
@@ -68,15 +68,15 @@ load "funcSendToDB.rb"
 		  	
 		  	#puts "::MSG:: Execution starting time : #{$obj_utili.getTime}"
 
-		  	#foo = ($obj_login.testLogin(client,"roman","qatest1"))
+		  	foo = ($obj_login.testLogin(client,"roman","qatest1"))
 
-			#puts "==================================================================================="
-		  	#puts "TEST RESULTS SENT TO DB"
-		  	#puts "==================================================================================="
+			puts "==================================================================================="
+		  	puts "TEST RESULTS SENT TO DB"
+		  	puts "==================================================================================="
 
-		  	#puts "Result : TESTCASE 2"
-			#puts "#{foo.execution_time}, #{foo.test_device}, #{foo.testcase_num}, #{foo.testcase_summary}, #{foo.test_result}, #{foo.err_message}, #{foo.comment}"
-			#puts ($obj_snddb.insertIntoReleaseTestEachFunc(foo.execution_time, foo.testcase_num, foo.testcase_summary, foo.test_result, foo.capture_url, foo.err_message, foo.comment))
+		  	puts "Result : TESTCASE 2"
+			puts "#{foo.execution_time}, #{foo.test_device}, #{foo.testcase_num}, #{foo.testcase_summary}, #{foo.test_result}, #{foo.err_message}, #{foo.comment}"
+			puts ($obj_snddb.insertIntoReleaseTestEachFunc(foo.execution_time, foo.testcase_num, foo.testcase_summary, foo.test_result, foo.capture_url, foo.err_message, foo.comment))
 	
 			#puts "Result : TESTCASE 3"
 			#puts "#{$foo1.test_device}, #{$foo1.testcase_num}, #{$foo1.testcase_summary}, #{$foo1.test_result}, #{$foo1.err_message}, #{$foo1.comment}"
