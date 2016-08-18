@@ -54,8 +54,8 @@ load "funcSinglePlay.rb"
 		puts "*			  v 1.0														"
 		puts "**********************************************************************"
 
-		puts "Enter how many TCs to be executed?"
-		$tcs = gets.chomp.to_i
+		#puts "Enter how many TCs to be executed?"
+		#$tcs = gets.chomp.to_i
 	end
 
 	unextTestPrgm
