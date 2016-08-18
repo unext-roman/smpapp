@@ -7,8 +7,8 @@
 # コピーライト : U-NEXT Co. Ltd.
 # バージョン : v1.0
 #############################################################################
-require "rubygems"
-require "mysql"
+require 'rubygems'
+require 'mysql'
 
 class ConnectDB
 
