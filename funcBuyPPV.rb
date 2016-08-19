@@ -6,6 +6,8 @@
 # バージョン : v1.0
 #############################################################################
 
+#/Users/admin/Desktop/github_edited
+
 load "funcHistoryPlay.rb"
 load "utilitiesFunc.rb"
 
@@ -103,7 +105,7 @@ class BuyPPV
 			$errMsgBuypv = "::MSG:: Exception occurrred, could not find any PPV item ..: " + e.message	
 		end
 
-		puts ($tp_info5.calculateRatio($finishedTest))
+		#puts ($tp_info5.calculateRatio($finishedTest))
 		$foo5 = ($obj_histp.testHistoryPlay(client))
 		client.sleep(1000)
 		dateTime = $tp_info5.getTime

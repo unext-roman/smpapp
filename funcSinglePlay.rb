@@ -6,6 +6,8 @@
 # バージョン : v1.0
 #############################################################################
 
+#/Users/admin/Desktop/github_edited
+
 load "constItems.rb"
 load "funcContinuePlay.rb"
 load "utilitiesFunc.rb"
@@ -108,7 +110,7 @@ class SinglePlay
 		#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
 		client.click("NATIVE", "text=ホーム", 0, 1)
 
-		puts ($tp_info3.calculateRatio($finishedTest))
+		#puts ($tp_info3.calculateRatio($finishedTest))
 		
 		$foo3 = ($obj_contp.testContinuePlay(client))
 		dateTime = $tp_info2.getTime

@@ -6,6 +6,8 @@
 # バージョン : v1.0
 #############################################################################
 
+#/Users/admin/Desktop/github_edited
+
 load "funcMylistPlay.rb"
 load "utilitiesFunc.rb"
 
@@ -42,7 +44,7 @@ class PurchasePlay
 			PurchasePlay.new.purchasedList(client)
 		end
 
-		puts ($tp_info7.calculateRatio($finishedTest))
+		#puts ($tp_info7.calculateRatio($finishedTest))
 		$foo6 = ($obj_mylst.testMylistContent(client))
 		dateTime = $tp_info7.getTime
 

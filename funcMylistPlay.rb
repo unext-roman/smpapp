@@ -6,6 +6,8 @@
 # バージョン : v1.0
 #############################################################################
 
+#/Users/admin/Desktop/github_edited
+
 load "funcLogout.rb"
 load "utilitiesFunc.rb"
 
@@ -36,7 +38,7 @@ class MyList
 			MyList.new.checkMylist(client)
 		end
 
-		puts ($tp_info8.calculateRatio($finishedTest))
+		#puts ($tp_info8.calculateRatio($finishedTest))
 		$foo7 = ($obj_logot.testLogout(client))
 		dateTime = $tp_info8.getTime
 

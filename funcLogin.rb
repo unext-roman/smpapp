@@ -8,9 +8,8 @@
 # バージョン : v1.0
 #############################################################################
 
-#load "Client.rb"
-#load "constItems.rb"
-#load "funcStartup.rb"
+#/Users/admin/Desktop/github_edited
+
 load "funcSinglePlay.rb"
 load "utilitiesFunc.rb"
 
@@ -91,7 +90,7 @@ class Login
 			end
 		end
 		
-		puts ($tp_info2.calculateRatio($finishedTest))
+		#puts ($tp_info2.calculateRatio($finishedTest))
 		dateTime = $tp_info2.getTime
 
 		rt_info2 = RegressionTestInfo.new

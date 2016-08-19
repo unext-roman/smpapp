@@ -6,6 +6,8 @@
 # バージョン : v1.0
 #############################################################################
 
+#/Users/admin/Desktop/github_edited
+
 load "funcPurchasedPlay.rb"
 load "utilitiesFunc.rb"
 
@@ -42,7 +44,7 @@ class HistoryPlay
 			HistoryPlay.new.historyList(client)
 		end
 
-		puts ($tp_info6.calculateRatio($finishedTest))
+		#puts ($tp_info6.calculateRatio($finishedTest))
 		$foo2 = ($obj_prcsp.testPurchasedItemPlay(client))
 		dateTime = $tp_info6.getTime
 

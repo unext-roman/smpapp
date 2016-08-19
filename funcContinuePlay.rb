@@ -6,6 +6,8 @@
 # バージョン : v1.0
 #############################################################################
 
+#/Users/admin/Desktop/github_edited
+
 load "funcBuyPPV.rb"
 load "utilitiesFunc.rb"
 
@@ -51,7 +53,7 @@ class ContinuePlay
 			ContinuePlay.new.playingOperation(client)
 		end
 
-		puts ($tp_info4.calculateRatio($finishedTest))
+		#puts ($tp_info4.calculateRatio($finishedTest))
 		$foo4 = ($obj_buypv.testBuyingPPV(client))
 		dateTime = $tp_info4.getTime
 		
