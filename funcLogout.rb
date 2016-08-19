@@ -6,6 +6,8 @@
 # バージョン : v1.0
 #############################################################################
 
+#/Users/admin/Desktop/github_edited
+
 load "Client.rb"
 load "funcRelease.rb"
 load "constItems.rb"
@@ -62,7 +64,7 @@ class Logout
 			$errMsgLogin = "::MSG:: Exception occurrred, could not continue test..: " + e.message
 		end	
 
-		puts ($tp_info8.calculateRatio($finishedTest))
+		#puts ($tp_info8.calculateRatio($finishedTest))
 		dateTime = $tp_info2.getTime
 
 		rt_info4 = RegressionTestInfo.new
