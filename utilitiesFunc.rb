@@ -19,7 +19,8 @@ class Utility
 	attr_accessor :progress, :key_progress
 
 	def initialize
-		@CONFIG_FILE_PATH = "https://github.com/unext-roman/smpapp/input.txt"		
+		#@CONFIG_FILE_PATH = "https://github.com/unext-roman/smpapp/input.txt"
+		@CONFIG_FILE_PATH = "http://10.4.136.254/Users/admin/Desktop/github_edited/input.txt"
 		@key_progress = "progress"
 	end
 
@@ -35,10 +36,12 @@ class Utility
 		
 		begin
 			contents = @key_progress + ":" + @progress
+			puts "EXpecting ERROR here"
 			File.open(@CONFIG_FILE_PATH, "w") do |file|
 				file.puts(contents)
 			end
 		rescue IOError => e
+			puts e
 		end
 	end
 
