@@ -19,8 +19,8 @@ class Utility
 	attr_accessor :progress, :key_progress
 
 	def initialize
-		#@CONFIG_FILE_PATH = "https://github.com/unext-roman/smpapp/input.txt"
-		@CONFIG_FILE_PATH = "http://10.4.136.254/Users/admin/Desktop/github_edited/input.txt"
+		@CONFIG_FILE_PATH = "C:¥Jenkins¥workspace¥U_Next_SMP_App_Test¥input.txt"
+		#@CONFIG_FILE_PATH = "/Users/admin/Desktop/auto_scripts/input.txt"
 		@key_progress = "progress"
 	end
 
@@ -36,7 +36,6 @@ class Utility
 		
 		begin
 			contents = @key_progress + ":" + @progress
-			puts "EXpecting ERROR here"
 			File.open(@CONFIG_FILE_PATH, "w") do |file|
 				file.puts(contents)
 			end
@@ -47,10 +46,10 @@ class Utility
 
 	def calculateRatio(finishedTC)
 
-		puts "Calling calculateRatio func"
+		#puts "::MSG:: Calling calculateRatio func"
 
 		ftc_val = finishedTC
-		rat_val = (ftc_val * 100 ) / $tcs #$totalTest
+		rat_val = (ftc_val * 100 ) / 38 #$tcs #$totalTest
 
 		puts "Ratio val : #{rat_val}"
 		case rat_val
@@ -85,7 +84,7 @@ class Utility
 
 	def getTime
 
-		$exeTime = Time.new
+		$exeTime = Time.new.strftime("%Y-%m-%d %H:%M:%S")
 		return $exeTime
 	end
 

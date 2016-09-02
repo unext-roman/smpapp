@@ -6,19 +6,10 @@
 # バージョン : v1.0
 #############################################################################
 
-#/Users/admin/Desktop/github_edited
-
-load "constItems.rb"
-load "funcContinuePlay.rb"
-load "utilitiesFunc.rb"
-load "releaseTest_info.rb"
-
 class SinglePlay
 
-	$obj_contp = ContinuePlay.new
-	$tp_info3 = Utility.new
-
 	####################################################
+	#Target Device: Android
 	#Function Name: testSinglePlay
 	#Activity: Perform a single content playing operation from title details
 	#Param: object
@@ -33,7 +24,6 @@ class SinglePlay
 
 		$totalTest = $totalTest + 1 
 		
-		client.setDevice("adb:401SO")
 		client.sleep(2000)
 		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 		client.sleep(2000)
@@ -54,6 +44,32 @@ class SinglePlay
 		if client.waitForElement("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 10000)
 	    	# If statement
 		end
+		SinglePlay.new.playfromTitleDetails(client)		
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc5 = ($obj_contp.testContinuePlay(client))		
+
+		andrt3 = RegressionTestInfo.new
+		andrt3.execution_time = $obj_utili.getTime
+		andrt3.test_device = "ANDROID" 
+		andrt3.testcase_num = 3
+		andrt3.testcase_summary = "単話見放題再生"
+		andrt3.test_result = $result
+		andrt3.capture_url = $captureURL
+		andrt3.err_message = $errMsgTanwa
+		andrt3.comment = ""
+
+		return andrt3
+	end
+
+	####################################################
+	#Function Name: playfromTitleDetails
+	#Activity: Function for playing from title details
+	#Param: object
+	####################################################
+
+	def playfromTitleDetails(client)
+
 		client.sleep(1000)
 		client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
 		client.sleep(35000)
@@ -72,15 +88,17 @@ class SinglePlay
 			if $endTime == $startTime
 				puts "::MSG:: 再生が開始しません、失敗しました「Playback has not started, check status」"
 				$result = $resultNG
-				$passCount = $passCount + 0
-				puts "Pass count is -> #{$totalTest} / #{$passCount}"
+				$failCount = $failCount + 1
 				$finishedTest = $finishedTest + 1
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"							
 			else
 				puts "::MSG:: 再生が開始しました、成功しました「Playback has started successfully」"
 				$result = $resultOK
 				$passCount = $passCount + 1
-				puts "Pass count is -> #{$totalTest} / #{$passCount}"
 				$finishedTest = $finishedTest + 1
+				puts "Result is -> " + $result
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"						
 			end
 
 		rescue Exception => e
@@ -109,23 +127,118 @@ class SinglePlay
 
 		#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
 		client.click("NATIVE", "text=ホーム", 0, 1)
+	end
 
-		#puts ($tp_info3.calculateRatio($finishedTest))
+	####################################################
+	#Target Device: iOS
+	#Function Name: ios_testSinglePlay
+	#Activity: Perform single play operation
+	#Param: object
+	####################################################
+
+	def ios_testSinglePlay(client)
+		client.sleep(2000)
+
+		puts ""
+		puts ""
+		puts "::MSG::[iOS] STARTING TEST @単話見放題再生"
+
+		$totalTest = $totalTest + 1 
+
+		client.sleep(5000)
 		
-		$foo3 = ($obj_contp.testContinuePlay(client))
-		dateTime = $tp_info2.getTime
+		if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 10000)
+	    	# If statement
+		end
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+		client.sleep(3000)
+		client.click("NATIVE", "xpath=//*[@text='洋画' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
+		client.sleep(2000)
+		if client.waitForElement("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！洋画編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 10000)
+	    	# If statement
+		end
+		client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！洋画編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 1)
+		SinglePlay.new.ios_playfromTitleDetails(client)
 
-		@rt_info3 = RegressionTestInfo.new
-		@rt_info3.execution_time = dateTime
-		@rt_info3.test_device = "ANDROID" 
-		@rt_info3.testcase_num = 3
-		@rt_info3.testcase_summary = "単話見放題再生"
-		@rt_info3.test_result = $result
-		@rt_info3.capture_url = $captureURL
-		@rt_info3.err_message = $errMsgTanwa
-		@rt_info3.comment = ""
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc5 = ($obj_contp.ios_testContinuePlay(client))
 
-		return @rt_info3
+		iosrt3 = RegressionTestInfo.new
+		iosrt3.execution_time = $obj_utili.getTime
+		iosrt3.test_device = "iOS"
+		iosrt3.testcase_num = 3
+		iosrt3.testcase_summary = "単話見放題再生"
+		iosrt3.test_result = $result
+		iosrt3.capture_url = $captureURL		
+		iosrt3.err_message = $errMsgTanwa
+		iosrt3.comment = ""
 
+		return iosrt3
+	end
+
+	####################################################
+	#Function Name: playfromTitleDetails
+	#Activity: Function for playing from title details
+	#Param: object
+	####################################################
+
+	def ios_playfromTitleDetails(client)
+
+		client.sleep(1000)		
+		if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 30000)
+	    	# If statement
+		end
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
+		puts "::MSG:: Playing operation started..."
+
+		begin		
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			$startTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
+			puts "Starting time : " + $startTime
+
+			client.sleep(10000)
+
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			$endTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
+			puts "Ending time : " + $endTime
+
+			if $endTime == $startTime
+				puts "::MSG:: 再生が開始しません、失敗しました「Playback has not started, check status」"
+				$result = $resultNG
+				$failCount = $failCount + 1
+				$finishedTest = $finishedTest + 1				
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"							
+			else
+				puts "::MSG:: 再生が開始しました、成功しました「Playback has started successfully」"
+				$result = $resultOK
+				$passCount = $passCount + 1
+				$finishedTest = $finishedTest + 1				
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			end
+
+		rescue Exception => e
+			$errMsgTanwa = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+		end
+		
+		puts "::MSG:: Tapped on seekbar..."
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
+		client.sleep(2000)
+
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
+		client.sleep(2000)
+		
+		if client.waitForElement("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main_nav_close']]", 0, 10000)
+	    	# If statement
+		end
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
+		client.sleep(2000)
+		if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 10000)
+	    	# If statement
+		end
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+		client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 	end
 end

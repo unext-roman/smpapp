@@ -6,17 +6,10 @@
 # バージョン : v1.0
 #############################################################################
 
-#/Users/admin/Desktop/github_edited
-
-load "funcPurchasedPlay.rb"
-load "utilitiesFunc.rb"
-
 class HistoryPlay
 
-	$obj_prcsp = PurchasePlay.new
-	$tp_info6 = Utility.new
-
 	####################################################
+	#Target Device: Android
 	#Function Name: testHistoryPlay
 	#Activity: Function to buy a PPV content
 	#Param: object
@@ -31,7 +24,6 @@ class HistoryPlay
 
 		$totalTest = $totalTest + 1 
 		
-		client.setDevice("adb:401SO")
 		client.sleep(2000)
 
 		if client.isElementFound("NATIVE", "text=つづきを再生")
@@ -44,21 +36,20 @@ class HistoryPlay
 			HistoryPlay.new.historyList(client)
 		end
 
-		#puts ($tp_info6.calculateRatio($finishedTest))
-		$foo2 = ($obj_prcsp.testPurchasedItemPlay(client))
-		dateTime = $tp_info6.getTime
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc8 = ($obj_prcsp.testPurchasedItemPlay(client))		
 
-		rt_info8 = RegressionTestInfo.new
-		rt_info8.execution_time = dateTime
-		rt_info8.test_device = "ANDROID" 
-		rt_info8.testcase_num = 8
-		rt_info8.testcase_summary = "視聴履歴から再生"
-		rt_info8.test_result = $result
-		rt_info8.capture_url = $captureURL
-		rt_info8.err_message = $errMsgHisto
-		rt_info8.comment = ""
+		andrt7 = RegressionTestInfo.new
+		andrt7.execution_time = $obj_utili.getTime
+		andrt7.test_device = "ANDROID" 
+		andrt7.testcase_num = 7
+		andrt7.testcase_summary = "視聴履歴から再生"
+		andrt7.test_result = $result
+		andrt7.capture_url = $captureURL
+		andrt7.err_message = $errMsgHisto
+		andrt7.comment = ""
 
-		return rt_info8
+		return andrt7
 	end
 
 	####################################################
@@ -111,6 +102,7 @@ class HistoryPlay
 			client.sleep(20000)
 			HistoryPlay.new.playbackCheck(client)
 			HistoryPlay.new.leavingPlayer(client)
+			client.sleep(2000)
 		else
 			for i in 1..cnt
 				client.click("NATIVE", "xpath=(//*[@id='drawerList']/*/*[@id='imageView'])[#{i}]")
@@ -123,6 +115,7 @@ class HistoryPlay
 					client.sleep(10000)
 					HistoryPlay.new.playbackCheck(client)
 					HistoryPlay.new.leavingPlayer(client)
+					client.sleep(2000)
 				else
 					i = i + 1				
 				end
@@ -176,20 +169,188 @@ class HistoryPlay
 			if $endTime == $startTime
 				puts "::MSG:: Playback has not started, check status!!!"
 				$result = $resultNG
-				$passCount = $passCount + 0
+				$failCount = $failCount + 1
 				$finishedTest = $finishedTest + 1
-				puts "Pass count is -> #{$totalTest} / #{$passCount}"
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 			else
 				puts "::MSG:: Playback has started successfully..."
 				$result = $resultOK
 				$passCount = $passCount + 1
 				$finishedTest = $finishedTest + 1
-				puts "Pass count is -> #{$totalTest} / #{$passCount}"
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 			end
 
 		rescue Exception => e
 			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
 		end
+	end
 
+	####################################################
+	#Target Device: iOS
+	#Function Name: testHistoryPlay
+	#Activity: Function to buy a PPV content
+	#Param: object
+	####################################################
+
+	def ios_testHistoryPlay(client)
+		client.sleep(2000)
+
+		puts ""
+		puts ""
+		puts "::MSG::[iOS] STARTING TEST @視聴履歴から再生"
+
+		$totalTest = $totalTest + 1 
+		
+		client.sleep(2000)
+		if client.isElementFound("NATIVE", "text=つづきを再生")
+			HistoryPlay.new.ios_historyList(client)
+		else
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+			HistoryPlay.new.ios_historyList(client)
+		end
+
+		puts ($obj_utili.calculateRatio($finishedTest))		
+		$tc8 = ($obj_prcsp.ios_testPurchasedItemPlay(client))
+
+		iosrt7 = RegressionTestInfo.new
+		iosrt7.execution_time = $obj_utili.getTime		
+		iosrt7.test_device = "ANDROID" 
+		iosrt7.testcase_num = 7
+		iosrt7.testcase_summary = "視聴履歴から再生"
+		iosrt7.test_result = $result
+		iosrt7.capture_url = $captureURL
+		iosrt7.err_message = $errMsgHisto
+		iosrt7.comment = ""
+
+		return iosrt7
+	end
+
+	####################################################
+	#Function Name: historyList
+	#Activity: Function for opening history list
+	#Param: object
+	####################################################
+
+	def ios_historyList(client)
+
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+		client.sleep(1000)
+		client.click("NATIVE", "xpath=//*[@text='視聴履歴']", 0, 1)
+		client.sleep(2000)
+		
+		if client.isElementFound("NATIVE", "xpath=//*[@text='視聴履歴']")
+			puts "::MSG:: History list opened"
+			client.sleep(2000)
+
+			if client.isElementFound("NATIVE", "text=視聴履歴がありません")
+				puts "::MSG:: There is no item in history list!!!"
+			else
+				# Check here whether content is PPV or viewing duration expired or  SVOD
+				HistoryPlay.new.ios_checkPPVorSVODorPurchased(client)			
+			end
+		end
+
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "text=ホーム", 0, 1)
+	end
+
+	####################################################
+	#Function Name: ios_checkPPVorSVODorPurchased
+	#Activity: Function for checking SVOD or PPV
+	#Param: object
+	####################################################
+
+	def ios_checkPPVorSVODorPurchased(client)
+
+		client.sleep(1000)
+		nolstitem = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[./parent::*[./parent::*[./parent::*[@class='UITableViewWrapperView']]]]]]", "class")
+		puts "Number of playable content visible in the screen:\n #{nolstitem}"
+		cnt = nolstitem.length - 1
+		puts "Number of contents found in the list is : #{cnt}"
+
+		begin
+			for i in 0..cnt
+				#client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView']", cnt, 1)
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNMovieItemCell']", i, 1)			
+				client.sleep(2000)
+				if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
+					puts "::MSG:: Using a PPV or SVOD content for this test"
+					client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
+					client.sleep(2000)
+					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView']", i, 1)
+					client.sleep(10000)
+					HistoryPlay.new.ios_playbackCheckFromList(client)
+					HistoryPlay.new.ios_leavingPlayer(client)
+				else
+					i = i + 1				
+				end
+				break #for
+			end #for
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+		end	
+	end
+
+	####################################################
+	#Function Name: leavingPlayer
+	#Activity: Function for leaving player screen
+	#Param: object
+	####################################################
+
+	def ios_leavingPlayer(client)
+
+		#client.sleep(000)
+		puts "::MSG:: Tapped on seekbar..."
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
+	end
+
+	####################################################
+	#Function Name: playbackCheck
+	#Activity: Function for playback checking
+	#Param: object
+	####################################################
+
+	def ios_playbackCheckFromList(client)
+
+		client.sleep(10000)
+		puts "::MSG:: Playing operation started..."
+			
+		begin		
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			$startTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
+			puts "Starting time : " + $startTime
+
+			client.sleep(5000)
+
+			if $startTime.include? ":"
+				puts "::MSG:: 視聴履歴からの再生は成功です「Playback successfully」"
+				$result = $resultOK
+				$passCount = $passCount + 1
+				$finishedTest = $finishedTest + 1				
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+			else
+				puts "::MSG:: 視聴履歴からの再生は失敗しました「Could not start playback!!!」"
+				$result = $resultNG
+				$failCount = $failCount + 1
+				$finishedTest = $finishedTest + 1
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+			end
+
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+		end
 	end
 end

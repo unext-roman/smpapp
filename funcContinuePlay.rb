@@ -6,17 +6,10 @@
 # バージョン : v1.0
 #############################################################################
 
-#/Users/admin/Desktop/github_edited
-
-load "funcBuyPPV.rb"
-load "utilitiesFunc.rb"
-
 class ContinuePlay
 
-	$obj_buypv = BuyPPV.new
-	$tp_info4 = Utility.new
-
 	####################################################
+	#Target Device: Android
 	#Function Name: testContinuePlay
 	#Activity: Perform playing operation from continious playing
 	#Param: object
@@ -30,9 +23,6 @@ class ContinuePlay
 		puts "::MSG::[ANDROID] STARTING TEST @つづきを再生"
 
 		$totalTest = $totalTest + 1 
-
-		client.setDevice("adb:401SO")
-		#client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, true)
 
 		client.sleep(2000)
 		if client.isElementFound("NATIVE", "text=つづきを再生")
@@ -53,21 +43,20 @@ class ContinuePlay
 			ContinuePlay.new.playingOperation(client)
 		end
 
-		#puts ($tp_info4.calculateRatio($finishedTest))
-		$foo4 = ($obj_buypv.testBuyingPPV(client))
-		dateTime = $tp_info4.getTime
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc6 = ($obj_buypv.testBuyingPPV(client))		
 		
-		rt_info5 = RegressionTestInfo.new
-		rt_info5.execution_time = dateTime
-		rt_info5.test_device = "ANDROID" 
-		rt_info5.testcase_num = 5
-		rt_info5.testcase_summary = "つづきを再生"
-		rt_info5.test_result = $result
-		rt_info5.capture_url = $captureURL
-		rt_info5.err_message = $errMsgConti
-		rt_info5.comment = ""
+		andrt5 = RegressionTestInfo.new
+		andrt5.execution_time = $obj_utili.getTime
+		andrt5.test_device = "ANDROID" 
+		andrt5.testcase_num = 5
+		andrt5.testcase_summary = "つづきを再生"
+		andrt5.test_result = $result
+		andrt5.capture_url = $captureURL
+		andrt5.err_message = $errMsgConti
+		andrt5.comment = ""
 
-		return rt_info5
+		return andrt5
 	end
 
 	####################################################
@@ -79,7 +68,7 @@ class ContinuePlay
 	def playingOperation(client)
 
 		client.sleep(35000)
-		#puts "::MSG:: Playing operation started..."
+		puts "::MSG:: Playing operation started..."
 			
 			begin		
 				client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
@@ -95,15 +84,17 @@ class ContinuePlay
 				if $endTime == $startTime
 					puts "::MSG:: Playback has not started, check status!!!"
 					$result = $resultNG
-					$passCount = $passCount + 0
+					$failCount = $failCount + 1
 					$finishedTest = $finishedTest + 1
-					puts "Pass count is -> #{$totalTest} / #{$passCount}"
+					puts "Result is -> " + $result	
+					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 				else
 					puts "::MSG:: Playback has started successfully..."
 					$result = $resultOK
 					$passCount = $passCount + 1
 					$finishedTest = $finishedTest + 1
-					puts "Pass count is -> #{$totalTest} / #{$passCount}"
+					puts "Result is -> " + $result	
+					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 				end
 
 			rescue Exception => e
@@ -122,6 +113,106 @@ class ContinuePlay
 		client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
 		client.sleep(500)
 		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+		puts "::MSG:: Returned to Home screen..."
+	end
+
+	####################################################
+	#Target Device: iOS
+	#Function Name: testContinuePlay
+	#Activity: Perform playing operation from continious playing
+	#Param: object
+	####################################################
+
+	def ios_testContinuePlay(client)
+		client.sleep(2000)
+
+		puts ""
+		puts ""
+		puts "::MSG::[iOS] STARTING TEST @つづきを再生"
+
+		$totalTest = $totalTest + 1 
+
+		client.sleep(2000)
+		if client.isElementFound("NATIVE", "text=つづきを再生")
+			if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayIndicator' and ./preceding-sibling::*[./*]][1]", 0, 10000)
+				puts "::MSG:: Found playing content[0]"
+	    		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./preceding-sibling::*[./*]]][1]", 0, 1)
+				ContinuePlay.new.ios_playingOperation(client)
+			end
+
+		else
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayIndicator' and ./preceding-sibling::*[./*]][1]", 0, 1)
+			ContinuePlay.new.ios_playingOperation(client)
+		end
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc6 = ($obj_buypv.ios_testBuyPPV(client))
+		
+		iosrt5 = RegressionTestInfo.new
+		iosrt5.execution_time = $obj_utili.getTime
+		iosrt5.test_device = "iOS" 
+		iosrt5.testcase_num = 5
+		iosrt5.testcase_summary = "つづきを再生"
+		iosrt5.test_result = $result
+		iosrt5.capture_url = $captureURL		
+		iosrt5.err_message = $errMsgConti
+		iosrt5.comment = ""
+
+		return iosrt5
+	end
+
+	####################################################
+	#Function Name: playingOperation
+	#Activity: Function to perform playing operation
+	#Param: object
+	####################################################
+
+	def ios_playingOperation(client)
+
+		client.sleep(35000)
+		puts "::MSG:: Playing operation started..."
+			
+		begin		
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			$startTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
+			puts "Starting time : " + $startTime
+
+			client.sleep(10000)
+
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			$endTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
+			puts "Ending time : " + $endTime
+
+			if $endTime == $startTime
+				puts "::MSG:: 再生が開始しません、失敗しました「Playback has not started, check status」"
+				$result = $resultNG
+				$failCount = $failCount + 1
+				$finishedTest = $finishedTest + 1
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+			else
+				puts "::MSG:: 再生が開始しました、成功しました「Playback has started successfully」"
+				$result = $resultOK
+				$passCount = $passCount + 1				
+				$finishedTest = $finishedTest + 1
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+			end
+
+		rescue Exception => e
+			$errMsgConti = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+		end
+		
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
+		client.sleep(2000)
+
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
 		puts "::MSG:: Returned to Home screen..."
 	end
 end

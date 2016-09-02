@@ -10,6 +10,7 @@
 	$resultNG = "NG"
 	$result = ""
 	$passCount = 0
+	$failCount = 0
 	$totalTest = 0
 	$finishedTest = 0
 	$errMsg = ""
@@ -27,6 +28,9 @@
 	$errMsgBuypv = ""
 	$errMsgHisto = ""
 	$errMsgBougt = ""
+	$errMsgMlist = ""
+	$errMsgDwnld = ""
+	$errMsgEpsdp = ""
 
 
 	#class names
@@ -39,3 +43,9 @@
 	#funcPurchasedPlay 	:PurchasePlay 	:$obj_prcsp
 	#funcMylistPlay 	:MyList 		:$obj_mylst
 	#funcLogout 		:Logout 		:$obj_logot
+
+
+	#devices names
+	#client.setDevice("adb:401SO")		
+	#client.setDevice("ios_app:autoIpad")	
+

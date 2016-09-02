@@ -1,0 +1,187 @@
+#!/usr/bin/ruby
+
+#############################################################################
+# 課題 : スマホアプリ向け回帰テストの自動化
+# モジュール : ロカル機能・見放題エピソード再生機能
+# 開発者 : Roman Ahmed
+# コピーライト : U-NEXT Co. Ltd.
+# バージョン : v1.0
+#############################################################################
+
+class EpisodePlay
+
+	####################################################
+	#Target Device: Android
+	#Function Name: testSVODEpisodePlay
+	#Activity: Function for playing from episode list
+	#Param: object
+	####################################################
+
+	def testSVODEpisodePlay(client)
+		client.sleep(2000)
+
+		puts ""
+		puts ""
+		puts "::MSG::[ANDROID] STARTING TEST @見放題エピソード再生機能"
+
+		$totalTest = $totalTest + 1
+
+		client.sleep(2000)
+		if client.isElementFound("NATIVE", "text=つづきを再生")
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='海外ドラマ' and @id='textView']", 0, 1)
+			client.sleep(2000)
+			EpisodePlay.new.getEpisodeToPlay(client)
+		else
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='海外ドラマ' and @id='textView']", 0, 1)
+			client.sleep(2000)
+			EpisodePlay.new.getEpisodeToPlay(client)
+		end
+
+		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "text=ホーム", 0, 1)
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tcEnd = ($obj_logot.testLogout(client))		
+
+		andrt12 = RegressionTestInfo.new
+		andrt12.execution_time = $obj_utili.getTime
+		andrt12.test_device = "ANDROID" 
+		andrt12.testcase_num = 12
+		andrt12.testcase_summary = "見放題エピソード再生機能"
+		andrt12.test_result = $result
+		andrt12.capture_url = $captureURL
+		andrt12.err_message = $errMsgBougt
+		andrt12.comment = ""
+
+		return andrt12
+	end
+
+	def getEpisodeToPlay(client)
+
+		if client.waitForElement("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 20000)
+	   		# If statement
+		end
+		if client.isElementFound("NATIVE", "xpath=//*[@text='見放題で楽しめる厳選良作！海外ドラマ編']")
+			client.click("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 1)
+			client.sleep(2000)
+		else
+			client.swipe2("Down", 250, 2000)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 1)
+			client.sleep(2000)
+		end
+		client.sleep(2000)
+		client.swipe2("Down", 250, 2000)
+		client.sleep(3000)
+		begin
+			if client.isElementFound("NATIVE", "xpath=//*[@text='エピソードを選択']")
+				client.click("NATIVE", "text=エピソードを選択", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*/*[@id='download_indicator' and ./parent::*[@id='image_container']])[1]", 0, 1)
+				client.sleep(10000)
+				HistoryPlay.new.playbackCheck(client)
+				HistoryPlay.new.leavingPlayer(client)
+			else
+				puts "::MSG:: This contents does not have episode list!!!"
+			end
+		rescue Exception => e
+			$errMsgEpsdp = "::MSG:: Error occurred while episode playing.." + e.message
+		end		
+		client.sleep(2000)
+	end
+
+	####################################################
+	#Target Device: iOS
+	#Function Name: ios_testSVODEpisodePlay
+	#Activity: Function for playing from episode list
+	#Param: object
+	####################################################
+
+	def ios_testSVODEpisodePlay(client)
+		client.sleep(2000)
+
+		puts ""
+		puts ""
+		puts "::MSG::[iOS] STARTING TEST @見放題エピソード再生機能"
+
+		$totalTest = $totalTest + 1
+		client.sleep(2000)
+
+		if client.isElementFound("NATIVE", "text=つづきを再生")
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='海外ドラマ' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
+			client.sleep(2000)
+			EpisodePlay.new.ios_getEpisodeToPlay(client)
+		else
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='海外ドラマ' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
+			client.sleep(3000)
+			EpisodePlay.new.ios_getEpisodeToPlay(client)
+		end
+
+		client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='エピソード']]", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+		client.sleep(2000)
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tcEnd = ($obj_logot.testLogout(client))		
+
+		iosrt12 = RegressionTestInfo.new
+		iosrt12.execution_time = $obj_utili.getTime
+		iosrt12.test_device = "iOS" 
+		iosrt12.testcase_num = 12
+		iosrt12.testcase_summary = "見放題エピソード再生機能"
+		iosrt12.test_result = $result
+		iosrt12.capture_url = $captureURL
+		iosrt12.err_message = $errMsgBougt
+		iosrt12.comment = ""
+
+		return iosrt12
+	end
+
+	def ios_getEpisodeToPlay(client)
+		client.sleep(2000)
+		if client.waitForElement("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 10000)
+    		# If statement
+		end
+		client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 1)
+		client.sleep(2000)
+		client.swipe2("Down", 350, 500)
+		client.sleep(2000)
+		begin
+			if client.isElementFound("NATIVE", "xpath=//*[@text='エピソードを選択']")
+				#client.elementListSelect("", "text=エピソードを選択", 0, false)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@text='エピソードを選択']", 0, 1)
+				if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton' and ./following-sibling::*[@text='43分']]]]", 0, 30000)
+	    			# If statement
+				end
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
+				client.sleep(10000)
+				HistoryPlay.new.ios_playbackCheckFromList(client)
+				HistoryPlay.new.ios_leavingPlayer(client)
+			else
+				puts "::MSG:: This contents does not have episode list!!!"
+			end
+		rescue Exception => e
+			$errMsgEpsdp = "::MSG:: Error occurred while episode playing.." + e.message
+		end
+	end
+end

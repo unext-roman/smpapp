@@ -74,10 +74,12 @@ class SendResultsToDB < ConnectDB
 			return false
 		end
 		begin
-			sql = "insert into #{@table_releasetest_cycle} (#{@cycle_key_date}, #{@cycle_key_build_no}, #{@cycle_key_login_id}, #{@cycle_key_device_type}, #{@cycle_key_device_name}, #{@cycle_key_result_ok_count}, #{@cycle_key_result_ng_count}) values ('#{date}', '#{build_no}', #{login_id}', '#{device_type}', '#{device_name}', #{result_ok_count}, #{result_ng_count});"
+			#puts "Pushing data into Cycle DB"
+			sql = "insert into #{@table_releasetest_cycle} (#{@cycle_key_date}, #{@cycle_key_build_no}, #{@cycle_key_login_id}, #{@cycle_key_device_type}, #{@cycle_key_device_name}, #{@cycle_key_result_ok_count}, #{@cycle_key_result_ng_count}) values ('#{date}','#{build_no}','#{login_id}','#{device_type}','#{device_name}',#{result_ok_count},#{result_ng_count});"
 			self.query(sql)
 		rescue
 			return false
+			puts "::MSG:: DBにデータ送信を失敗しました「Could not send data to DB」"
 		end
 		return true
 	end
@@ -90,10 +92,12 @@ class SendResultsToDB < ConnectDB
 			return false
 		end
 		begin
+			#puts "::MSG:: Pushing data into Each DB"
 			sql = "insert into #{@table_releasetest_each_func} (#{@each_func_key_date}, #{@each_func_key_test_num}, #{@each_func_key_test_summary}, #{@each_func_key_result}, #{@each_func_key_capture_url}, #{@each_func_key_err_message}, #{@each_func_key_comment}) values ('#{date}','#{test_num}','#{test_summary}','#{result}','#{capture_url}','#{err_message}','#{comment}');"
 			self.query(sql)
 		rescue
 			return false
+			puts "::MSG:: DBにデータ送信を失敗しました「Could not send data to DB」"
 		end
 		return true
 	end

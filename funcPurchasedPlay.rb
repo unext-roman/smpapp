@@ -6,17 +6,10 @@
 # バージョン : v1.0
 #############################################################################
 
-#/Users/admin/Desktop/github_edited
-
-load "funcMylistPlay.rb"
-load "utilitiesFunc.rb"
-
 class PurchasePlay
 
-	$obj_mylst = MyList.new
-	$tp_info7 = Utility.new
-
 	####################################################
+	#target Device: Android
 	#Function Name: testPurchasedPlay
 	#Activity: Function to play content from purchased list
 	#Param: object
@@ -31,35 +24,32 @@ class PurchasePlay
 
 		$totalTest = $totalTest + 1
 
-		client.setDevice("adb:401SO")
-		client.sleep(2000)
-		
+		client.sleep(2000)		
 		if client.isElementFound("NATIVE", "text=つづきを再生")
 			PurchasePlay.new.purchasedList(client)
 		else
-			client.sleep(1000)
+			client.sleep(3000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+			client.sleep(2000)
 			PurchasePlay.new.purchasedList(client)
 		end
 
-		#puts ($tp_info7.calculateRatio($finishedTest))
-		$foo6 = ($obj_mylst.testMylistContent(client))
-		dateTime = $tp_info7.getTime
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc9 = ($obj_mylst.testMylistContent(client))		
 
-		rt_info7 = RegressionTestInfo.new
-		rt_info7.execution_time = dateTime
-		rt_info7.test_device = "ANDROID" 
-		rt_info7.testcase_num = 7
-		rt_info7.testcase_summary = "購入済みから再生"
-		rt_info7.test_result = $result
-		rt_info7.capture_url = $captureURL
-		rt_info7.err_message = $errMsgBougt
-		rt_info7.comment = ""
+		andrt8 = RegressionTestInfo.new
+		andrt8.execution_time = $obj_utili.getTime
+		andrt8.test_device = "ANDROID" 
+		andrt8.testcase_num = 8
+		andrt8.testcase_summary = "購入済みから再生"
+		andrt8.test_result = $result
+		andrt8.capture_url = $captureURL
+		andrt8.err_message = $errMsgBougt
+		andrt8.comment = ""
 
-		return rt_info7
-
+		return andrt8
 	end
 
 	####################################################
@@ -98,21 +88,23 @@ class PurchasePlay
 					if $endTime == $startTime
 						puts "::MSG:: Playback has not started, check status!!!"
 						$result = $resultNG
-						$passCount = $passCount + 0
+						$failCount = $failCount + 1
 						$finishedTest = $finishedTest + 1
-						puts "Pass count is -> #{$totalTest} / #{$passCount}"
+						puts "Result is -> " + $result	
+						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 					else
 						puts "::MSG:: Playback has started successfully..."
 						$result = $resultOK
 						$passCount = $passCount + 1
 						$finishedTest = $finishedTest + 1
-						puts "Pass count is -> #{$totalTest} / #{$passCount}"
+						puts "Result is -> " + $result	
+						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 					end
 
 				rescue Exception => e
 					$errMsgBougt = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
 				end
-				leavingPlayer(client)
+				$obj_histp.leavingPlayer(client)
 			end
 		end
 
@@ -124,24 +116,118 @@ class PurchasePlay
 	end
 
 	####################################################
-	#Function Name: leavingPlayer
-	#Activity: Function for leaving player screen
+	#Target Device: iOS
+	#Function Name: testPurchasedPlay
+	#Activity: Function to play content from purchased list
 	#Param: object
 	####################################################
 
-	def leavingPlayer(client)
+	def ios_testPurchasedItemPlay(client)
+		client.sleep(2000)
+		
+		puts ""
+		puts ""
+		puts "::MSG::[iOS] STARTING TEST @購入済みから再生"
 
-		if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 120000)
-	    	# If statement
+		$totalTest = $totalTest + 1 
+		
+		client.sleep(2000)
+		if client.isElementFound("NATIVE", "text=つづきを再生")
+			PurchasePlay.new.ios_purchasedList(client)
+		else
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+			client.sleep(2000)
+			PurchasePlay.new.ios_purchasedList(client)
 		end
-		client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@id='play_pause_button']", 0, 1)
 
-		if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 30000)
-	    	# If statement
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc9 = ($obj_mylst.ios_testMylistContent(client))	
+
+		iosrt8 = RegressionTestInfo.new
+		iosrt8.execution_time = $obj_utili.getTime		
+		iosrt8.test_device = "ANDROID" 
+		iosrt8.testcase_num = 8
+		iosrt8.testcase_summary = "購入済みから再生"
+		iosrt8.test_result = $result
+		iosrt8.capture_url = $captureURL		
+		iosrt8.err_message = $errMsgBougt
+		iosrt8.comment = ""
+
+		return iosrt8
+	end
+
+	####################################################
+	#Function Name: purchasedList
+	#Activity: Function for opening purchased list
+	#Param: object
+	####################################################
+
+	def ios_purchasedList(client)
+
+		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@text='購入済み']", 0, 1)
+		
+		if client.isElementFound("NATIVE", "text=購入済み")
+			if client.isElementFound("NATIVE", "text=購入済みの作品がありません")
+				puts "::MSG:: There is no item in purchased list!!!"
+			else
+				if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 30000)
+	    			# If statement
+				end
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)				
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and ./parent::*[./preceding-sibling::*[@class='UNextMobile_Protected.UNGradientView'] and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
+				client.sleep(20000)
+				PurchasePlay.new.ios_playbackCheckFromTitleDetails(client)
+				$obj_histp.ios_leavingPlayer(client)
+			end
 		end
-		client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
-		client.sleep(500)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+		client.sleep(1000)
+		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@accessibilityLabel='Back' and ./preceding-sibling::*[./*[@text='購入済み']]]", 0, 1)
+		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+	end
+
+	####################################################
+	#Function Name: ios_playbackCheck
+	#Activity: Function for playback checking
+	#Param: object
+	####################################################
+
+	def ios_playbackCheckFromTitleDetails(client)
+		puts "::MSG:: Playing operation started..."
+			
+		begin		
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			$startTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
+			puts "Starting time : " + $startTime
+
+			client.sleep(5000)
+
+			if $startTime.include? ":"
+				puts "::MSG:: 購入済みからの再生は成功です「Playback successfully」"
+				$result = $resultOK
+				$passCount = $passCount + 1
+				$finishedTest = $finishedTest + 1				
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+			else
+				puts "::MSG:: 購入済みからの再生は失敗しました「Could not start playback!!!」"
+				$result = $resultNG
+				$failCount = $failCount + 1
+				$finishedTest = $finishedTest + 1
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			end
+
+		rescue Exception => e
+			$errMsgBougt = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+		end
 	end
 end

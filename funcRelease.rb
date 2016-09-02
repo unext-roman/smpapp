@@ -6,8 +6,6 @@
 # バージョン : v1.0
 #############################################################################
 
-load "Client.rb"
-
 class Finish
 
 	####################################################
@@ -17,8 +15,7 @@ class Finish
 	####################################################
 
 	def testEnd(client)
-		client.generateReport2(false);
-		# Releases the client so that other clients can approach the agent in the near future. 
+		#client.generateReport2(false);
 		client.releaseClient();
 	end
 end
