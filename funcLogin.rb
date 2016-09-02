@@ -24,9 +24,9 @@ class Login
 		puts ""
 		puts ""
 		s = "ログイン"
-		s1 = s.encode("Shift_JIS")
-		puts ("::MSG::[ANDROID] STARTING TEST @#{s1}")
-		
+		s.encode("Shift_JIS")
+		puts "::MSG::[ANDROID] STARTING TEST @#{s}"
+
 		$totalTest = $totalTest + 1
 
 		# Apps startup checking
@@ -113,7 +113,10 @@ class Login
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @ログイン"
+		s = "ログイン"
+		s.encode("Shift_JIS")
+		puts "::MSG::[iOS] STARTING TEST @#{s}"
+
 		$totalTest = $totalTest + 1
 
 		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
