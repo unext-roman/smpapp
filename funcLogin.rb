@@ -120,10 +120,14 @@ class Login
 		$totalTest = $totalTest + 1
 
 		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-		client.sleep(2000)
+		client.sleep(2000)		
 		s2 = "設定・サポート"
 		s2.encode!("Shift_JIS")
-		client.click("NATIVE", "xpath=//*[@text='#{s2}']", 0, 1)
+		begin
+			client.click("NATIVE", "xpath=//*[@text='#{s2}']", 0, 1)
+		rescue Exception => e
+			$errMsg = "::MSG:: Exception occurrred fwhile text encoding"
+		end			
 		client.sleep(2000)
 
 		s3 = "ログアウト"
