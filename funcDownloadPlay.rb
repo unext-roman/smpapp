@@ -45,7 +45,7 @@ class DownlaodPlay
 		client.click("NATIVE", "text=ホーム", 0, 1)
 	
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc11 = ($obj_dwnpl.testDownloadPlay(client))
+		$tcEnd = ($obj_logot.testLogout(client))
 
 		andrt11 = RegressionTestInfo.new
 		andrt11.execution_time = $obj_utili.getTime
@@ -209,7 +209,7 @@ class DownlaodPlay
 		client.sleep(2000)
 	
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc12 = ($obj_epsdp.testSVODEpisodePlay(client))	
+		$tcEnd = ($obj_logot.ios_testLogout(client))	
 
 		iosrt11 = RegressionTestInfo.new
 		iosrt11.execution_time = $obj_utili.getTime

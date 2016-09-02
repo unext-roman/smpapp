@@ -20,7 +20,7 @@ class PurchasePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @購入済みから再生"
+		puts "::MSG::[ANDROID] STARTING TEST PURCHASE PLAY@購入済みから再生"
 
 		$totalTest = $totalTest + 1
 
@@ -127,7 +127,7 @@ class PurchasePlay
 		
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @購入済みから再生"
+		puts "::MSG::[iOS] STARTING TEST PURCHASE PLAY@購入済みから再生"
 
 		$totalTest = $totalTest + 1 
 		

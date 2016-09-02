@@ -6,7 +6,7 @@
 # バージョン : v1.0
 #############################################################################
 
-#/Users/admin/Desktop/auto_scripts
+#/Users/admin/Desktop/github_edited
 
 #loading android libs
 load "Client.rb"
@@ -38,7 +38,6 @@ load "funcRelease.rb"
 	$b_no = ARGV[6]
 
 	# Create client using defaults or using hostname and port number
-	#client = Mobile::Client.new('127.0.0.1', 8889, true)
 	client = Mobile::Client.new("#{$host}","#{$port}", true)
 	client.setProjectBaseDirectory("/Users/admin/workspace/PR_Regression")
 
@@ -79,8 +78,6 @@ load "funcRelease.rb"
 		puts "*			  v 1.0														"
 		puts "**********************************************************************"
 
-		#puts "Enter how many TCs to be executed?"
-		#$tcs = gets
 	end
 
 	def startTest(client, dtype, dname, logid, passw)

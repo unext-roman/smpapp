@@ -20,7 +20,7 @@ class BuyPPV
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @PPV作品の購入"
+		puts "::MSG::[ANDROID] STARTING TEST BUYING PPV@PPV作品の購入"
 
 		$totalTest = $totalTest + 1
 		flag = false
@@ -204,7 +204,7 @@ class BuyPPV
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @PPV作品の購入"
+		puts "::MSG::[iOS] STARTING TEST BUYING PPV@PPV作品の購入"
 
 		$totalTest = $totalTest + 1 
 

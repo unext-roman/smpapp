@@ -20,7 +20,7 @@ class SinglePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @単話見放題再生"
+		puts "::MSG::[ANDROID] STARTING TEST SVOD MOVIE PLAY@単話見放題再生"
 
 		$totalTest = $totalTest + 1 
 		
@@ -141,7 +141,7 @@ class SinglePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @単話見放題再生"
+		puts "::MSG::[iOS] STARTING TEST SVOD MOVIE PLAY@単話見放題再生"
 
 		$totalTest = $totalTest + 1 
 

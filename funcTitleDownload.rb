@@ -22,7 +22,7 @@ class TitleDownload
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @単話ダウンロード機能"
+		puts "::MSG::[ANDROID] STARTING TEST SVOD DOWNLOAD@単話ダウンロード機能"
 
 		$totalTest = $totalTest + 1
 
@@ -48,7 +48,7 @@ class TitleDownload
 		client.sleep(2000)
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc11 = ($obj_dwnpl.testDownloadPlay(client))		
+		$tc12 = ($obj_epsdp.testSVODEpisodePlay(client))		
 
 		andrt10 = RegressionTestInfo.new
 		andrt10.execution_time = $obj_utili.getTime
@@ -196,7 +196,7 @@ class TitleDownload
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @単話ダウンロード機能"
+		puts "::MSG::[iOS] STARTING TEST SVOD DOWNLOAD@単話ダウンロード機能"
 
 		$totalTest = $totalTest + 1
 
@@ -222,7 +222,7 @@ class TitleDownload
 		client.sleep(1000)
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc12 = ($obj_epsdp.testSVODEpisodePlay(client))		
+		$tc12 = ($obj_epsdp.ios_testSVODEpisodePlay(client))		
 
 		iosrt10 = RegressionTestInfo.new
 		iosrt10.execution_time = $obj_utili.getTime

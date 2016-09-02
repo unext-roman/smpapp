@@ -20,7 +20,7 @@ class ContinuePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @つづきを再生"
+		puts "::MSG::[ANDROID] STARTING TEST CONTINUE PLAY@つづきを再生"
 
 		$totalTest = $totalTest + 1 
 
@@ -128,7 +128,7 @@ class ContinuePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @つづきを再生"
+		puts "::MSG::[iOS] STARTING TEST CONTINUE PLAY@つづきを再生"
 
 		$totalTest = $totalTest + 1 
 

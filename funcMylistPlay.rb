@@ -21,7 +21,7 @@ class MyList
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @マイリストから再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST MYLIST PLAY@マイリストから再生機能"
 
 		$totalTest = $totalTest + 1
 		client.sleep(2000)
@@ -137,7 +137,7 @@ class MyList
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @マイリストから再生機能"
+		puts "::MSG::[iOS] STARTING TEST MYLIST PLAY@マイリストから再生機能"
 
 		$totalTest = $totalTest + 1
 
@@ -153,7 +153,7 @@ class MyList
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc10 = ($obj_dwnld.testSingleDownload(client))		
+		$tc10 = ($obj_dwnld.ios_testSingleDownload(client))		
 
 		iosrt9 = RegressionTestInfo.new
 		iosrt9.execution_time = $obj_utili.getTime

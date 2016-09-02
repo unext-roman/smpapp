@@ -25,7 +25,7 @@ class Login
 		puts ""
 		s = "ログイン"
 		s.encode("Shift_JIS")
-		puts "::MSG::[ANDROID] STARTING TEST @#{s}"
+		puts "::MSG::[ANDROID] STARTING TEST LOGIN@#{s}"
 
 		$totalTest = $totalTest + 1
 
@@ -115,7 +115,7 @@ class Login
 		puts ""
 		s1 = "ログイン"
 		s1.encode!("Shift_JIS")
-		puts "::MSG::[iOS] STARTING TEST @#{s1}"
+		puts "::MSG::[iOS] STARTING TEST LOGIN@#{s1}"
 
 		$totalTest = $totalTest + 1
 

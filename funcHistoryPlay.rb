@@ -20,7 +20,7 @@ class HistoryPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @視聴履歴から再生"
+		puts "::MSG::[ANDROID] STARTING TEST HISTORY PLAY@視聴履歴から再生"
 
 		$totalTest = $totalTest + 1 
 		
@@ -199,7 +199,7 @@ class HistoryPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @視聴履歴から再生"
+		puts "::MSG::[iOS] STARTING TEST HISTORY PLAY@視聴履歴から再生"
 
 		$totalTest = $totalTest + 1 
 		
