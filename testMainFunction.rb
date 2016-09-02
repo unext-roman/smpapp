@@ -26,7 +26,6 @@ load "funcSendToDB.rb"
 load "funcTitleDownload.rb"
 load "funcDownloadPlay.rb"
 load "funcEpisodePlay.rb"
-load "funcKeySearch.rb"
 load "setupHost.rb"
 load "funcRelease.rb"
 
@@ -54,7 +53,6 @@ load "funcRelease.rb"
 	$obj_dwnld = TitleDownload.new
 	$obj_dwnpl = DownlaodPlay.new
 	$obj_epsdp = EpisodePlay.new
-	$obj_keysh = KeywordSearch.new
 	$obj_logot = Logout.new
 	$obj_utili = Utility.new
 	$obj_snddb = SendResultsToDB.new
