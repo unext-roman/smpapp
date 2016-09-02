@@ -1,11 +1,11 @@
 #!/usr/bin/ruby
 
 #############################################################################
-# èª²é¡Œ : ã‚¹ãƒãƒ›ã‚¢ãƒ—ãƒªå‘ã‘å›å¸°ãƒ†ã‚¹ãƒˆã®è‡ªå‹•åŒ–
-# ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« : ãƒ­ã‚«ãƒ«æ©Ÿèƒ½ãƒ»ãƒ­ã‚°ã‚¤ãƒ³ã™ã‚‹æ©Ÿèƒ½
-# é–‹ç™ºè€… : Roman Ahmed
-# ã‚³ãƒ”ãƒ¼ãƒ©ã‚¤ãƒˆ : U-NEXT Co. Ltd.
-# ãƒãƒ¼ã‚¸ãƒ§ãƒ³ : v1.0
+# ‰Û‘è : ƒXƒ}ƒzƒAƒvƒŠŒü‚¯‰ñ‹AƒeƒXƒg‚Ì©“®‰»
+# ƒ‚ƒWƒ…[ƒ‹ : ƒƒJƒ‹‹@”\EƒƒOƒCƒ“‚·‚é‹@”\
+# ŠJ”­Ò : Roman Ahmed
+# ƒRƒs[ƒ‰ƒCƒg : U-NEXT Co. Ltd.
+# ƒo[ƒWƒ‡ƒ“ : v1.0
 #############################################################################
 
 class Login
@@ -22,51 +22,51 @@ class Login
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @ãƒ­ã‚°ã‚¤ãƒ³"
+		puts "::MSG::[ANDROID] STARTING TEST @ƒƒOƒCƒ“"
 		$totalTest = $totalTest + 1
 
 		# Apps startup checking
-		if client.isElementFound("NATIVE", "text=ã”åˆ©ç”¨é–‹å§‹ã®å‰ã«")
+		if client.isElementFound("NATIVE", "text=‚²—˜—pŠJn‚Ì‘O‚É")
 			puts ($obj_strtp.testStartupCheck(client))
 		else
 			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='ä¸Šã¸ç§»å‹•']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='ã‚ÖˆÚ“®']", 0, 1)
 			client.sleep(1000)
-			client.click("NATIVE", "text=è¨­å®šãƒ»ã‚µãƒãƒ¼ãƒˆ", 0, 1)
+			client.click("NATIVE", "text=İ’èEƒTƒ|[ƒg", 0, 1)
 			client.sleep(2000)
 
-			if client.isElementFound("NATIVE", "text=ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ", 0)
-				$comment = "::MSG:: æ—¢ã«ãƒ­ã‚°ã‚¤ãƒ³æ¸ˆã¿!!! çµæœã‚’OKã«ã™ã‚‹"
+			if client.isElementFound("NATIVE", "text=ƒƒOƒAƒEƒg", 0)
+				$comment = "::MSG:: Šù‚ÉƒƒOƒCƒ“Ï‚İ!!! Œ‹‰Ê‚ğOK‚É‚·‚é"
 				$finishedTest = $finishedTest + 1
 				##$tc3 = ($obj_snglp.testSinglePlay(client))
 			else
-				client.elementListSelect("", "text=ãƒ­ã‚°ã‚¤ãƒ³", 0, false)
-				client.click("NATIVE", "text=ãƒ­ã‚°ã‚¤ãƒ³", 0, 1)
+				client.elementListSelect("", "text=ƒƒOƒCƒ“", 0, false)
+				client.click("NATIVE", "text=ƒƒOƒCƒ“", 0, 1)
 				client.click("NATIVE", "id=id_edit_text", 0, 1)
 				client.sendText(user)
 				client.click("NATIVE", "id=password_edit_text", 0, 1)
 				client.sendText(pass)
 				client.closeKeyboard()
-				if client.waitForElement("NATIVE", "text=ãƒ­ã‚°ã‚¤ãƒ³", 0, 10000)
+				if client.waitForElement("NATIVE", "text=ƒƒOƒCƒ“", 0, 10000)
 	    			# If statement
 				end
 				client.click("NATIVE", "id=login_button", 0, 1)
 				client.sleep(2000)
 
 				begin
-					if client.isElementFound("NATIVE", "xpath=//*[@text='ãŠå®¢æ§˜æƒ…å ±ã®ç™»éŒ²']")
+					if client.isElementFound("NATIVE", "xpath=//*[@text='‚¨‹q—lî•ñ‚Ì“o˜^']")
 						client.sleep(1000)
-						client.click("NATIVE", "xpath=//*[@contentDescription='ä¸Šã¸ç§»å‹•']")
+						client.click("NATIVE", "xpath=//*[@contentDescription='ã‚ÖˆÚ“®']")
 					end
-					if client.isElementFound("NATIVE", "text=ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ", 0)
-						puts "::MSG:: ãƒ­ã‚°ã‚¤ãƒ³æˆåŠŸã—ã¾ã—ãŸã€ŒLogin successfulã€"
+					if client.isElementFound("NATIVE", "text=ƒƒOƒAƒEƒg", 0)
+						puts "::MSG:: ƒƒOƒCƒ“¬Œ÷‚µ‚Ü‚µ‚½uLogin successfulv"
 						$result = $resultOK
 						$passCount = $passCount + 1
 						$finishedTest = $finishedTest + 1				
 						puts "Result is -> " + $result
 						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"						
 					else
-						puts "::MSG:: ãƒ­ã‚°ã‚¤ãƒ³å¤±æ•—ã—ã¾ã—ãŸã€ŒWrong credentials, Test abortedã€"
+						puts "::MSG:: ƒƒOƒCƒ“¸”s‚µ‚Ü‚µ‚½uWrong credentials, Test abortedv"
 						$result = $resultNG
 						$failCount = $failCount + 1
 						$finishedTest = $finishedTest + 1
@@ -86,7 +86,7 @@ class Login
 		andrt2.execution_time = $obj_utili.getTime
 		andrt2.test_device = "ANDROID" 
 		andrt2.testcase_num = 2
-		andrt2.testcase_summary = "ãƒ­ã‚°ã‚¤ãƒ³"
+		andrt2.testcase_summary = "ƒƒOƒCƒ“"
 		andrt2.test_result = $result
 		andrt2.capture_url = $captureURL
 		andrt2.err_message = $errMsgLogin
@@ -109,44 +109,44 @@ class Login
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @ãƒ­ã‚°ã‚¤ãƒ³"
+		puts "::MSG::[iOS] STARTING TEST @ƒƒOƒCƒ“"
 		$totalTest = $totalTest + 1
 
 		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
 		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@text='è¨­å®šãƒ»ã‚µãƒãƒ¼ãƒˆ']", 0, 1)
+		client.click("NATIVE", "xpath=//*[@text='İ’èEƒTƒ|[ƒg']", 0, 1)
 		client.sleep(2000)
 
-		if client.isElementFound("NATIVE", "text=ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ", 0)
-			$comment = "::MSG:: æ—¢ã«ãƒ­ã‚°ã‚¤ãƒ³æ¸ˆã¿!!! çµæœã‚’OKã«ã™ã‚‹"
+		if client.isElementFound("NATIVE", "text=ƒƒOƒAƒEƒg", 0)
+			$comment = "::MSG:: Šù‚ÉƒƒOƒCƒ“Ï‚İ!!! Œ‹‰Ê‚ğOK‚É‚·‚é"
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='ãƒ›ãƒ¼ãƒ ']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ƒz[ƒ€']", 0, 1)
 			client.sleep(2000)
 		else
-			client.click("NATIVE", "xpath=//*[@accessibilityLabel='ãƒ­ã‚°ã‚¤ãƒ³']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@accessibilityLabel='ƒƒOƒCƒ“']", 0, 1)
 			if client.waitForElement("NATIVE", "class=UITextField", 0, 10000)
 	   			# If statement
 			end
-			client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='ãƒ­ã‚°ã‚¤ãƒ³ID']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='ƒƒOƒCƒ“ID']]", 0, 1)
 			client.sendText(user)
-			client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='ƒpƒXƒ[ƒh']]", 0, 1)
 			client.sendText(pass)
 			client.closeKeyboard()
 			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@text='ãƒ­ã‚°ã‚¤ãƒ³' and @class='UIButtonLabel']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ƒƒOƒCƒ“' and @class='UIButtonLabel']", 0, 1)
 			client.sleep(2000)
 
 			begin
-				if client.isElementFound("NATIVE", "text=ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ", 0)
-					puts "::MSG:: ãƒ­ã‚°ã‚¤ãƒ³æˆåŠŸã—ã¾ã—ãŸã€ŒLogin successfulã€"
+				if client.isElementFound("NATIVE", "text=ƒƒOƒAƒEƒg", 0)
+					puts "::MSG:: ƒƒOƒCƒ“¬Œ÷‚µ‚Ü‚µ‚½uLogin successfulv"
 					$result = $resultOK
 					$passCount = $passCount + 1					
 					$finishedTest = $finishedTest + 1
 					puts "Result is -> " + $result
 					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"	
 				else
-					puts "::MSG:: ãƒ­ã‚°ã‚¤ãƒ³å¤±æ•—ã—ã¾ã—ãŸã€ŒWrong credentials, Test abortedã€"
+					puts "::MSG:: ƒƒOƒCƒ“¸”s‚µ‚Ü‚µ‚½uWrong credentials, Test abortedv"
 					$result = $resultNG
 					$failCount = $failCount + 1
 					$finishedTest = $finishedTest + 1
@@ -158,7 +158,7 @@ class Login
 			end
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='ãƒ›ãƒ¼ãƒ ']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ƒz[ƒ€']", 0, 1)
 			client.sleep(2000)
 		end
 
@@ -169,7 +169,7 @@ class Login
 		iosrt2.execution_time = $obj_utili.getTime
 		iosrt2.test_device = "iOS"
 		iosrt2.testcase_num = 2
-		iosrt2.testcase_summary = "ãƒ­ã‚°ã‚¤ãƒ³"
+		iosrt2.testcase_summary = "ƒƒOƒCƒ“"
 		iosrt2.test_result = $result
 		iosrt2.capture_url = $captureURL		
 		iosrt2.err_message = $errMsgLogin
