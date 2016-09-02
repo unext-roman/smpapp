@@ -25,7 +25,8 @@ class Login
 		puts ""
 		s = "ログイン"
 		s1 = s.encode("Shift_JIS")
-		puts ("::MSG::[ANDROID] STARTING TEST @#{s1}"
+		puts ("::MSG::[ANDROID] STARTING TEST @#{s1}")
+		
 		$totalTest = $totalTest + 1
 
 		# Apps startup checking
