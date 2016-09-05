@@ -128,10 +128,12 @@ class Login
 		end			
 		client.sleep(2000)
 		if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0)	
-
-			s4 = "既にログイン済み!!! 結果をOKにする"
-			s4.encode!("Shift_JIS")
-			$comment = "::MSG:: #{s4}"
+			$comment = "::MSG:: 既にログイン済み!!! 結果をOKにする"
+				$result = $resultOK
+				$passCount = $passCount + 1					
+				$finishedTest = $finishedTest + 1
+				puts "Result is -> " + $result
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"	
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
@@ -147,8 +149,7 @@ class Login
 			client.sendText(pass)
 			client.closeKeyboard()
 			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@text='ログイン' and @class='UIButtonLabel']", 0, 1)
-			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='ログイン']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ログイン' and @class='UIButtonLabel']", 0, 1)			
 			client.sleep(2000)
 
 			begin
@@ -177,7 +178,7 @@ class Login
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		#$tc3 = ($obj_snglp.ios_testSinglePlay(client))
+		$tc3 = ($obj_snglp.ios_testSinglePlay(client))
 
 		iosrt2 = RegressionTestInfo.new
 		iosrt2.execution_time = $obj_utili.getTime
