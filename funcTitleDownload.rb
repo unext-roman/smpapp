@@ -22,7 +22,7 @@ class TitleDownload
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST SVOD DOWNLOAD@単話ダウンロード機能"
+		puts "::MSG::[ANDROID] STARTING TEST @単話ダウンロード機能"
 
 		$totalTest = $totalTest + 1
 
@@ -48,7 +48,7 @@ class TitleDownload
 		client.sleep(2000)
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc12 = ($obj_epsdp.testSVODEpisodePlay(client))		
+		tc12 = ($obj_epsdp.testSVODEpisodePlay(client))	
 
 		andrt10 = RegressionTestInfo.new
 		andrt10.execution_time = $obj_utili.getTime
@@ -196,7 +196,7 @@ class TitleDownload
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST SVOD DOWNLOAD@単話ダウンロード機能"
+		puts "::MSG::[iOS] STARTING TEST SINGLE DOWNLOAD@単話ダウンロード機能"
 
 		$totalTest = $totalTest + 1
 
@@ -276,17 +276,17 @@ class TitleDownload
 		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
 		client.sleep(2000)
 		client.click("NATIVE", "xpath=//*[@class='UITableView' and ./*[./*[@class='UNextMobile_Protected.SpecialBlockCell']]]", 0, 1)
-		client.sleep(2000)
+		client.sleep(3000)
 		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
-		client.sleep(2000)
+		client.sleep(3000)
 		client.click("NATIVE", "xpath=//*[@text='キッズ一覧']", 0, 1)
-		client.sleep(2000)
+		client.sleep(3000)
 		client.click("NATIVE", "xpath=//*[@accessibilityLabel='えほん']", 0, 1)
-		client.sleep(2000)
+		client.sleep(3000)
 		client.click("NATIVE", "accessibilityLabel=見放題", 0, 1)
-		client.sleep(2000)
+		client.sleep(3000)
 		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.ThumbPlayButton' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
-		client.sleep(2000)
+		client.sleep(3000)
 
 		begin
 			if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNIndicatorView' and ./parent::*[@class='UNextMobile_Protected.PlayIndicator' and ./parent::*[@class='UITableViewCellContentView']]]", 0, 10000)
