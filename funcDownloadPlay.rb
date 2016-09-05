@@ -255,7 +255,7 @@ class DownlaodPlay
 			puts "::MSG:: Download items available"
 			DownlaodPlay.new.ios_downLoadProgress(client)
 			client.sleep(2000)
-			if $dloading == false
+			if $dloading == true
 				puts "::MSG:: Can not perform download playing, execute later"
 			else
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
