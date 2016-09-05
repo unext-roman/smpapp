@@ -21,7 +21,7 @@ class MyList
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST MYLIST PLAY@マイリストから再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST @マイリストから再生機能"
 
 		$totalTest = $totalTest + 1
 		client.sleep(2000)
@@ -137,7 +137,7 @@ class MyList
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST MYLIST PLAY@マイリストから再生機能"
+		puts "::MSG::[iOS] STARTING TEST @マイリストから再生機能"
 
 		$totalTest = $totalTest + 1
 
@@ -184,7 +184,7 @@ class MyList
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "xpath=//*[@accessibilityLabel='Back' and ./preceding-sibling::*[./*[@text='マイリスト']]]", 0, 1)				
+				client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[./*[@text='マイリスト']]]", 0, 1)				
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 			end

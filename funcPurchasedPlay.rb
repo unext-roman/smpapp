@@ -20,7 +20,7 @@ class PurchasePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST PURCHASE PLAY@購入済みから再生"
+		puts "::MSG::[ANDROID] STARTING TEST @購入済みから再生"
 
 		$totalTest = $totalTest + 1
 
@@ -127,7 +127,7 @@ class PurchasePlay
 		
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST PURCHASE PLAY@購入済みから再生"
+		puts "::MSG::[iOS] STARTING TEST @購入済みから再生"
 
 		$totalTest = $totalTest + 1 
 		
@@ -189,7 +189,7 @@ class PurchasePlay
 		client.sleep(1000)
 		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
 		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@accessibilityLabel='Back' and ./preceding-sibling::*[./*[@text='購入済み']]]", 0, 1)
+		client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[./*[@text='購入済み']]]", 0, 1)
 		client.sleep(2000)
 		client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 	end
