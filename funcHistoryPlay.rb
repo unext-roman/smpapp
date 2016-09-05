@@ -20,7 +20,7 @@ class HistoryPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST HISTORY PLAY@視聴履歴から再生"
+		puts "::MSG::[ANDROID] STARTING TEST @視聴履歴から再生"
 
 		$totalTest = $totalTest + 1 
 		
@@ -199,7 +199,7 @@ class HistoryPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST HISTORY PLAY@視聴履歴から再生"
+		puts "::MSG::[iOS] STARTING TEST @視聴履歴から再生"
 
 		$totalTest = $totalTest + 1 
 		
@@ -256,7 +256,8 @@ class HistoryPlay
 			end
 		end
 
-		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
+		#client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
+		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @width>0 and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
 		client.sleep(2000)
 		client.click("NATIVE", "text=ホーム", 0, 1)
 	end
