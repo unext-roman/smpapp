@@ -22,7 +22,7 @@ class EpisodePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST SVOD EPISODE PLAY@見放題エピソード再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST @見放題エピソード再生機能"
 
 		$totalTest = $totalTest + 1
 
@@ -112,7 +112,7 @@ class EpisodePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @見放題エピソード再生機能"
+		puts "::MSG::[iOS] STARTING TEST SVOD EPISODE PLAY@見放題エピソード再生機能"
 
 		$totalTest = $totalTest + 1
 		client.sleep(2000)
@@ -141,7 +141,7 @@ class EpisodePlay
 		client.sleep(2000)
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		tc11 = ($obj_dwnpl.ios_testDownloadPlay(client))	
+		tc11 = ($obj_dwnpl.ios_testDownloadPlay(client))
 
 		iosrt12 = RegressionTestInfo.new
 		iosrt12.execution_time = $obj_utili.getTime

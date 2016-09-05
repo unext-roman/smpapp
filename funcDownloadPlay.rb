@@ -189,7 +189,7 @@ class DownlaodPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @単話ダウンロード再生機能"
+		puts "::MSG::[iOS] STARTING TEST DOWNLOAD PLAY@単話ダウンロード再生機能"
 
 		$totalTest = $totalTest + 1
 

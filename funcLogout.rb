@@ -86,7 +86,7 @@ class Logout
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @ログアウト"
+		puts "::MSG::[iOS] STARTING TEST LOGOUT@ログアウト"
 
 		$totalTest = $totalTest + 1
 
@@ -125,7 +125,7 @@ class Logout
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		
+
 		iosrt4 = RegressionTestInfo.new
 		iosrt4.execution_time = $obj_utili.getTime		
 		iosrt4.test_device = "iOS"
