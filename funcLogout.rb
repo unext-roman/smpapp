@@ -124,6 +124,8 @@ class Logout
 			$errMsgLogot = "::MSG:: Exception occurrred, could not logout..: " + e.message	
 		end
 
+		puts ($obj_utili.calculateRatio($finishedTest))
+		
 		iosrt4 = RegressionTestInfo.new
 		iosrt4.execution_time = $obj_utili.getTime		
 		iosrt4.test_device = "iOS"
