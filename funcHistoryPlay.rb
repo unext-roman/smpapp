@@ -199,7 +199,7 @@ class HistoryPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @視聴履歴から再生"
+		puts "::MSG::[iOS] STARTING TEST PLAYING FROM HISTORY@視聴履歴から再生"
 
 		$totalTest = $totalTest + 1 
 		

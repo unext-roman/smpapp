@@ -137,7 +137,7 @@ class MyList
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @マイリストから再生機能"
+		puts "::MSG::[iOS] STARTING TEST PLAYING FROM MYLIST@マイリストから再生機能"
 
 		$totalTest = $totalTest + 1
 
