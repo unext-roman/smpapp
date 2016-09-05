@@ -252,7 +252,7 @@ class BuyPPV
 							str3 = str2.scan(/\d+/).first						
 							if str3.to_i > 0
 								puts "::MSG:: uCoinが足りない「Not enough uCoin」!!!"
-								client.click("NATIVE", "xpath=//*[@accessibilityLabel='Back' and ./preceding-sibling::*[@accessibilityLabel='レンタル / 購入']]", 0, 1)
+								client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='レンタル / 購入']]", 0, 1)
 								puts "::MSG:: 前提条件が合っていません、U-Nextポイントをチャージしてから再度実行して下さい「Precondition does not meet! Charge U-Next point and test again later」"
 								client.sleep(5000)
 								break
@@ -286,7 +286,7 @@ class BuyPPV
 				end
 			end
 		rescue Exception => e
-			$errMsgBuypv = "::MSG:: Exception occurrred " + e.message	
+			$errMsgBuypv = "::MSG:: Exception occurrred while PPV buying" + e.message	
 		end
 
 		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
