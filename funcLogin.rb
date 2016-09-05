@@ -42,7 +42,6 @@ class Login
 			if client.isElementFound("NATIVE", "text=ログアウト", 0)
 				$comment = "::MSG:: 既にログイン済み!!! 結果をOKにする"
 				$finishedTest = $finishedTest + 1
-				##$tc3 = ($obj_snglp.testSinglePlay(client))
 			else
 				client.elementListSelect("", "text=ログイン", 0, false)
 				client.click("NATIVE", "text=ログイン", 0, 1)
@@ -84,7 +83,7 @@ class Login
 		end
 		
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc3 = ($obj_snglp.testSinglePlay(client))
+		#$tc3 = ($obj_snglp.testSinglePlay(client))
 
 		andrt2 = RegressionTestInfo.new
 		andrt2.execution_time = $obj_utili.getTime
@@ -121,46 +120,39 @@ class Login
 
 		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
 		client.sleep(2000)		
-		s2 = "設定・サポート"
-		s2.encode("iso-8859-1").force_encoding("utf-8", "Windows-1252")
+
 		begin
-			client.click("NATIVE", "xpath=//*[@text='#{s2}']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='設定・サポート']", 0, 1)
 		rescue Exception => e
 			$errMsg = "::MSG:: Exception occurrred fwhile text encoding"
 		end			
 		client.sleep(2000)
-
-		s3 = "ログアウト"
-		s3.encode!("Shift_JIS")		
-		if client.isElementFound("NATIVE", "text=#{s3}", 0)
+		if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0)	
 
 			s4 = "既にログイン済み!!! 結果をOKにする"
 			s4.encode!("Shift_JIS")
 			$comment = "::MSG:: #{s4}"
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
 			client.sleep(2000)
-			s5 = "ホーム"
-			s5.encode!("Shift_JIS")			
-			client.click("NATIVE", "xpath=//*[@text='#{s5}']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 			client.sleep(2000)
 		else
-			client.click("NATIVE", "xpath=//*[@accessibilityLabel='#{s1}']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@accessibilityLabel='ログイン']", 0, 1)
 			if client.waitForElement("NATIVE", "class=UITextField", 0, 10000)
 	   			# If statement
 			end
-			client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='#{s1}ID']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='ログインID']]", 0, 1)
 			client.sendText(user)
-			s6 = "パスワード"
-			s6.encode!("Shift_JIS")
-			client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='#{s6}']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='パスワード']]", 0, 1)
 			client.sendText(pass)
 			client.closeKeyboard()
 			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@text='#{s1}' and @class='UIButtonLabel']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ログイン' and @class='UIButtonLabel']", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='ログイン']]", 0, 1)
 			client.sleep(2000)
 
 			begin
-				if client.isElementFound("NATIVE", "text=#{s3}", 0)
+				if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0)
 					puts "::MSG:: ログイン成功しました「Login successful」"
 					$result = $resultOK
 					$passCount = $passCount + 1					
@@ -180,18 +172,18 @@ class Login
 			end
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='#{s5}']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 			client.sleep(2000)
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc3 = ($obj_snglp.ios_testSinglePlay(client))
+		#$tc3 = ($obj_snglp.ios_testSinglePlay(client))
 
 		iosrt2 = RegressionTestInfo.new
 		iosrt2.execution_time = $obj_utili.getTime
 		iosrt2.test_device = "iOS"
 		iosrt2.testcase_num = 2
-		iosrt2.testcase_summary = "#{s1}"
+		iosrt2.testcase_summary = "ログイン"
 		iosrt2.test_result = $result
 		iosrt2.capture_url = $captureURL		
 		iosrt2.err_message = $errMsgLogin
