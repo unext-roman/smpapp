@@ -122,7 +122,7 @@ class Login
 		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
 		client.sleep(2000)		
 		s2 = "設定・サポート"
-		s2.encode!("Shift_JIS")
+		s2.encode("iso-8859-1").force_encoding("utf-8", "Windows-1252")
 		begin
 			client.click("NATIVE", "xpath=//*[@text='#{s2}']", 0, 1)
 		rescue Exception => e
