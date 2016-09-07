@@ -20,7 +20,6 @@ class Utility
 
 	def initialize
 		@CONFIG_FILE_PATH = "C:\\Jenkins\\workspace\\U-Next_SMP_App_Test\\input.txt"
-		#@CONFIG_FILE_PATH = "C:\\Jenkins\\workspace\\U-Next_SMP_App_Test\\input.txt"
 		#@CONFIG_FILE_PATH = "/Users/admin/Desktop/auto_scripts/input.txt"
 		@key_progress = "progress"
 	end
