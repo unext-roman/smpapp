@@ -164,8 +164,8 @@ class EpisodePlay
 		end
 		client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 1)
 		client.sleep(2000)
-		client.swipe2("Down", 300, 2500)
-		client.sleep(2000)
+		client.swipe2("Down", 1000, 2000)
+		client.sleep(3000)
 		begin
 			if client.isElementFound("NATIVE", "xpath=//*[@text='エピソードを選択']")
 				#client.elementListSelect("", "text=エピソードを選択", 0, false)
