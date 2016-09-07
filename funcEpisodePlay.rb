@@ -131,6 +131,7 @@ class EpisodePlay
 			EpisodePlay.new.ios_getEpisodeToPlay(client)
 		end
 
+		client.sleep(2000)
 		client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='エピソード']]", 0, 1)
 		client.sleep(2000)
 		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
