@@ -15,7 +15,7 @@ class Finish
 	####################################################
 
 	def testEnd(client)
-		#client.generateReport2(false);
+		puts "Test Finished, Releasing Client."
 		client.releaseClient();
 	end
 end

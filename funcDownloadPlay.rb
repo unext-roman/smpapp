@@ -210,7 +210,6 @@ class DownlaodPlay
 		client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 	
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tcEnd = ($obj_logot.ios_testLogout(client))	
 
 		iosrt11 = RegressionTestInfo.new
 		iosrt11.execution_time = $obj_utili.getTime
@@ -223,6 +222,8 @@ class DownlaodPlay
 		iosrt11.comment = ""
 
 		return iosrt11
+
+		$tcEnd = ($obj_logot.ios_testLogout(client))	
 	end
 
 	####################################################
