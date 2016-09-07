@@ -19,7 +19,7 @@ class Utility
 	attr_accessor :progress, :key_progress
 
 	def initialize
-		@CONFIG_FILE_PATH = "C:¥Jenkins¥workspace¥U_Next_SMP_App_Test¥input.txt"
+		@CONFIG_FILE_PATH = "C:\\Jenkins\\workspace\\U_Next_SMP_App_Test\\input.txt"
 		#@CONFIG_FILE_PATH = "/Users/admin/Desktop/auto_scripts/input.txt"
 		@key_progress = "progress"
 	end
