@@ -205,8 +205,9 @@ class DownlaodPlay
 		end
 
 		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
 		client.sleep(2000)
+		client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 	
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tcEnd = ($obj_logot.ios_testLogout(client))	
