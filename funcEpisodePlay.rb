@@ -164,14 +164,25 @@ class EpisodePlay
 		end
 		client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 1)
 		client.sleep(2000)
-		client.swipe2("Down", 350, 500)
+		client.swipe2("Down", 300, 2500)
 		client.sleep(2000)
 		begin
 			if client.isElementFound("NATIVE", "xpath=//*[@text='エピソードを選択']")
 				#client.elementListSelect("", "text=エピソードを選択", 0, false)
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='エピソードを選択']", 0, 1)
-				if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton' and ./following-sibling::*[@text='43分']]]]", 0, 30000)
+				if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 30000)
+	    			# If statement
+				end
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
+				client.sleep(10000)
+				HistoryPlay.new.ios_playbackCheckFromList(client)
+				HistoryPlay.new.ios_leavingPlayer(client)
+			elsif
+				client.swipe2("Up", 1000, 3000)
+				client.waitForElement("NATIVE", "xpath=//*[@text='エピソードを選択']")
+				client.click("NATIVE", "xpath=//*[@text='エピソードを選択']", 0, 1)
+				if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 30000)
 	    			# If statement
 				end
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
