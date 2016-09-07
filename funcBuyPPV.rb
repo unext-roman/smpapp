@@ -254,7 +254,11 @@ class BuyPPV
 								puts "::MSG:: uCoinが足りない「Not enough uCoin」!!!"
 								client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='レンタル / 購入']]", 0, 1)
 								puts "::MSG:: 前提条件が合っていません、U-Nextポイントをチャージしてから再度実行して下さい「Precondition does not meet! Charge U-Next point and test again later」"
-								client.sleep(5000)
+									$result = $resultNG
+									$failCount = $failCount + 1
+									$finishedTest = $finishedTest + 1
+									puts "Result is -> " + $result	
+									puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 								break
 							else
 								puts "::MSG:: [#{str3}] uCoinで購入「Buying content with [#{str3}] uCoin」"
