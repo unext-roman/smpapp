@@ -171,9 +171,7 @@ class EpisodePlay
 				#client.elementListSelect("", "text=エピソードを選択", 0, false)
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='エピソードを選択']", 0, 1)
-				if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 30000)
-	    			# If statement
-				end
+				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
 				client.sleep(10000)
 				HistoryPlay.new.ios_playbackCheckFromList(client)
