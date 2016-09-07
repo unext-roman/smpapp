@@ -19,7 +19,7 @@ class Utility
 	attr_accessor :progress, :key_progress
 
 	def initialize
-		@CONFIG_FILE_PATH = "C:\\Jenkins\\workspace\\U_Next_SMP_App_Test\\input.txt"
+		@CONFIG_FILE_PATH = "C:\\Jenkins\\workspace\\U-Next_SMP_App_Test\\input.txt"
 		#@CONFIG_FILE_PATH = "/Users/admin/Desktop/auto_scripts/input.txt"
 		@key_progress = "progress"
 	end
@@ -45,8 +45,6 @@ class Utility
 	end
 
 	def calculateRatio(finishedTC)
-
-		#puts "::MSG:: Calling calculateRatio func"
 
 		ftc_val = finishedTC
 		rat_val = (ftc_val * 100 ) / 38 #$tcs #$totalTest
