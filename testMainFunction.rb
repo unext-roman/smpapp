@@ -134,10 +134,11 @@ load "funcRelease.rb"
 			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc10.execution_time, $tc10.testcase_num, $tc10.testcase_summary, $tc10.test_result, $tc10.capture_url, $tc10.err_message, $tc10.comment))
 			#puts "RESULT:TC12"
 			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc12.execution_time, $tc12.testcase_num, $tc12.testcase_summary, $tc12.test_result, $tc12.capture_url, $tc12.err_message, $tc12.comment))
-			#puts "RESULT:TC11"
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc11.execution_time, $tc11.testcase_num, $tc11.testcase_summary, $tc11.test_result, $tc11.capture_url, $tc11.err_message, $tc11.comment))
 			#puts "RESULT:TC4"
 			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tcEnd.execution_time, $tcEnd.testcase_num, $tcEnd.testcase_summary, $tcEnd.test_result, $tcEnd.capture_url, $tcEnd.err_message, $tcEnd.comment))
+			#puts "RESULT:TC11"
+			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc11.execution_time, $tc11.testcase_num, $tc11.testcase_summary, $tc11.test_result, $tc11.capture_url, $tc11.err_message, $tc11.comment))
+
 			puts ($obj_snddb.insertIntoReleaseTestCycle($obj_utili.getTime, @build, @loginid, @dtype, @dname, $passCount, $failCount))
 		rescue Exception => e
 			$errMsgLogot = "::MSG:: Exception occurrred while sending results to DB " + e.message	
