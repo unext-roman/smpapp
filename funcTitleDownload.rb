@@ -274,7 +274,7 @@ class TitleDownload
 		client.sleep(2000)
 		#client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
-		client.sleep(2000)
+		client.sleep(3000)
 		#client.click("NATIVE", "xpath=//*[@class='UITableView' and ./*[./*[@class='UNextMobile_Protected.SpecialBlockCell']]]", 0, 1)
 		#client.sleep(3000)
 		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
