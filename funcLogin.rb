@@ -83,7 +83,7 @@ class Login
 		end
 		
 		puts ($obj_utili.calculateRatio($finishedTest))
-		#$tc3 = ($obj_snglp.testSinglePlay(client))
+		$tc3 = ($obj_snglp.testSinglePlay(client))
 
 		andrt2 = RegressionTestInfo.new
 		andrt2.execution_time = $obj_utili.getTime
@@ -171,6 +171,7 @@ class Login
 			rescue Exception => e
 				$errMsg = "::MSG:: Exception occurrred, could not continue test..: #{$e}"
 			end
+			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
