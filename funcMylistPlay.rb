@@ -17,16 +17,11 @@ class MyList
 
 	def testMylistContent(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM MYLIST@マイリストから再生機能"
-
-		andrt9 = RegressionTestInfo.new
-		andrt9.execution_time = $obj_utili.getTime
-		andrt9.test_device = "ANDROID" 
-		andrt9.testcase_num = 9
-		andrt9.testcase_summary = "マイリストから再生"
+		puts "::MSG::[ANDROID] STARTING TEST @マイリストから再生機能"
 
 		$totalTest = $totalTest + 1
 
@@ -48,6 +43,11 @@ class MyList
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc10 = ($obj_dwnld.testSingleDownload(client))		
 
+		andrt9 = RegressionTestInfo.new
+		andrt9.execution_time = $obj_utili.getTime
+		andrt9.test_device = "ANDROID" 
+		andrt9.testcase_num = 9
+		andrt9.testcase_summary = "マイリストから再生"
 		andrt9.test_result = $result
 		andrt9.capture_url = $captureURL
 		andrt9.err_message = $errMsgMlist
@@ -149,16 +149,11 @@ class MyList
 
 	def ios_testMylistContent(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")		
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM MYLIST@マイリストから再生機能"
-
-		iosrt9 = RegressionTestInfo.new
-		iosrt9.execution_time = $obj_utili.getTime
-		iosrt9.test_device = "iOS" 
-		iosrt9.testcase_num = 9
-		iosrt9.testcase_summary = "マイリストから再生"
+		puts "::MSG::[iOS] STARTING TEST PLAYING FROM MYLIST@マイリストから再生機能"
 
 		$totalTest = $totalTest + 1
 
@@ -180,6 +175,11 @@ class MyList
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc10 = ($obj_dwnld.ios_testSingleDownload(client))		
 
+		iosrt9 = RegressionTestInfo.new
+		iosrt9.execution_time = $obj_utili.getTime
+		iosrt9.test_device = "iOS" 
+		iosrt9.testcase_num = 9
+		iosrt9.testcase_summary = "マイリストから再生"
 		iosrt9.test_result = $result
 		iosrt9.capture_url = $captureURL
 		iosrt9.err_message = $errMsgMlist
