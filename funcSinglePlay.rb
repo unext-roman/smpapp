@@ -17,16 +17,11 @@ class SinglePlay
 
 	def testSinglePlay(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST SINGLE MOVIE PLAY@単話見放題再生"
-
-		andrt3 = RegressionTestInfo.new
-		andrt3.execution_time = $obj_utili.getTime
-		andrt3.test_device = "ANDROID" 
-		andrt3.testcase_num = 3
-		andrt3.testcase_summary = "単話見放題再生"
+		puts "::MSG::[ANDROID] STARTING TEST @単話見放題再生"
 
 		$totalTest = $totalTest + 1
 		
@@ -57,6 +52,11 @@ class SinglePlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc5 = ($obj_contp.testContinuePlay(client))
 
+		andrt3 = RegressionTestInfo.new
+		andrt3.execution_time = $obj_utili.getTime
+		andrt3.test_device = "ANDROID" 
+		andrt3.testcase_num = 3
+		andrt3.testcase_summary = "単話見放題再生"
 		andrt3.test_result = $result
 		andrt3.capture_url = $captureURL
 		andrt3.err_message = $errMsgTanwa
@@ -145,16 +145,11 @@ class SinglePlay
 
 	def ios_testSinglePlay(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")			
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST SINGLE MOVIE PLAY@単話見放題再生"
-
-		iosrt3 = RegressionTestInfo.new
-		iosrt3.execution_time = $obj_utili.getTime
-		iosrt3.test_device = "iOS"
-		iosrt3.testcase_num = 3
-		iosrt3.testcase_summary = "単話見放題再生"
+		puts "::MSG::[iOS] STARTING TEST @単話見放題再生"
 
 		$totalTest = $totalTest + 1 
 
@@ -179,6 +174,11 @@ class SinglePlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc5 = ($obj_contp.ios_testContinuePlay(client))
 
+		iosrt3 = RegressionTestInfo.new
+		iosrt3.execution_time = $obj_utili.getTime
+		iosrt3.test_device = "iOS"
+		iosrt3.testcase_num = 3
+		iosrt3.testcase_summary = "単話見放題再生"
 		iosrt3.test_result = $result
 		iosrt3.capture_url = $captureURL		
 		iosrt3.err_message = $errMsgTanwa
