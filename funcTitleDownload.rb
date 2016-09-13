@@ -52,7 +52,7 @@ class TitleDownload
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		tc12 = ($obj_epsdp.testSVODEpisodePlay(client))	
+		$tc12 = ($obj_epsdp.testSVODEpisodePlay(client))	
 
 		andrt10 = RegressionTestInfo.new
 		andrt10.execution_time = $obj_utili.getTime

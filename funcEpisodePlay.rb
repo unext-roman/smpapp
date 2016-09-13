@@ -150,7 +150,7 @@ class EpisodePlay
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		tc11 = ($obj_dwnpl.ios_testDownloadPlay(client))
+		$tc11 = ($obj_dwnpl.ios_testDownloadPlay(client))
 
 		iosrt12 = RegressionTestInfo.new
 		iosrt12.execution_time = $obj_utili.getTime
