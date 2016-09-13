@@ -17,7 +17,6 @@ class BuyPPV
 
 	def testBuyingPPV(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
@@ -211,7 +210,6 @@ class BuyPPV
 
 	def ios_testBuyingPPV(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
