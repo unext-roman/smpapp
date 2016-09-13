@@ -19,16 +19,11 @@ class EpisodePlay
 
 	def testSVODEpisodePlay(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST SVOD EPISODE PLAY@見放題エピソード再生機能"
-
-		andrt12 = RegressionTestInfo.new
-		andrt12.execution_time = $obj_utili.getTime
-		andrt12.test_device = "ANDROID" 
-		andrt12.testcase_num = 12
-		andrt12.testcase_summary = "見放題エピソード再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST @見放題エピソード再生機能"
 
 		$totalTest = $totalTest + 1
 
@@ -58,6 +53,11 @@ class EpisodePlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc11 = ($obj_dwnpl.testDownloadPlay(client))
 
+		andrt12 = RegressionTestInfo.new
+		andrt12.execution_time = $obj_utili.getTime
+		andrt12.test_device = "ANDROID" 
+		andrt12.testcase_num = 12
+		andrt12.testcase_summary = "見放題エピソード再生機能"
 		andrt12.test_result = $result
 		andrt12.capture_url = $captureURL
 		andrt12.err_message = $errMsgBougt
@@ -117,20 +117,15 @@ class EpisodePlay
 
 	def ios_testSVODEpisodePlay(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST SVOD EPISODE PLAY@見放題エピソード再生機能"
 
-		iosrt12 = RegressionTestInfo.new
-		iosrt12.execution_time = $obj_utili.getTime
-		iosrt12.test_device = "iOS" 
-		iosrt12.testcase_num = 12
-		iosrt12.testcase_summary = "見放題エピソード再生機能"
-
 		$totalTest = $totalTest + 1
-		client.sleep(2000)
 
+		client.sleep(2000)
 		begin
 			if client.isElementFound("NATIVE", "text=つづきを再生")
 				EpisodePlay.new.ios_getEpisodeToPlay(client)
@@ -157,9 +152,14 @@ class EpisodePlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		tc11 = ($obj_dwnpl.ios_testDownloadPlay(client))
 
+		iosrt12 = RegressionTestInfo.new
+		iosrt12.execution_time = $obj_utili.getTime
+		iosrt12.test_device = "iOS" 
+		iosrt12.testcase_num = 12
+		iosrt12.testcase_summary = "見放題エピソード再生機能"
 		iosrt12.test_result = $result
 		iosrt12.capture_url = $captureURL
-		iosrt12.err_message = $errMsgBougt
+		iosrt12.err_message = $errMsgEpsdp
 		iosrt12.comment = ""
 
 		return iosrt12
