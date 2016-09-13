@@ -20,7 +20,6 @@ class Login
 
 	def testLogin(client,user,pass)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
@@ -142,7 +141,6 @@ class Login
 
 	def ios_testLogin(client, user, pass)
 		client.sleep(2000)	
-		client.setDevice("ios_app:autoIpad")			
 
 		puts ""
 		puts ""
