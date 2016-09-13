@@ -79,8 +79,8 @@ class HistoryPlay
 					HistoryPlay.new.checkPPVorSVODorPurchased(client)			
 				end
 			end
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(2000)
+			#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			#client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "text=ホーム", 0, 1)
