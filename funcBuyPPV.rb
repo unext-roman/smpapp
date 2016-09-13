@@ -17,16 +17,11 @@ class BuyPPV
 
 	def testBuyingPPV(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST BUYING PPV@PPV作品の購入"
-
-		andrt6 = RegressionTestInfo.new
-		andrt6.execution_time = $obj_utili.getTime
-		andrt6.test_device = "ANDROID" 
-		andrt6.testcase_num = 6
-		andrt6.testcase_summary = "作品の購入"
 
 		$totalTest = $totalTest + 1
 		@flag = false
@@ -100,6 +95,11 @@ class BuyPPV
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc7 = ($obj_histp.testHistoryPlay(client))
 
+		andrt6 = RegressionTestInfo.new
+		andrt6.execution_time = $obj_utili.getTime
+		andrt6.test_device = "ANDROID" 
+		andrt6.testcase_num = 6
+		andrt6.testcase_summary = "作品の購入"
 		andrt6.test_result = $result
 		andrt6.capture_url = $captureURL
 		andrt6.err_message = $errMsgBuypv
@@ -211,16 +211,11 @@ class BuyPPV
 
 	def ios_testBuyingPPV(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST BUYING PPV@PPV作品の購入"
-
-		iosrt6 = RegressionTestInfo.new
-		iosrt6.execution_time = $obj_utili.getTime		
-		iosrt6.test_device = "iOS" 
-		iosrt6.testcase_num = 6
-		iosrt6.testcase_summary = "作品の購入"
 
 		$totalTest = $totalTest + 1 
 
@@ -317,6 +312,11 @@ class BuyPPV
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc7 = ($obj_histp.ios_testHistoryPlay(client))
 
+		iosrt6 = RegressionTestInfo.new
+		iosrt6.execution_time = $obj_utili.getTime		
+		iosrt6.test_device = "iOS" 
+		iosrt6.testcase_num = 6
+		iosrt6.testcase_summary = "作品の購入"
 		iosrt6.test_result = $result
 		iosrt6.capture_url = $captureURL		
 		iosrt6.err_message = $errMsgBuypv
