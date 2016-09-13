@@ -17,7 +17,6 @@ class MyList
 
 	def testMylistContent(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
@@ -149,7 +148,6 @@ class MyList
 
 	def ios_testMylistContent(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")		
 
 		puts ""
 		puts ""
