@@ -17,7 +17,6 @@ class HistoryPlay
 
 	def testHistoryPlay(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")	
 
 		puts ""
 		puts ""
@@ -213,7 +212,6 @@ class HistoryPlay
 
 	def ios_testHistoryPlay(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
