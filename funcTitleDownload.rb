@@ -19,16 +19,11 @@ class TitleDownload
 
 	def testSingleDownload(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST SVOD SINGLE DOWNLOAD@単話ダウンロード機能"
-
-		andrt10 = RegressionTestInfo.new
-		andrt10.execution_time = $obj_utili.getTime
-		andrt10.test_device = "ANDROID" 
-		andrt10.testcase_num = 10
-		andrt10.testcase_summary = "単話ダウンロード機能"
+		puts "::MSG::[ANDROID] STARTING TEST @単話ダウンロード機能"
 
 		$totalTest = $totalTest + 1
 
@@ -59,6 +54,11 @@ class TitleDownload
 		puts ($obj_utili.calculateRatio($finishedTest))
 		tc12 = ($obj_epsdp.testSVODEpisodePlay(client))	
 
+		andrt10 = RegressionTestInfo.new
+		andrt10.execution_time = $obj_utili.getTime
+		andrt10.test_device = "ANDROID" 
+		andrt10.testcase_num = 10
+		andrt10.testcase_summary = "単話ダウンロード機能"
 		andrt10.test_result = $result
 		andrt10.capture_url = $captureURL
 		andrt10.err_message = $errMsgDwnld
@@ -167,7 +167,7 @@ class TitleDownload
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST SVOD SINGLE DOWNLOAD@ダウンロード作品を削除機能"
+		puts "::MSG::[ANDROID] STARTING TEST @ダウンロード作品を削除機能"
 
 		begin			
 			if client.isElementFound("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])[1]")
@@ -202,16 +202,11 @@ class TitleDownload
 
 	def ios_testSingleDownload(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST SINGLE DOWNLOAD@単話ダウンロード機能"
-
-		iosrt10 = RegressionTestInfo.new
-		iosrt10.execution_time = $obj_utili.getTime
-		iosrt10.test_device = "iOS" 
-		iosrt10.testcase_num = 10
-		iosrt10.testcase_summary = "単話ダウンロード機能"
 
 		$totalTest = $totalTest + 1
 
@@ -242,6 +237,11 @@ class TitleDownload
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc12 = ($obj_epsdp.ios_testSVODEpisodePlay(client))		
 
+		iosrt10 = RegressionTestInfo.new
+		iosrt10.execution_time = $obj_utili.getTime
+		iosrt10.test_device = "iOS" 
+		iosrt10.testcase_num = 10
+		iosrt10.testcase_summary = "単話ダウンロード機能"
 		iosrt10.test_result = $result
 		iosrt10.capture_url = $captureURL
 		iosrt10.err_message = $errMsgDwnld
