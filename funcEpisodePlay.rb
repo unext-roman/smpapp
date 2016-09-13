@@ -19,7 +19,6 @@ class EpisodePlay
 
 	def testSVODEpisodePlay(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
@@ -117,7 +116,6 @@ class EpisodePlay
 
 	def ios_testSVODEpisodePlay(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
