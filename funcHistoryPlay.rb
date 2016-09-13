@@ -17,16 +17,11 @@ class HistoryPlay
 
 	def testHistoryPlay(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")	
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM HISTORY@視聴履歴から再生"
-
-		andrt7 = RegressionTestInfo.new
-		andrt7.execution_time = $obj_utili.getTime
-		andrt7.test_device = "ANDROID" 
-		andrt7.testcase_num = 7
-		andrt7.testcase_summary = "視聴履歴から再生"
+		puts "::MSG::[ANDROID] STARTING TEST @視聴履歴から再生"
 
 		$totalTest = $totalTest + 1 
 		
@@ -48,6 +43,11 @@ class HistoryPlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc8 = ($obj_prcsp.testPurchasedItemPlay(client))		
 
+		andrt7 = RegressionTestInfo.new
+		andrt7.execution_time = $obj_utili.getTime
+		andrt7.test_device = "ANDROID" 
+		andrt7.testcase_num = 7
+		andrt7.testcase_summary = "視聴履歴から再生"
 		andrt7.test_result = $result
 		andrt7.capture_url = $captureURL
 		andrt7.err_message = $errMsgHisto
@@ -213,16 +213,11 @@ class HistoryPlay
 
 	def ios_testHistoryPlay(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM HISTORY@視聴履歴から再生"
-
-		iosrt7 = RegressionTestInfo.new
-		iosrt7.execution_time = $obj_utili.getTime		
-		iosrt7.test_device = "iOS" 
-		iosrt7.testcase_num = 7
-		iosrt7.testcase_summary = "視聴履歴から再生"
+		puts "::MSG::[iOS] STARTING TEST PLAYING FROM HISTORY@視聴履歴から再生"
 
 		$totalTest = $totalTest + 1 
 		
@@ -244,6 +239,11 @@ class HistoryPlay
 		puts ($obj_utili.calculateRatio($finishedTest))		
 		$tc8 = ($obj_prcsp.ios_testPurchasedItemPlay(client))
 
+		iosrt7 = RegressionTestInfo.new
+		iosrt7.execution_time = $obj_utili.getTime		
+		iosrt7.test_device = "iOS" 
+		iosrt7.testcase_num = 7
+		iosrt7.testcase_summary = "視聴履歴から再生"
 		iosrt7.test_result = $result
 		iosrt7.capture_url = $captureURL
 		iosrt7.err_message = $errMsgHisto
