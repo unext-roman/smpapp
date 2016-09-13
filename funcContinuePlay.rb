@@ -20,37 +20,42 @@ class ContinuePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST CONTINUE PLAY@つづきを再生"
+		puts "::MSG::[ANDROID] STARTING TEST @つづきを再生"
 
-		$totalTest = $totalTest + 1 
-
-		client.sleep(2000)
-		if client.isElementFound("NATIVE", "text=つづきを再生")
-			puts "::MSG:: Now at home screen"
-			if client.waitForElement("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='download_indicator'])[3]", 0, 10000)
-				puts "::MSG:: Found playing content[0]"
-	    		client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='download_indicator'])[3]", 0, 1)
-				ContinuePlay.new.playingOperation(client)
-			end
-
-		else
-			puts "::MSG:: Not in home screen"
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(1000)
-			client.click("NATIVE", "text=ホーム", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='download_indicator'])[3]", 0, 1)
-			ContinuePlay.new.playingOperation(client)
-		end
-
-		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc6 = ($obj_buypv.testBuyingPPV(client))		
-		
 		andrt5 = RegressionTestInfo.new
 		andrt5.execution_time = $obj_utili.getTime
 		andrt5.test_device = "ANDROID" 
 		andrt5.testcase_num = 5
 		andrt5.testcase_summary = "つづきを再生"
+
+		$totalTest = $totalTest + 1 
+
+		client.sleep(2000)
+		begin
+			if client.isElementFound("NATIVE", "text=つづきを再生")
+				puts "::MSG:: Now at home screen"
+				if client.waitForElement("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='download_indicator'])[3]", 0, 10000)
+					puts "::MSG:: Found playing content[0]"
+		    		client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='download_indicator'])[3]", 0, 1)
+					ContinuePlay.new.playingOperation(client)
+				end
+
+			else
+				puts "::MSG:: Not in home screen"
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(1000)
+				client.click("NATIVE", "text=ホーム", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='download_indicator'])[3]", 0, 1)
+				ContinuePlay.new.playingOperation(client)
+			end
+		rescue Exception => e
+			$errMsgConti = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc6 = ($obj_buypv.testBuyingPPV(client))		
+		
 		andrt5.test_result = $result
 		andrt5.capture_url = $captureURL
 		andrt5.err_message = $errMsgConti
@@ -99,21 +104,28 @@ class ContinuePlay
 
 			rescue Exception => e
 				$errMsgConti = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+				$result = $resultNG
+				$failCount = $failCount + 1
+				$finishedTest = $finishedTest + 1
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 			end
-		
-		if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 120000)
-	    	# If statement
-		end
-		client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@id='play_pause_button']", 0, 1)
-
-		if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 30000)
-	    	# If statement
-		end
-		client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
-		client.sleep(500)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		puts "::MSG:: Returned to Home screen..."
+		begin
+			if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 120000)
+		    	# If statement
+			end
+			client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='play_pause_button']", 0, 1)
+			if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 30000)
+		    	# If statement
+			end
+			client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
+			client.sleep(500)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			puts "::MSG:: Returned to Home screen..."
+		rescue Exception => e
+			$errMsgConti = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end		
 	end
 
 	####################################################
@@ -128,36 +140,41 @@ class ContinuePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST CONTINUE PLAY@つづきを再生"
+		puts "::MSG::[iOS] STARTING TEST @つづきを再生"
 
-		$totalTest = $totalTest + 1 
-
-		client.sleep(2000)
-		if client.isElementFound("NATIVE", "text=つづきを再生")
-			if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayIndicator' and ./preceding-sibling::*[./*]][1]", 0, 10000)
-				puts "::MSG:: Found playing content[0]"
-	    		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./preceding-sibling::*[./*]]][1]", 0, 1)
-				ContinuePlay.new.ios_playingOperation(client)
-			end
-
-		else
-			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayIndicator' and ./preceding-sibling::*[./*]][1]", 0, 1)
-			ContinuePlay.new.ios_playingOperation(client)
-		end
-
-		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc6 = ($obj_buypv.ios_testBuyPPV(client))
-		
 		iosrt5 = RegressionTestInfo.new
 		iosrt5.execution_time = $obj_utili.getTime
 		iosrt5.test_device = "iOS" 
 		iosrt5.testcase_num = 5
 		iosrt5.testcase_summary = "つづきを再生"
+
+		$totalTest = $totalTest + 1 
+
+		client.sleep(2000)
+		begin
+			if client.isElementFound("NATIVE", "text=つづきを再生")
+				if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayIndicator' and ./preceding-sibling::*[./*]][1]", 0, 10000)
+					puts "::MSG:: Found playing content[0]"
+		    		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./preceding-sibling::*[./*]]][1]", 0, 1)
+					ContinuePlay.new.ios_playingOperation(client)
+				end
+
+			else
+				client.sleep(1000)
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+				client.sleep(1000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayIndicator' and ./preceding-sibling::*[./*]][1]", 0, 1)
+				ContinuePlay.new.ios_playingOperation(client)
+			end
+		rescue Exception => e
+			$errMsgConti = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end		
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc6 = ($obj_buypv.ios_testBuyingPPV(client))
+		
 		iosrt5.test_result = $result
 		iosrt5.capture_url = $captureURL		
 		iosrt5.err_message = $errMsgConti
@@ -206,13 +223,20 @@ class ContinuePlay
 
 		rescue Exception => e
 			$errMsgConti = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
+			puts "Result is -> " + $result	
+			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 		end
-		
-		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
-		client.sleep(2000)
-
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
-		puts "::MSG:: Returned to Home screen..."
+		begin
+			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
+			puts "::MSG:: Returned to Home screen..."
+		rescue Exception => e
+			$errMsgConti = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end			
 	end
 end

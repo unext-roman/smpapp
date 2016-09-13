@@ -10,7 +10,6 @@
 
 load "connectDB.rb"
 
-
 class SendResultsToDB < ConnectDB
 
 	attr_accessor = :cycle_key_date, :cycle_key_build_no, :cycle_key_login_id, :cycle_key_device_type, :cycle_key_device_name, :cycle_key_result_ok_count, :cycle_key_result_ng_count, :each_func_key_date, :each_func_key_test_num, :each_func_key_test_summary, :each_func_key_result,  :each_func_key_capture_url, :each_func_key_err_message, :each_func_key_comment

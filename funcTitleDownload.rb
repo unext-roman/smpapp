@@ -24,37 +24,41 @@ class TitleDownload
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST @単話ダウンロード機能"
 
-		$totalTest = $totalTest + 1
-
-		client.sleep(2000)
-		if client.isElementFound("NATIVE", "text=つづきを再生")
-			TitleDownload.new.checkDownloadStatus(client)
-		else
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(3000)
-			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
-			client.sleep(2000)
-			TitleDownload.new.checkDownloadStatus(client)
-		end
-
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)		
-		client.sleep(2000)
-
-		puts ($obj_utili.calculateRatio($finishedTest))
-		tc12 = ($obj_epsdp.testSVODEpisodePlay(client))	
-
 		andrt10 = RegressionTestInfo.new
 		andrt10.execution_time = $obj_utili.getTime
 		andrt10.test_device = "ANDROID" 
 		andrt10.testcase_num = 10
 		andrt10.testcase_summary = "単話ダウンロード機能"
+
+		$totalTest = $totalTest + 1
+
+		client.sleep(2000)
+		begin
+			if client.isElementFound("NATIVE", "text=つづきを再生")
+				TitleDownload.new.checkDownloadStatus(client)
+			else
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(3000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+				client.sleep(2000)
+				TitleDownload.new.checkDownloadStatus(client)
+			end
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)		
+			client.sleep(2000)
+		rescue Exception => e
+			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		tc12 = ($obj_epsdp.testSVODEpisodePlay(client))	
+
 		andrt10.test_result = $result
 		andrt10.capture_url = $captureURL
 		andrt10.err_message = $errMsgDwnld
@@ -71,29 +75,26 @@ class TitleDownload
 
 	def getTargetContent(client)
 
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "text=ホーム", 0, 1)
-		client.sleep(2000)
-
-		client.click("NATIVE", "xpath=//*[@id='searchButton']", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "text=キッズ一覧", 0, 1)
-		if client.waitForElement("NATIVE", "partial_text=えほん", 0, 10000)
-	    	# If statement
+		begin
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=ホーム", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@id='searchButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=キッズ一覧", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=えほん", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@id='subscription']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=(//*[@id='recycler_view' and ./following-sibling::*[@id='error_view']]/*/*/*[@id='thumbnail'])", 0, 1)
+			client.sleep(2000)
+			client.swipe2("Down", 300, 1500)
+		    client.sleep(1000)
+		rescue Exception => e
+			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
-		client.sleep(1000)
-		client.click("NATIVE", "text=えほん", 0, 1)
-		if client.waitForElement("NATIVE", "partial_text=見放題", 0, 10000)
-	    	# If statement
-		end
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=//*[@id='subscription']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=(//*[@id='recycler_view' and ./following-sibling::*[@id='error_view']]/*/*/*[@id='thumbnail'])", 0, 1)
-		client.sleep(2000)
-		client.swipe2("Down", 300, 1500)
-	    client.sleep(1000)
 	    begin
 			if client.waitForElement("NATIVE", "xpath=//*[@id='otherView' and @class='jp.co.unext.widget.DownloadCircleIndicator']", 0, 10000)
 				#If statement
@@ -102,7 +103,6 @@ class TitleDownload
 			if client.isElementFound("NATIVE", "xpath=//*[@id='alertTitle']")
 				client.click("NATIVE", "xpath=//*[@id='button1']", 0, 1)
 			end
-
 			if client.isElementFound("NATIVE", "xpath=//*[@id='download_progress']")
 				puts "::MSG:: ダウンロードを開始しました「Download has started」"
 				$result = $resultOK
@@ -119,7 +119,12 @@ class TitleDownload
 				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 			end
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred during Download operation..: " + e.message	
+			$errMsgDwnld = "::MSG:: Exception occurrred during Download operation..: " + e.message
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
+			puts "Result is -> " + $result	
+			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 		end			
 	end
 
@@ -131,19 +136,24 @@ class TitleDownload
 
 	def checkDownloadStatus(client)
 		
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		client.sleep(3000)
-		client.click("NATIVE", "xpath=//*[@text='ダウンロード済み']", 0, 1)
-		client.sleep(2000)
-		if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
-			puts "::MSG:: Empty download list"
-			TitleDownload.new.getTargetContent(client)
-			client.sleep(10000)
-		else
-			puts "::MSG:: Download items available"
-			TitleDownload.new.deleteDownloadedContents(client)
-			TitleDownload.new.getTargetContent(client)
+		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(3000)
+			client.click("NATIVE", "xpath=//*[@text='ダウンロード済み']", 0, 1)
+			client.sleep(2000)
+			if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
+				puts "::MSG:: Empty download list"
+				TitleDownload.new.getTargetContent(client)
+				client.sleep(10000)
+			else
+				puts "::MSG:: Download items available"
+				TitleDownload.new.deleteDownloadedContents(client)
+				client.sleep(2000)
+				TitleDownload.new.getTargetContent(client)
+			end
+		rescue Exception => e
+			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 	end
 
@@ -166,7 +176,6 @@ class TitleDownload
 				ditems = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])", "id")
 				cnt = ditems.length
 				puts "Current contents item is #{cnt}"
-
 				begin
 					client.sleep(3000)
 					client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*[@id='delete_button'])", 0, 1)
@@ -180,7 +189,7 @@ class TitleDownload
 				end until cnt == 0
 			end
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred at delete operation..: " + e.message	
+			$errMsgDwnld = "::MSG:: Exception occurrred while deleting downlaoded items" + e.message	
 		end
 	end
 
@@ -198,37 +207,41 @@ class TitleDownload
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST SINGLE DOWNLOAD@単話ダウンロード機能"
 
-		$totalTest = $totalTest + 1
-
-		client.sleep(2000)
-		if client.isElementFound("NATIVE", "text=つづきを再生")
-			TitleDownload.new.ios_checkDownloadStatus(client)
-		else
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
-			client.sleep(2000)
-			TitleDownload.new.ios_checkDownloadStatus(client)
-		end
-
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@class='UNextMobile_Protected.UNTitleListHeaderView']]", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@class='UIControl']", 0, 1)
-		client.sleep(1000)
-
-		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc12 = ($obj_epsdp.ios_testSVODEpisodePlay(client))		
-
 		iosrt10 = RegressionTestInfo.new
 		iosrt10.execution_time = $obj_utili.getTime
 		iosrt10.test_device = "iOS" 
 		iosrt10.testcase_num = 10
 		iosrt10.testcase_summary = "単話ダウンロード機能"
+
+		$totalTest = $totalTest + 1
+
+		client.sleep(2000)
+		begin
+			if client.isElementFound("NATIVE", "text=つづきを再生")
+				TitleDownload.new.ios_checkDownloadStatus(client)
+			else
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+				client.sleep(2000)
+				TitleDownload.new.ios_checkDownloadStatus(client)
+			end
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@class='UNextMobile_Protected.UNTitleListHeaderView']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UIControl']", 0, 1)
+			client.sleep(1000)
+		rescue Exception => e
+			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end			
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc12 = ($obj_epsdp.ios_testSVODEpisodePlay(client))		
+
 		iosrt10.test_result = $result
 		iosrt10.capture_url = $captureURL
 		iosrt10.err_message = $errMsgDwnld
@@ -245,20 +258,25 @@ class TitleDownload
 
 	def ios_checkDownloadStatus(client)
 
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@text='ダウンロード済み']", 0, 1)
-		client.sleep(2000)
-		if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
-			puts "::MSG:: Empty download list"
-			TitleDownload.new.ios_getTargetContent(client)
-			client.sleep(10000)
-		else
-			puts "::MSG:: Download items available"
-			TitleDownload.new.ios_deleteDownloadedContents(client)
-			TitleDownload.new.ios_getTargetContent(client)
-		end	
+		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='ダウンロード済み']", 0, 1)
+			client.sleep(2000)
+			if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
+				puts "::MSG:: Empty download list"
+				TitleDownload.new.ios_getTargetContent(client)
+				client.sleep(10000)
+			else
+				puts "::MSG:: Download items available"
+				TitleDownload.new.ios_deleteDownloadedContents(client)
+				client.sleep(2000)
+				TitleDownload.new.ios_getTargetContent(client)
+			end
+		rescue Exception => e
+			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end		
 	end	
 
 	####################################################
@@ -269,26 +287,23 @@ class TitleDownload
 
 	def ios_getTargetContent(client)
 		
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
-		client.sleep(2000)
-		#client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
-		client.sleep(3000)
-		#client.click("NATIVE", "xpath=//*[@class='UITableView' and ./*[./*[@class='UNextMobile_Protected.SpecialBlockCell']]]", 0, 1)
-		#client.sleep(3000)
-		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
-		client.sleep(3000)
-		client.click("NATIVE", "xpath=//*[@text='キッズ一覧']", 0, 1)
-		client.sleep(3000)
-		client.click("NATIVE", "xpath=//*[@accessibilityLabel='えほん']", 0, 1)
-		client.sleep(3000)
-		client.click("NATIVE", "accessibilityLabel=見放題", 0, 1)
-		client.sleep(3000)
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.ThumbPlayButton' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
-		client.sleep(3000)
-
 		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
+			client.sleep(3000)
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
+			client.sleep(3000)
+			client.click("NATIVE", "xpath=//*[@text='キッズ一覧']", 0, 1)
+			client.sleep(3000)
+			client.click("NATIVE", "xpath=//*[@accessibilityLabel='えほん']", 0, 1)
+			client.sleep(3000)
+			client.click("NATIVE", "accessibilityLabel=見放題", 0, 1)
+			client.sleep(3000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.ThumbPlayButton' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
+			client.sleep(3000)
+
 			if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNIndicatorView' and ./parent::*[@class='UNextMobile_Protected.PlayIndicator' and ./parent::*[@class='UITableViewCellContentView']]]", 0, 10000)
 				#If statement
 			end
@@ -319,7 +334,12 @@ class TitleDownload
 				end
 			end
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred during Download operation..: " + e.message	
+			$errMsgDwnld = "::MSG:: Exception occurrred during Download operation..: " + e.message
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
+			puts "Result is -> " + $result	
+			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 		end
 	end
 
@@ -346,7 +366,7 @@ class TitleDownload
 				client.sleep(2000)
 			end
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred at delete operation..: " + e.message	
+			$errMsgDwnld = "::MSG:: Exception occurrred while deleting downlaoded items" + e.message	
 		end		
 	end
 end

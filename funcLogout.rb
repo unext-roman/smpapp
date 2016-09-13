@@ -17,22 +17,29 @@ class Logout
 
 	def testLogout(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")		
 		
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST @ログアウト"
 
+		andrt4 = RegressionTestInfo.new
+		andrt4.execution_time = $obj_utili.getTime
+		andrt4.test_device = "ANDROID" 
+		andrt4.testcase_num = 4
+		andrt4.testcase_summary = "ログアウト"
+
 		$totalTest = $totalTest + 1
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "text=設定・サポート", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=//*[@text='ログアウト']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "id=button1", 0, 1)
 
 		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "text=設定・サポート", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@text='ログアウト']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "id=button1", 0, 1)
 			if client.isElementFound("NATIVE", "text=ログイン", 0);
 				puts "::MSG:: ログアウト成功しました「Logout sucessfull」"
 				$result = $resultOK
@@ -49,21 +56,25 @@ class Logout
 				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 			end
 		rescue Exception => e
-			$errMsgLogot = "::MSG:: Exception occurrred, could not logout..: " + e.message
+			$errMsgLogot = "::MSG:: Exception occurrred while loggin out" + e.message
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
+			puts "Result is -> " + $result	
+			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 		end	
 
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "text=ホーム", 0, 1)
+		begin			
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "text=ホーム", 0, 1)
+		rescue Exception => e
+			$errMsgLogot = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end	
 
 		puts ($obj_utili.calculateRatio($finishedTest))
 
-		andrt4 = RegressionTestInfo.new
-		andrt4.execution_time = $obj_utili.getTime
-		andrt4.test_device = "ANDROID" 
-		andrt4.testcase_num = 4
-		andrt4.testcase_summary = "ログアウト"
 		andrt4.test_result = $result
 		andrt4.capture_url = $captureURL		
 		andrt4.err_message = $errMsgLogot
@@ -71,7 +82,6 @@ class Logout
 
 		return andrt4
 
-		#puts ($obj_finis.testEnd(client))
 	end
 
 	####################################################
@@ -83,24 +93,30 @@ class Logout
 
 	def ios_testLogout(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")		
 
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST LOGOUT@ログアウト"
 
+		iosrt4 = RegressionTestInfo.new
+		iosrt4.execution_time = $obj_utili.getTime		
+		iosrt4.test_device = "iOS"
+		iosrt4.testcase_num = 4
+		iosrt4.testcase_summary = "ログアウト"
+
 		$totalTest = $totalTest + 1
 
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=//*[@text='設定・サポート']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=//*[@text='ログアウト' and @class='UIButtonLabel']", 0, 1)
-		client.sleep(2000)
-
 		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@text='設定・サポート']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@text='ログアウト' and @class='UIButtonLabel']", 0, 1)
+			client.sleep(2000)
 			if client.isElementFound("NATIVE", "text=ログイン", 0);
 				puts "::MSG:: Logout sucessfull..."
 				$result = $resultOK
@@ -126,11 +142,6 @@ class Logout
 
 		puts ($obj_utili.calculateRatio($finishedTest))
 
-		iosrt4 = RegressionTestInfo.new
-		iosrt4.execution_time = $obj_utili.getTime		
-		iosrt4.test_device = "iOS"
-		iosrt4.testcase_num = 4
-		iosrt4.testcase_summary = "ログアウト"
 		iosrt4.test_result = $result
 		iosrt4.capture_url = $captureURL		
 		iosrt4.err_message = $errMsgLogot

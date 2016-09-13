@@ -31,6 +31,9 @@
 	$errMsgMlist = ""
 	$errMsgDwnld = ""
 	$errMsgEpsdp = ""
+	$errMsgSarch = ""
+	$errMsgLnbko = ""
+	$errMsgDelet = ""
 
 
 	#class names

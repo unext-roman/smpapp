@@ -22,28 +22,32 @@ class HistoryPlay
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST @視聴履歴から再生"
 
-		$totalTest = $totalTest + 1 
-		
-		client.sleep(2000)
-
-		if client.isElementFound("NATIVE", "text=つづきを再生")
-			HistoryPlay.new.historyList(client)
-		else
-			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
-			HistoryPlay.new.historyList(client)
-		end
-
-		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc8 = ($obj_prcsp.testPurchasedItemPlay(client))		
-
 		andrt7 = RegressionTestInfo.new
 		andrt7.execution_time = $obj_utili.getTime
 		andrt7.test_device = "ANDROID" 
 		andrt7.testcase_num = 7
 		andrt7.testcase_summary = "視聴履歴から再生"
+
+		$totalTest = $totalTest + 1 
+		
+		client.sleep(2000)
+		begin
+			if client.isElementFound("NATIVE", "text=つづきを再生")
+				HistoryPlay.new.historyList(client)
+			else
+				client.sleep(1000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+				HistoryPlay.new.historyList(client)
+			end
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end
+
+		puts ($obj_utili.calculateRatio($finishedTest))
+		$tc8 = ($obj_prcsp.testPurchasedItemPlay(client))		
+
 		andrt7.test_result = $result
 		andrt7.capture_url = $captureURL
 		andrt7.err_message = $errMsgHisto
@@ -60,27 +64,29 @@ class HistoryPlay
 
 	def historyList(client)
 
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=//*[@text='視聴履歴']", 0, 1)
-		
-		if client.isElementFound("NATIVE", "xpath=//*[@text='視聴履歴']")
-			puts "::MSG:: History list opened"
+		begin
 			client.sleep(2000)
-
-			if client.isElementFound("NATIVE", "text=視聴履歴がありません")
-				puts "::MSG:: There is no item in history list!!!"
-			else
-				# Check here whether content is PPV or viewing duration expired or  SVOD
-				HistoryPlay.new.checkPPVorSVODorPurchased(client)			
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "xpath=//*[@text='視聴履歴']", 0, 1)
+			
+			if client.isElementFound("NATIVE", "xpath=//*[@text='視聴履歴']")
+				puts "::MSG:: History list opened"
+				client.sleep(2000)
+				if client.isElementFound("NATIVE", "text=視聴履歴がありません")
+					puts "::MSG:: There is no item in history list!!!"
+				else
+					HistoryPlay.new.checkPPVorSVODorPurchased(client)			
+				end
 			end
-		end
-
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "text=ホーム", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=ホーム", 0, 1)
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end			
 	end
 
 	####################################################
@@ -91,37 +97,41 @@ class HistoryPlay
 
 	def checkPPVorSVODorPurchased(client)
 
-		client.sleep(1000)
-		nolstitem = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])", "id")
-		puts "Number of image view visible in the screen:\n #{nolstitem}"
-		cnt = nolstitem.length
-		puts "Number of contents found in the list is : #{cnt}"
+		begin
+			client.sleep(1000)
+			nolstitem = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])", "id")
+			puts "Number of image view visible in the screen:\n #{nolstitem}"
+			cnt = nolstitem.length
+			puts "Number of contents found in the list is : #{cnt}"
 
-		if cnt == 1
-			client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])")
-			client.sleep(20000)
-			HistoryPlay.new.playbackCheck(client)
-			HistoryPlay.new.leavingPlayer(client)
-			client.sleep(2000)
-		else
-			for i in 1..cnt
-				client.click("NATIVE", "xpath=(//*[@id='drawerList']/*/*[@id='imageView'])[#{i}]")
-				client.sleep(1000)
-				if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
-					puts "::MSG:: Using a PPV or SVOD content for this test"
-					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+			if cnt == 1
+				client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])")
+				client.sleep(20000)
+				HistoryPlay.new.playbackCheck(client)
+				HistoryPlay.new.leavingPlayer(client)
+				client.sleep(2000)
+			else
+				for i in 1..cnt
+					client.click("NATIVE", "xpath=(//*[@id='drawerList']/*/*[@id='imageView'])[#{i}]")
 					client.sleep(1000)
-					client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])[#{i}]")
-					client.sleep(10000)
-					HistoryPlay.new.playbackCheck(client)
-					HistoryPlay.new.leavingPlayer(client)
-					client.sleep(2000)
-				else
-					i = i + 1				
-				end
-				break #for
-			end #for
-		end	
+					if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
+						puts "::MSG:: Using a PPV or SVOD content for this test"
+						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+						client.sleep(1000)
+						client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])[#{i}]")
+						client.sleep(10000)
+						HistoryPlay.new.playbackCheck(client)
+						HistoryPlay.new.leavingPlayer(client)
+						client.sleep(2000)
+					else
+						i = i + 1				
+					end
+					break #for
+				end #for
+			end
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end
 	end
 
 	####################################################
@@ -132,19 +142,22 @@ class HistoryPlay
 
 	def leavingPlayer(client)
 
-		client.sleep(5000)
-		if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 120000)
-	    	# If statement
-		end
-		client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@id='play_pause_button']", 0, 1)
-
-		if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 30000)
-	    	# If statement
-		end
-		client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
-		client.sleep(500)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+		begin
+			client.sleep(5000)
+			if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 120000)
+		    	# If statement
+			end
+			client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='play_pause_button']", 0, 1)
+			if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 30000)
+		    	# If statement
+			end
+			client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
+			client.sleep(500)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end			
 	end
 
 	####################################################
@@ -181,9 +194,13 @@ class HistoryPlay
 				puts "Result is -> " + $result	
 				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 			end
-
 		rescue Exception => e
 			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
+			puts "Result is -> " + $result	
+			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 		end
 	end
 
@@ -201,27 +218,32 @@ class HistoryPlay
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST PLAYING FROM HISTORY@視聴履歴から再生"
 
+		iosrt7 = RegressionTestInfo.new
+		iosrt7.execution_time = $obj_utili.getTime		
+		iosrt7.test_device = "iOS" 
+		iosrt7.testcase_num = 7
+		iosrt7.testcase_summary = "視聴履歴から再生"
+
 		$totalTest = $totalTest + 1 
 		
 		client.sleep(2000)
-		if client.isElementFound("NATIVE", "text=つづきを再生")
-			HistoryPlay.new.ios_historyList(client)
-		else
-			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
-			HistoryPlay.new.ios_historyList(client)
-		end
+		begin
+			if client.isElementFound("NATIVE", "text=つづきを再生")
+				HistoryPlay.new.ios_historyList(client)
+			else
+				client.sleep(1000)
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+				HistoryPlay.new.ios_historyList(client)
+			end
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))		
 		$tc8 = ($obj_prcsp.ios_testPurchasedItemPlay(client))
 
-		iosrt7 = RegressionTestInfo.new
-		iosrt7.execution_time = $obj_utili.getTime		
-		iosrt7.test_device = "ANDROID" 
-		iosrt7.testcase_num = 7
-		iosrt7.testcase_summary = "視聴履歴から再生"
 		iosrt7.test_result = $result
 		iosrt7.capture_url = $captureURL
 		iosrt7.err_message = $errMsgHisto
@@ -238,28 +260,31 @@ class HistoryPlay
 
 	def ios_historyList(client)
 
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-		client.sleep(1000)
-		client.click("NATIVE", "xpath=//*[@text='視聴履歴']", 0, 1)
-		client.sleep(2000)
-		
-		if client.isElementFound("NATIVE", "xpath=//*[@text='視聴履歴']")
-			puts "::MSG:: History list opened"
+		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='視聴履歴']", 0, 1)
 			client.sleep(2000)
 
-			if client.isElementFound("NATIVE", "text=視聴履歴がありません")
-				puts "::MSG:: There is no item in history list!!!"
-			else
-				# Check here whether content is PPV or viewing duration expired or  SVOD
-				HistoryPlay.new.ios_checkPPVorSVODorPurchased(client)			
-			end
-		end
+			if client.isElementFound("NATIVE", "xpath=//*[@text='視聴履歴']")
+				puts "::MSG:: History list opened"
+				client.sleep(2000)
 
-		#client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @width>0 and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "text=ホーム", 0, 1)
+				if client.isElementFound("NATIVE", "text=視聴履歴がありません")
+					puts "::MSG:: There is no item in history list!!!"
+				else
+					HistoryPlay.new.ios_checkPPVorSVODorPurchased(client)			
+				end
+			end
+
+			#client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @width>0 and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=ホーム", 0, 1)
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end			
 	end
 
 	####################################################
@@ -270,13 +295,13 @@ class HistoryPlay
 
 	def ios_checkPPVorSVODorPurchased(client)
 
-		client.sleep(1000)
-		nolstitem = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[./parent::*[./parent::*[./parent::*[@class='UITableViewWrapperView']]]]]]", "class")
-		puts "Number of playable content visible in the screen:\n #{nolstitem}"
-		cnt = nolstitem.length - 1
-		puts "Number of contents found in the list is : #{cnt}"
-
 		begin
+			client.sleep(1000)
+			nolstitem = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[./parent::*[./parent::*[./parent::*[@class='UITableViewWrapperView']]]]]]", "class")
+			puts "Number of playable content visible in the screen:\n #{nolstitem}"
+			cnt = nolstitem.length - 1
+			puts "Number of contents found in the list is : #{cnt}"
+
 			for i in 0..cnt
 				#client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView']", cnt, 1)
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNMovieItemCell']", i, 1)			
@@ -295,7 +320,7 @@ class HistoryPlay
 				break #for
 			end #for
 		rescue Exception => e
-			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 		end	
 	end
 
@@ -307,13 +332,16 @@ class HistoryPlay
 
 	def ios_leavingPlayer(client)
 
-		#client.sleep(000)
-		puts "::MSG:: Tapped on seekbar..."
-		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
+		begin
+			puts "::MSG:: Tapped on seekbar..."
+			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
+		rescue Exception => e
+			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end			
 	end
 
 	####################################################
@@ -333,7 +361,6 @@ class HistoryPlay
 			puts "Starting time : " + $startTime
 
 			client.sleep(5000)
-
 			if $startTime.include? ":"
 				puts "::MSG:: 視聴履歴からの再生は成功です「Playback successfully」"
 				$result = $resultOK
@@ -352,6 +379,11 @@ class HistoryPlay
 
 		rescue Exception => e
 			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
+			puts "Result is -> " + $result	
+			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 		end
 	end
 end

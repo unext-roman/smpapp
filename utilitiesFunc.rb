@@ -20,10 +20,15 @@ class Utility
 
 	def initialize
 		@CONFIG_FILE_PATH = "C:\\Jenkins\\workspace\\U-Next_SMP_App_Test\\input.txt"
-		#@CONFIG_FILE_PATH = "/Users/admin/Desktop/auto_scripts/input.txt"
 		@key_progress = "progress"
 	end
 
+	####################################################
+	#Function Name: setProgressValue
+	#Activity: Function for witing progress ratio
+	#Param: objects
+	####################################################
+	
 	def setProgressValue(key, value)
 
 		if key == @key_progress
@@ -44,40 +49,50 @@ class Utility
 		end
 	end
 
+	####################################################
+	#Function Name: calculateRatio
+	#Activity: Function for witing progress ratio
+	#Param: objects
+	####################################################
+
 	def calculateRatio(finishedTC)
 
 		ftc_val = finishedTC
 		rat_val = (ftc_val * 100 ) / 38 #$tcs #$totalTest
 
-		puts "Ratio val : #{rat_val}"
-		case rat_val
-			when 0
-				setProgressValue("progress", "0")
-			when 1..10
-				setProgressValue("progress", "10")
-			when 11..20
-				setProgressValue("progress", "20")
-			when 21..30
-				setProgressValue("progress", "30")
-			when 31..40
-				setProgressValue("progress", "40")
-			when 41..50
-				setProgressValue("progress", "50")
-			when 51..60
-				setProgressValue("progress", "60")
-			when 61..70
-				setProgressValue("progress", "70")
-			when 71..80
-				setProgressValue("progress", "80")
-			when 81..90
-				setProgressValue("progress", "90")
-			when 91..99
-				setProgressValue("progress", "99")
-			when 100
-				setProgressValue("progress", "100")
-		else
-			puts "Can not update progress ratio!!!"
-		end		
+		begin
+			puts "Progress ratio : #{rat_val}%"
+			case rat_val
+				when 0
+					setProgressValue("progress", "0")
+				when 1..10
+					setProgressValue("progress", "10")
+				when 11..20
+					setProgressValue("progress", "20")
+				when 21..30
+					setProgressValue("progress", "30")
+				when 31..40
+					setProgressValue("progress", "40")
+				when 41..50
+					setProgressValue("progress", "50")
+				when 51..60
+					setProgressValue("progress", "60")
+				when 61..70
+					setProgressValue("progress", "70")
+				when 71..80
+					setProgressValue("progress", "80")
+				when 81..90
+					setProgressValue("progress", "90")
+				when 91..99
+					setProgressValue("progress", "99")
+				when 100
+					setProgressValue("progress", "100")
+			else
+				puts "Can not update progress ratio!!!"
+			end
+		rescue Exception => e
+			puts "::MSG:: Exception occurrred while updating progress ratio" + e.message
+		end			
 	end
 
 	def getTime

@@ -22,16 +22,21 @@ class BuyPPV
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST BUYING PPV@PPV作品の購入"
 
-		$totalTest = $totalTest + 1
-		flag = false
+		andrt6 = RegressionTestInfo.new
+		andrt6.execution_time = $obj_utili.getTime
+		andrt6.test_device = "ANDROID" 
+		andrt6.testcase_num = 6
+		andrt6.testcase_summary = "作品の購入"
 
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "text=洋画", 0, 1)
-		client.sleep(2000)
-		#client.click("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='終了間近！【SALE】FOXサーチライトピクチャーズ']]]/*/*/*[@class='android.view.View' and ./parent::*[@id='maskLayout']])[1]", 0, 1)
-		
+		$totalTest = $totalTest + 1
+		@flag = false
+
 		begin
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=洋画", 0, 1)
+			client.sleep(2000)
+
 			for n in 1..2
 				# Here get the number of imageView in the visible screen
 				noimgvw = client.getAllValues("NATIVE", "xpath=//*[@id='imageView' and @busy='true']", "id")
@@ -40,21 +45,11 @@ class BuyPPV
 				puts "Number of contents found in the screen is : #{cnt}"
 	
 				for i in 0..cnt - 1
-					#To-Do 
-					#here implement scrolling....
 					if client.isElementFound("NATIVE", "xpath=//*[@id='p_badge']")
 						str3 = client.elementGetProperty("NATIVE", "xpath=//*[@id='p_badge']", i, "onScreen")
 					
 						if str3 == "true"
 							puts "::MSG:: PPV 作品を見つかりました「PPV item found」"
-		#					for i in 1..cnt
-							#To-Do
-							# if all the contents are already purchased, then make a swipe operation to down
-							#client.click("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='終了間近！【SALE】FOXサーチライトピクチャーズ']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]")
-		#					if i > 2
-		#						client.elementSwipe("NATIVE", "xpath=(//*[@id='listView']/*/*[@id='recyclerView'])[1]", 0, "Right", 200, 2000)
-		#					end
-		#					client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[#{i}]")
 							client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])", i, 1)
 							client.sleep(2000)
 							puts "::MSG:: 該当作品を選びました「Item from list has been clicked」"
@@ -68,7 +63,7 @@ class BuyPPV
 									BuyPPV.new.purchasingContent(client)
 								end
 								# breaking loop, when operation has been done successfully
-								flag = true
+								@flag = true
 								break
 							end
 							# count for loop
@@ -81,7 +76,7 @@ class BuyPPV
 						i = i + 1				
 					end
 				end
-				if flag == true
+				if @flag == true
 					break
 				else
 					n = n + 1
@@ -91,17 +86,20 @@ class BuyPPV
 				end
 			end	
 		rescue Exception => e
-			$errMsgBuypv = "::MSG:: Exception occurrred, could not find any PPV item ..: " + e.message	
+			$errMsgBuypv = "::MSG:: Exception occurrred while while finding ELEMENT: " + e.message	
+		end
+		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=ホーム", 0, 1)
+		rescue Exception => e
+			$errMsgBuypv = "::MSG:: Exception occurrred while while finding ELEMENT: " + e.message	
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc7 = ($obj_histp.testHistoryPlay(client))
 
-		andrt6 = RegressionTestInfo.new
-		andrt6.execution_time = $obj_utili.getTime
-		andrt6.test_device = "ANDROID" 
-		andrt6.testcase_num = 6
-		andrt6.testcase_summary = "作品の購入"
 		andrt6.test_result = $result
 		andrt6.capture_url = $captureURL
 		andrt6.err_message = $errMsgBuypv
@@ -118,40 +116,49 @@ class BuyPPV
 
 	def purchasingContent(client)
 
-		client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
-		client.sleep(3000)
-		if client.isElementFound("NATIVE", "text=レンタル／購入")
-			puts "::MSG:: Entered into purchase modal"
-			client.sleep(1000)
-			if client.waitForElement("NATIVE", "xpath=//*[@id='button']", 0, 30000)								
-				if client.isElementFound("NATIVE", "id=button")
-					puts "::MSG:: Purchase button available"
+		begin
+			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
+			client.sleep(3000)
+			if client.isElementFound("NATIVE", "text=レンタル／購入")
+				puts "::MSG:: Entered into purchase modal"
+				client.sleep(2000)
+				if client.waitForElement("NATIVE", "xpath=//*[@id='button']", 0, 30000)								
+					if client.isElementFound("NATIVE", "id=button")
+						puts "::MSG:: Purchase button available"
+					end
+					#purchase operation
+					client.click("NATIVE", "xpath=//*[@id='button']", 0, 1)
+					client.sleep(10000)
+					client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
+					if client.isElementFound("NATIVE", "xpath=//*[@id='time']")
+						puts "::MSG:: PPV作品の購入を成功しました、「Content has been purchased successfully」"
+						$result = $resultOK
+						$passCount = $passCount + 1
+						$finishedTest = $finishedTest + 1
+						puts "Result is -> " + $result	
+						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+						BuyPPV.new.leavingPlayer(client)
+						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+					else
+						puts "::MSG:: PPV作品を購入できませんでした、「Could not purchase PPV content!!!」"
+						$result = $resultNG
+						$failCount = $failCount + 1
+						$finishedTest = $finishedTest + 1
+						puts "Result is -> " + $result	
+						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+					end
 				end
-				#purchase operation
-				client.click("NATIVE", "xpath=//*[@id='button']", 0, 1)
-				client.sleep(10000)
-				client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
-				if client.isElementFound("NATIVE", "xpath=//*[@id='time']")
-					puts "::MSG:: Content has been purchased successfully"
-					$result = $resultOK
-					$passCount = $passCount + 1
-					$finishedTest = $finishedTest + 1
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
-					BuyPPV.new.leavingPlayer(client)
-					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
-				else
-					puts "::MSG:: Could not purchase content, check status!!!"
-					$result = $resultNG
-					$failCount = $failCount + 1
-					$finishedTest = $finishedTest + 1
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
-				end
+			else
+				puts "::MSG:: 購入モーダルが見つかりません、「Could not get purchase modal, check status!!!」"
 			end
-		else
-			puts "::MSG:: Could not get purchase modal, check status!!!"
-		end		
+		rescue Exception => e
+			$errMsgBuypv = "::MSG:: Exception occurrred while buying PPV: " + e.message
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
+			puts "Result is -> " + $result	
+			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+		end				
 	end
 
 	####################################################
@@ -162,19 +169,23 @@ class BuyPPV
 
 	def leavingPlayer(client)
 
-		client.sleep(5000)
-		if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 120000)
-	    	# If statement
-		end
-		client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@id='play_pause_button']", 0, 1)
+		begin
+			client.sleep(5000)
+			if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 120000)
+		    	# If statement
+			end
+			client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='play_pause_button']", 0, 1)
 
-		if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 30000)
-	    	# If statement
-		end
-		client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
-		client.sleep(500)
-		client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 30000)
+		    	# If statement
+			end
+			client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
+			client.sleep(500)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+		rescue Exception => e
+			$errMsgBuypv = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end			
 	end
 
 	####################################################
@@ -188,7 +199,6 @@ class BuyPPV
 		puts "::MSG:: Could not find PPV item to buy!!!"
 		$result = $resultNG
 		$failCount = $failCount + 1
-		$finishedTest = $finishedTest + 1
 		puts "Pass count is -> #{$totalTest} / #{$passCount}"
 	end
 
@@ -199,27 +209,33 @@ class BuyPPV
 	#Param: object
 	####################################################
 
-	def ios_testBuyPPV(client)
+	def ios_testBuyingPPV(client)
 		client.sleep(2000)
 
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST BUYING PPV@PPV作品の購入"
 
+		iosrt6 = RegressionTestInfo.new
+		iosrt6.execution_time = $obj_utili.getTime		
+		iosrt6.test_device = "iOS" 
+		iosrt6.testcase_num = 6
+		iosrt6.testcase_summary = "作品の購入"
+
 		$totalTest = $totalTest + 1 
 
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-		client.sleep(2000)
-		client.click("NATIVE", "xpath=//*[@text='洋画' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
-		client.sleep(2000)
-		
-		# Here get the number of imageView in the visible screen
-		nopmbg = client.getAllValues("NATIVE", "xpath=//*[@accessibilityIdentifier='badge_payitem_l' and @top='true']", "accessibilityIdentifier")
-		puts "Number of payment badge in the screen:\n #{nopmbg}"
-		$count = nopmbg.length - 2
-		puts "Number of contents found in the screen is : #{$count}"
-
 		begin
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='洋画' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
+			client.sleep(2000)
+			
+			# Here get the number of imageView in the visible screen
+			nopmbg = client.getAllValues("NATIVE", "xpath=//*[@accessibilityIdentifier='badge_payitem_l' and @top='true']", "accessibilityIdentifier")
+			puts "Number of payment badge in the screen:\n #{nopmbg}"
+			$count = nopmbg.length - 2
+			puts "Number of contents found in the screen is : #{$count}"
+
 			for i in 0..$count
 				str1 = client.elementGetProperty("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PayItemBagde' and @top='true']", i, "hidden")
 				puts "Payment badge at #{i} index has Hidden property of #{str1}"
@@ -230,17 +246,12 @@ class BuyPPV
 					puts "::MSG:: 該当作品を選びました「Item from list has been clicked」"
 					puts ""
 					client.sleep(2000)
-	#				if i > $count
-	#					client.elementSwipe("NATIVE", "xpath=(//*[@id='listView']/*/*[@id='recyclerView'])[1]", 0, "Right", 200, 2000)
-	#				end
 					if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
 						puts "::MSG:: 該当作品は既に購入済みもしくはPPVではありません「This content has already bought or not PPV!!!」"
 						client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
 						client.sleep(2000)
 					else
 						puts "::MSG:: 本作品は未購入ので買えます「This content is PPV and can be purchased」"
-						#command to close title details
-						#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
 						client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
 						client.sleep(2000)
 						if client.isElementFound("NATIVE", "text=レンタル / 購入")
@@ -274,14 +285,14 @@ class BuyPPV
 							if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 10000)
 							   	# If statement
 							end
-							client.sleep(1000)
+							client.sleep(2000)
 							client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
 							BuyPPV.new.ios_buyingConfirmation(client)
 							client.sleep(1000)
 						else
 							puts "::MSG:: 購入モーダルが開けません「Could not get purchase modal, check status!!!」"
 						end
-	#					# breaking loop, when operation has been done successfully
+						# breaking loop, when operation has been done successfully
 						break
 					end
 	 				puts "::MSG:: Checked index #{i} out of #{$count}"
@@ -293,18 +304,19 @@ class BuyPPV
 			$errMsgBuypv = "::MSG:: Exception occurrred while PPV buying" + e.message	
 		end
 
-		client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+		begin
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+		rescue Exception => e
+			$errMsgBuypv = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc7 = ($obj_histp.ios_testHistoryPlay(client))
 
-		iosrt6 = RegressionTestInfo.new
-		iosrt6.execution_time = $obj_utili.getTime		
-		iosrt6.test_device = "ANDROID" 
-		iosrt6.testcase_num = 6
-		iosrt6.testcase_summary = "作品の購入"
 		iosrt6.test_result = $result
 		iosrt6.capture_url = $captureURL		
 		iosrt6.err_message = $errMsgBuypv
@@ -352,13 +364,20 @@ class BuyPPV
 			end
 
 		rescue Exception => e
-			$errMsgBuypv = "::MSG:: Exception occurrred, could not find any PPV item ..: " + e.message
+			$errMsgBuypv = "::MSG:: Exception occurrred while buying PPV: " + e.message
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
+			puts "Result is -> " + $result	
+			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
 		end
-		
-		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
-		client.sleep(2000)
-
-		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
-		client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
+		begin
+			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
+		rescue Exception => e
+			$errMsgBuypv = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end
 	end
 end
