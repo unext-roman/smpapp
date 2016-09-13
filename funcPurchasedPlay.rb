@@ -17,7 +17,6 @@ class PurchasePlay
 
 	def testPurchasedItemPlay(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
@@ -135,7 +134,6 @@ class PurchasePlay
 
 	def ios_testPurchasedItemPlay(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")	
 		
 		puts ""
 		puts ""
