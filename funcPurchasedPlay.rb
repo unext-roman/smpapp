@@ -17,16 +17,11 @@ class PurchasePlay
 
 	def testPurchasedItemPlay(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM PURCHASE LIST@購入済みから再生"
-
-		andrt8 = RegressionTestInfo.new
-		andrt8.execution_time = $obj_utili.getTime
-		andrt8.test_device = "ANDROID" 
-		andrt8.testcase_num = 8
-		andrt8.testcase_summary = "購入済みから再生"
+		puts "::MSG::[ANDROID] STARTING TEST @購入済みから再生"
 
 		$totalTest = $totalTest + 1
 
@@ -49,6 +44,11 @@ class PurchasePlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc9 = ($obj_mylst.testMylistContent(client))		
 
+		andrt8 = RegressionTestInfo.new
+		andrt8.execution_time = $obj_utili.getTime
+		andrt8.test_device = "ANDROID" 
+		andrt8.testcase_num = 8
+		andrt8.testcase_summary = "購入済みから再生"
 		andrt8.test_result = $result
 		andrt8.capture_url = $captureURL
 		andrt8.err_message = $errMsgBougt
@@ -135,16 +135,11 @@ class PurchasePlay
 
 	def ios_testPurchasedItemPlay(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")	
 		
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM PURCHASE LIST@購入済みから再生"
-
-		iosrt8 = RegressionTestInfo.new
-		iosrt8.execution_time = $obj_utili.getTime		
-		iosrt8.test_device = "iOS" 
-		iosrt8.testcase_num = 8
-		iosrt8.testcase_summary = "購入済みから再生"
+		puts "::MSG::[iOS] STARTING TEST PLAYING FROM PURCHASED@購入済みから再生"
 
 		$totalTest = $totalTest + 1 
 		
@@ -167,6 +162,11 @@ class PurchasePlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc9 = ($obj_mylst.ios_testMylistContent(client))	
 
+		iosrt8 = RegressionTestInfo.new
+		iosrt8.execution_time = $obj_utili.getTime		
+		iosrt8.test_device = "iOS" 
+		iosrt8.testcase_num = 8
+		iosrt8.testcase_summary = "購入済みから再生"
 		iosrt8.test_result = $result
 		iosrt8.capture_url = $captureURL		
 		iosrt8.err_message = $errMsgBougt
