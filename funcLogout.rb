@@ -21,7 +21,7 @@ class Logout
 		
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @ログアウト"
+		puts "::MSG::[ANDROID] STARTING TEST LOGOUT@ログアウト"
 
 		andrt4 = RegressionTestInfo.new
 		andrt4.execution_time = $obj_utili.getTime

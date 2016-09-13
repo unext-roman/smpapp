@@ -25,7 +25,7 @@ class DownlaodPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @単話ダウンロード再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM DOWNLOAD LIST@単話ダウンロード再生機能"
 
 		andrt11 = RegressionTestInfo.new
 		andrt11.execution_time = $obj_utili.getTime
@@ -203,7 +203,7 @@ class DownlaodPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST DOWNLOAD PLAY@単話ダウンロード再生機能"
+		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM DOWNLOAD LIST@単話ダウンロード再生機能"
 
 		iosrt11 = RegressionTestInfo.new
 		iosrt11.execution_time = $obj_utili.getTime

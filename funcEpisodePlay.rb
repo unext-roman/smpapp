@@ -22,7 +22,7 @@ class EpisodePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @見放題エピソード再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST SVOD EPISODE PLAY@見放題エピソード再生機能"
 
 		andrt12 = RegressionTestInfo.new
 		andrt12.execution_time = $obj_utili.getTime

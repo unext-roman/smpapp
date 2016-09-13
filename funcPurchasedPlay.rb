@@ -20,7 +20,7 @@ class PurchasePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @購入済みから再生"
+		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM PURCHASE LIST@購入済みから再生"
 
 		andrt8 = RegressionTestInfo.new
 		andrt8.execution_time = $obj_utili.getTime
@@ -138,7 +138,7 @@ class PurchasePlay
 		
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST PLAYING FROM PURCHASED@購入済みから再生"
+		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM PURCHASE LIST@購入済みから再生"
 
 		iosrt8 = RegressionTestInfo.new
 		iosrt8.execution_time = $obj_utili.getTime		

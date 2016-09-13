@@ -22,7 +22,7 @@ class TitleDownload
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @単話ダウンロード機能"
+		puts "::MSG::[ANDROID] STARTING TEST SVOD SINGLE DOWNLOAD@単話ダウンロード機能"
 
 		andrt10 = RegressionTestInfo.new
 		andrt10.execution_time = $obj_utili.getTime
@@ -167,7 +167,7 @@ class TitleDownload
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @ダウンロード作品を削除機能"
+		puts "::MSG::[ANDROID] STARTING TEST SVOD SINGLE DOWNLOAD@ダウンロード作品を削除機能"
 
 		begin			
 			if client.isElementFound("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])[1]")

@@ -20,7 +20,7 @@ class ContinuePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @つづきを再生"
+		puts "::MSG::[ANDROID] STARTING TEST CONTINUE PLAY@つづきを再生"
 
 		andrt5 = RegressionTestInfo.new
 		andrt5.execution_time = $obj_utili.getTime
@@ -140,7 +140,7 @@ class ContinuePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @つづきを再生"
+		puts "::MSG::[iOS] STARTING TEST CONTINUE PLAY@つづきを再生"
 
 		iosrt5 = RegressionTestInfo.new
 		iosrt5.execution_time = $obj_utili.getTime

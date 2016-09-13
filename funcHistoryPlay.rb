@@ -20,7 +20,7 @@ class HistoryPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @視聴履歴から再生"
+		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM HISTORY@視聴履歴から再生"
 
 		andrt7 = RegressionTestInfo.new
 		andrt7.execution_time = $obj_utili.getTime
@@ -216,7 +216,7 @@ class HistoryPlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST PLAYING FROM HISTORY@視聴履歴から再生"
+		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM HISTORY@視聴履歴から再生"
 
 		iosrt7 = RegressionTestInfo.new
 		iosrt7.execution_time = $obj_utili.getTime		

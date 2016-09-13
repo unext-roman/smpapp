@@ -20,7 +20,7 @@ class MyList
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @マイリストから再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM MYLIST@マイリストから再生機能"
 
 		andrt9 = RegressionTestInfo.new
 		andrt9.execution_time = $obj_utili.getTime
@@ -152,7 +152,7 @@ class MyList
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST PLAYING FROM MYLIST@マイリストから再生機能"
+		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM MYLIST@マイリストから再生機能"
 
 		iosrt9 = RegressionTestInfo.new
 		iosrt9.execution_time = $obj_utili.getTime

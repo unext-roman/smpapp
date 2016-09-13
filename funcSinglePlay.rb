@@ -20,7 +20,7 @@ class SinglePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @単話見放題再生"
+		puts "::MSG::[ANDROID] STARTING TEST SINGLE MOVIE PLAY@単話見放題再生"
 
 		andrt3 = RegressionTestInfo.new
 		andrt3.execution_time = $obj_utili.getTime
@@ -148,7 +148,7 @@ class SinglePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @単話見放題再生"
+		puts "::MSG::[iOS] STARTING TEST SINGLE MOVIE PLAY@単話見放題再生"
 
 		iosrt3 = RegressionTestInfo.new
 		iosrt3.execution_time = $obj_utili.getTime
