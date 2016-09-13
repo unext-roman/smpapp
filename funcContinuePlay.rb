@@ -17,16 +17,11 @@ class ContinuePlay
 
 	def testContinuePlay(client)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST CONTINUE PLAY@つづきを再生"
-
-		andrt5 = RegressionTestInfo.new
-		andrt5.execution_time = $obj_utili.getTime
-		andrt5.test_device = "ANDROID" 
-		andrt5.testcase_num = 5
-		andrt5.testcase_summary = "つづきを再生"
+		puts "::MSG::[ANDROID] STARTING TEST @つづきを再生"
 
 		$totalTest = $totalTest + 1 
 
@@ -56,6 +51,11 @@ class ContinuePlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc6 = ($obj_buypv.testBuyingPPV(client))		
 		
+		andrt5 = RegressionTestInfo.new
+		andrt5.execution_time = $obj_utili.getTime
+		andrt5.test_device = "ANDROID" 
+		andrt5.testcase_num = 5
+		andrt5.testcase_summary = "つづきを再生"
 		andrt5.test_result = $result
 		andrt5.capture_url = $captureURL
 		andrt5.err_message = $errMsgConti
@@ -137,16 +137,11 @@ class ContinuePlay
 
 	def ios_testContinuePlay(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")	
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST CONTINUE PLAY@つづきを再生"
-
-		iosrt5 = RegressionTestInfo.new
-		iosrt5.execution_time = $obj_utili.getTime
-		iosrt5.test_device = "iOS" 
-		iosrt5.testcase_num = 5
-		iosrt5.testcase_summary = "つづきを再生"
+		puts "::MSG::[iOS] STARTING TEST @つづきを再生"
 
 		$totalTest = $totalTest + 1 
 
@@ -175,6 +170,11 @@ class ContinuePlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tc6 = ($obj_buypv.ios_testBuyingPPV(client))
 		
+		iosrt5 = RegressionTestInfo.new
+		iosrt5.execution_time = $obj_utili.getTime
+		iosrt5.test_device = "iOS" 
+		iosrt5.testcase_num = 5
+		iosrt5.testcase_summary = "つづきを再生"
 		iosrt5.test_result = $result
 		iosrt5.capture_url = $captureURL		
 		iosrt5.err_message = $errMsgConti
