@@ -17,7 +17,6 @@ class Logout
 
 	def testLogout(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")		
 		
 		puts ""
 		puts ""
@@ -92,7 +91,6 @@ class Logout
 
 	def ios_testLogout(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")		
 
 		puts ""
 		puts ""
