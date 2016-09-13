@@ -19,7 +19,6 @@ class TitleDownload
 
 	def testSingleDownload(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")		
 
 		puts ""
 		puts ""
@@ -202,7 +201,6 @@ class TitleDownload
 
 	def ios_testSingleDownload(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
