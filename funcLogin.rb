@@ -20,18 +20,13 @@ class Login
 
 	def testLogin(client,user,pass)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
 		s = "ログイン"
 		s.encode("Shift_JIS")
 		puts "::MSG::[ANDROID] STARTING TEST LOGIN@#{s}"
-
-		andrt2 = RegressionTestInfo.new
-		andrt2.execution_time = $obj_utili.getTime
-		andrt2.test_device = "ANDROID" 
-		andrt2.testcase_num = 2
-		andrt2.testcase_summary = "ログイン"
 
 		$totalTest = $totalTest + 1
 		@flag = true
@@ -124,6 +119,11 @@ class Login
 			puts ""
 		end
 
+		andrt2 = RegressionTestInfo.new
+		andrt2.execution_time = $obj_utili.getTime
+		andrt2.test_device = "ANDROID" 
+		andrt2.testcase_num = 2
+		andrt2.testcase_summary = "ログイン"
 		andrt2.test_result = $result
 		andrt2.capture_url = $captureURL
 		andrt2.err_message = $errMsgLogin
@@ -142,18 +142,13 @@ class Login
 
 	def ios_testLogin(client, user, pass)
 		client.sleep(2000)	
+		client.setDevice("ios_app:autoIpad")			
 
 		puts ""
 		puts ""
 		s1 = "ログイン"
 		s1.encode!("Shift_JIS")
 		puts "::MSG::[iOS] STARTING TEST LOGIN@#{s1}"
-
-		iosrt2 = RegressionTestInfo.new
-		iosrt2.execution_time = $obj_utili.getTime
-		iosrt2.test_device = "iOS"
-		iosrt2.testcase_num = 2
-		iosrt2.testcase_summary = "ログイン"
 
 		$totalTest = $totalTest + 1
 		@flag = true
@@ -232,6 +227,11 @@ class Login
 			puts ""
 		end
 
+		iosrt2 = RegressionTestInfo.new
+		iosrt2.execution_time = $obj_utili.getTime
+		iosrt2.test_device = "iOS"
+		iosrt2.testcase_num = 2
+		iosrt2.testcase_summary = "ログイン"
 		iosrt2.test_result = $result
 		iosrt2.capture_url = $captureURL		
 		iosrt2.err_message = $errMsgLogin
