@@ -27,12 +27,6 @@ class DownlaodPlay
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM DOWNLOAD LIST@単話ダウンロード再生機能"
 
-		andrt11 = RegressionTestInfo.new
-		andrt11.execution_time = $obj_utili.getTime
-		andrt11.test_device = "ANDROID" 
-		andrt11.testcase_num = 11
-		andrt11.testcase_summary = "単話ダウンロード再生機能"
-
 		$totalTest = $totalTest + 1
 
 		client.sleep(2000)
@@ -57,6 +51,11 @@ class DownlaodPlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tcEnd = ($obj_logot.testLogout(client))
 
+		andrt11 = RegressionTestInfo.new
+		andrt11.execution_time = $obj_utili.getTime
+		andrt11.test_device = "ANDROID" 
+		andrt11.testcase_num = 11
+		andrt11.testcase_summary = "単話ダウンロード再生機能"
 		andrt11.test_result = $result
 		andrt11.capture_url = $captureURL
 		andrt11.err_message = $errMsgDwnld
@@ -205,12 +204,6 @@ class DownlaodPlay
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM DOWNLOAD LIST@単話ダウンロード再生機能"
 
-		iosrt11 = RegressionTestInfo.new
-		iosrt11.execution_time = $obj_utili.getTime
-		iosrt11.test_device = "iOS" 
-		iosrt11.testcase_num = 11
-		iosrt11.testcase_summary = "単話ダウンロード再生機能"
-
 		$totalTest = $totalTest + 1
 
 		client.sleep(2000)
@@ -236,6 +229,11 @@ class DownlaodPlay
 		puts ($obj_utili.calculateRatio($finishedTest))
 		$tcEnd = ($obj_logot.ios_testLogout(client))	
 
+		iosrt11 = RegressionTestInfo.new
+		iosrt11.execution_time = $obj_utili.getTime
+		iosrt11.test_device = "iOS" 
+		iosrt11.testcase_num = 11
+		iosrt11.testcase_summary = "単話ダウンロード再生機能"
 		iosrt11.test_result = $result
 		iosrt11.capture_url = $captureURL
 		iosrt11.err_message = $errMsgDwnld

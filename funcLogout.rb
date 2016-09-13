@@ -21,13 +21,7 @@ class Logout
 		
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST LOGOUT@ログアウト"
-
-		andrt4 = RegressionTestInfo.new
-		andrt4.execution_time = $obj_utili.getTime
-		andrt4.test_device = "ANDROID" 
-		andrt4.testcase_num = 4
-		andrt4.testcase_summary = "ログアウト"
+		puts "::MSG::[ANDROID] STARTING TEST @ログアウト"
 
 		$totalTest = $totalTest + 1
 
@@ -75,6 +69,11 @@ class Logout
 
 		puts ($obj_utili.calculateRatio($finishedTest))
 
+		andrt4 = RegressionTestInfo.new
+		andrt4.execution_time = $obj_utili.getTime
+		andrt4.test_device = "ANDROID" 
+		andrt4.testcase_num = 4
+		andrt4.testcase_summary = "ログアウト"
 		andrt4.test_result = $result
 		andrt4.capture_url = $captureURL		
 		andrt4.err_message = $errMsgLogot
@@ -98,12 +97,6 @@ class Logout
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST LOGOUT@ログアウト"
-
-		iosrt4 = RegressionTestInfo.new
-		iosrt4.execution_time = $obj_utili.getTime		
-		iosrt4.test_device = "iOS"
-		iosrt4.testcase_num = 4
-		iosrt4.testcase_summary = "ログアウト"
 
 		$totalTest = $totalTest + 1
 
@@ -142,6 +135,11 @@ class Logout
 
 		puts ($obj_utili.calculateRatio($finishedTest))
 
+		iosrt4 = RegressionTestInfo.new
+		iosrt4.execution_time = $obj_utili.getTime		
+		iosrt4.test_device = "iOS"
+		iosrt4.testcase_num = 4
+		iosrt4.testcase_summary = "ログアウト"
 		iosrt4.test_result = $result
 		iosrt4.capture_url = $captureURL		
 		iosrt4.err_message = $errMsgLogot
