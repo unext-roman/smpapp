@@ -102,6 +102,7 @@ load "funcRelease.rb"
 		else
 			puts "::MSG:: 該当デバイスが見つかりません「Confirm target test devcie」"
 		end
+		client.releaseDevice("#{@dname}", true, true, true)
 	end
 
 	def sendResultsToDB(build, loginid, dtype, dname)
