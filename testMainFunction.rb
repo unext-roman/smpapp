@@ -83,19 +83,18 @@ load "funcRelease.rb"
 	def startTest(client, dtype, dname, logid, passw)
 
 		@dtype = dtype
-		@dname = dname
+		@dname = client.waitForDevice("xpath=//*[@name='#{dname}' AND @remote='true']", 300000)
 		@logid = logid
 		@passw = passw		
-		@tdvic = client.waitForDevice("#{@dname}", 300000)
 
 		if @dtype == "ios"
-			client.setDevice("#{@tdvic}")
+			client.setDevice("#{@dname}")
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
 			$tc2 = ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
 		elsif @dtype == "android"
-			client.setDevice("#{@tdvic}")
+			client.setDevice("#{@dname}")
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
 			client.sleep(5000)
