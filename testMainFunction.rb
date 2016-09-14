@@ -83,7 +83,7 @@ load "funcRelease.rb"
 	def startTest(client, dtype, dname, logid, passw)
 
 		@dtype = dtype
-		@dname = client.waitForDevice("\"@name='adb:401SO' AND @remote='true'\"", 300000)
+		@dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
 		@logid = logid
 		@passw = passw		
 
