@@ -40,8 +40,6 @@ load "funcRelease.rb"
 	client = Mobile::Client.new("#{$host}","#{$port}", true)
 	client.setProjectBaseDirectory("/Users/admin/workspace/PR_Regression")
 
-	#$rflag = false
-
 	$obj_strtp = Startup.new
 	$obj_login = Login.new
 	$obj_snglp = SinglePlay.new
@@ -83,36 +81,21 @@ load "funcRelease.rb"
 
 	def startTest(client, dtype, dname, logid, passw)
 
-		#if $rflag == true
-		#	client.releaseDevice("#{dname}", true, true, true)
-		#end
 		@dtype = dtype
-		begin
-			if @dtype == "ios"
-				@dname = client.waitForDevice("\"@name='ipadpro' AND @remote='true'\"", 300000)
-			else
-				@dname = client.waitForDevice("\"@name='adb:401SO' AND @remote='true'\"", 300000)
-			end
-		rescue Exception => e
-			$errMsgLogot = "::MSG:: Exception occurrred while connecting device" + e	
-		end
-		client.setDevice("#{@dname}")
-		client.openDevice()		
+		@dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
 		@logid = logid
 		@passw = passw
 
 		if @dtype == "ios"
-			#client.setDevice("#{@dname}")
-			#client.openDevice()
-			#$rflag = true
+			client.setDevice("#{@dname}")
+			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
 			$tc2 = ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
 		elsif @dtype == "android"
-			#client.setDevice("#{@dname}")
-			#client.openDevice()
-			#$rflag = true
+			client.setDevice("#{@dname}")
+			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
 			client.sleep(5000)
