@@ -40,7 +40,7 @@ load "funcRelease.rb"
 	client = Mobile::Client.new("#{$host}","#{$port}", true)
 	client.setProjectBaseDirectory("/Users/admin/workspace/PR_Regression")
 
-	$rflag = false
+	#$rflag = false
 
 	$obj_strtp = Startup.new
 	$obj_login = Login.new
@@ -83,9 +83,9 @@ load "funcRelease.rb"
 
 	def startTest(client, dtype, dname, logid, passw)
 
-		if $rflag == true
-			client.releaseDevice("#{dname}", true, true, true)
-		end
+		#if $rflag == true
+		#	client.releaseDevice("#{dname}", true, true, true)
+		#end
 
 		@dtype = dtype
 		@dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
@@ -95,7 +95,7 @@ load "funcRelease.rb"
 		if @dtype == "ios"
 			client.setDevice("#{@dname}")
 			client.openDevice()
-			$rflag = true
+			#$rflag = true
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
@@ -103,7 +103,7 @@ load "funcRelease.rb"
 		elsif @dtype == "android"
 			client.setDevice("#{@dname}")
 			client.openDevice()
-			$rflag = true
+			#$rflag = true
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
 			client.sleep(5000)
