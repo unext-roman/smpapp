@@ -87,12 +87,15 @@ load "funcRelease.rb"
 		#	client.releaseDevice("#{dname}", true, true, true)
 		#end
 		@dtype = dtype
-		if @dtype == "ios"
-			@dname = client.waitForDevice("\"@name='ipadpro' AND @remote='true'\"", 300000)
-		else
-			@dname = client.waitForDevice("\"@name='adb:401SO' AND @remote='true'\"", 300000)
+		begin
+			if @dtype == "ios"
+				@dname = client.waitForDevice("\"@name='ipadpro' AND @remote='true'\"", 300000)
+			else
+				@dname = client.waitForDevice("\"@name='adb:401SO' AND @remote='true'\"", 300000)
+			end
+		rescue Exception => e
+			$errMsgLogot = "::MSG:: Exception occurrred while connecting device" + e	
 		end
-
 		client.setDevice("#{@dname}")
 		client.openDevice()		
 		@logid = logid
