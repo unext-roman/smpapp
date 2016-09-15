@@ -86,10 +86,15 @@ load "funcRelease.rb"
 		#if $rflag == true
 		#	client.releaseDevice("#{dname}", true, true, true)
 		#end
-		@dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
+		@dtype = dtype
+		if @dtype == "ios"
+			@dname = client.waitForDevice("\"@name='ipadpro' AND @remote='true'\"", 300000)
+		else
+			@dname = client.waitForDevice("\"@name='adb:401SO' AND @remote='true'\"", 300000)
+		end
+
 		client.setDevice("#{@dname}")
 		client.openDevice()		
-		@dtype = dtype
 		@logid = logid
 		@passw = passw
 
