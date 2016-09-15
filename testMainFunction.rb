@@ -85,7 +85,8 @@ load "funcRelease.rb"
 		@dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
 		@logid = logid
 		@passw = passw
-
+		client.sleep(10000)
+		
 		if @dtype == "ios"
 			client.setDevice("#{@dname}")
 			client.openDevice()
