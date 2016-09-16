@@ -56,7 +56,7 @@ load "funcRelease.rb"
 	$obj_snddb = SendResultsToDB.new
 	$obj_finis = Finish.new
 	
-
+	$dname = ""
 	####################################################
 	#Module: Calling test functions
 	#Activity: Perform main operation
@@ -82,12 +82,9 @@ load "funcRelease.rb"
 	def startTest(client, dtype, dname, logid, passw)
 
 		@dtype = dtype
-		@dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)		
+		$dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)		
 		@logid = logid
 		@passw = passw
-
-		client.setDevice("#{@dname}")
-		client.openDevice()
 
 		if @dtype == "ios"
 			#client.setDevice("#{@dname}")
@@ -142,4 +139,4 @@ load "funcRelease.rb"
 	startTest(client, $d_type, $d_name, $l_id, $pass)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
 
-	$obj_finis.testEnd(client)
+	$obj_finis.testEnd(client, $dname)
