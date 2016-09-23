@@ -87,15 +87,15 @@ load "funcRelease.rb"
 		@passw = passw
 
 		if @dtype == "ios"
-			#client.setDevice("#{@dname}")
-			#client.openDevice()
+			client.setDevice("#{$dname}")
+			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
 			$tc2 = ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
 		elsif @dtype == "android"
-			#client.setDevice("#{@dname}")
-			#client.openDevice()
+			client.setDevice("#{$dname}")
+			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
 			client.sleep(5000)
@@ -103,7 +103,7 @@ load "funcRelease.rb"
 		else
 			puts "::MSG:: 該当デバイスが見つかりません「Confirm target test devcie」"
 		end
-		client.releaseDevice("#{@dname}", true, true, true)
+		client.releaseDevice("#{$dname}", true, true, true)
 	end
 
 	def sendResultsToDB(build, loginid, dtype, dname)
