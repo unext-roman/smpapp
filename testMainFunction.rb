@@ -82,12 +82,13 @@ load "funcRelease.rb"
 	def startTest(client, dtype, dname, logid, passw)
 
 		@dtype = dtype
-		$dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)		
+		#$dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)		
 		@logid = logid
 		@passw = passw
 
 		if @dtype == "ios"
 			#client.setDevice("#{$dname}")
+			client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
@@ -95,6 +96,7 @@ load "funcRelease.rb"
 			$tc2 = ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
 		elsif @dtype == "android"
 			#client.setDevice("#{$dname}")
+			client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
@@ -139,4 +141,4 @@ load "funcRelease.rb"
 	startTest(client, $d_type, $d_name, $l_id, $pass)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
 
-	$obj_finis.testEnd(client, $dname)
+	#$obj_finis.testEnd(client, $dname)
