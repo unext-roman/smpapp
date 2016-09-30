@@ -88,7 +88,7 @@ load "funcRelease.rb"
 
 		if @dtype == "ios"
 			#client.setDevice("#{$dname}")
-			client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
+			client.waitForDevice("\"@name='#{dname}'\"", 300000)
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
@@ -96,7 +96,7 @@ load "funcRelease.rb"
 			$tc2 = ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
 		elsif @dtype == "android"
 			#client.setDevice("#{$dname}")
-			client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
+			client.waitForDevice("\"@name='#{dname}'\"", 300000)
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
