@@ -19,8 +19,8 @@
 	$exeTime = ""
 	$captureURL = ""
 	$tcs = 0
-	TIME = Time.new.strftime("%Y-%m-%d %H:%M:%S")
-	$execution_time = TIME
+	TTIME = Time.new.strftime("%Y-%m-%d %H:%M:%S")
+	$execution_time = TTIME
 
 	#Error Message List
 	$errMsgLogin = ""
