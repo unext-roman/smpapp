@@ -63,6 +63,7 @@ class SinglePlay
 		@err_message = $errMsgTanwa
 		@comment = ""
 
+		client.sleep(2000)
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 		puts ($obj_contp.testContinuePlay(client))
@@ -187,7 +188,8 @@ class SinglePlay
 		@capture_url = $captureURL
 		@err_message = $errMsgTanwa
 		@comment = ""
-
+		
+		client.sleep(2000)
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 		puts ($obj_contp.ios_testContinuePlay(client))
