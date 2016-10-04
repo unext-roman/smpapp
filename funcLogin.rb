@@ -130,6 +130,7 @@ class Login
 		@err_message = $errMsgLogin
 		@comment = $comment
 
+		puts "#{@exetime}"
 		puts "#{@test_device}"
 		puts "#{@testcase_num}"
 		puts "#{@testcase_summary}"
