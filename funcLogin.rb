@@ -124,6 +124,14 @@ class Login
 		@err_message = $errMsgLogin
 		@comment = $comment
 
+		puts "#{@test_device}"
+		puts "#{@testcase_num}"
+		puts "#{testcase_summary}"
+		puts "#{@test_result}"
+		puts "#{@capture_url}"
+		puts "#{@err_message}"
+		puts "#{@comment}"
+
 		client.sleep(2000)
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
