@@ -112,7 +112,7 @@ load "funcRelease.rb"
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
-			$tc2 = ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
+			puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
 		elsif @dtype == "android"
 			#client.setDevice("#{$dname}")
 			client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
@@ -120,7 +120,7 @@ load "funcRelease.rb"
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
 			client.sleep(5000)
-			$tc2 = ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
+			puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
 		else
 			puts "::MSG:: 該当デバイスが見つかりません「Confirm target test devcie」"
 		end
@@ -153,5 +153,4 @@ load "funcRelease.rb"
 	unextTestPrgm
 	startTest(client, $d_type, $d_name, $l_id, $pass)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
-	callFinisherClient(client)
-	$obj_finis.testEnd(client, $dname)
+	#$obj_finis.testEnd(client, $dname)
