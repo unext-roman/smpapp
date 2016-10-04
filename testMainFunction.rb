@@ -139,19 +139,19 @@ load "funcRelease.rb"
 			puts "**********************************************************************"
 			puts "			TEST RESULTS 												"
 			puts ""
-			puts ($obj_snddb.insertIntoReleaseTestCycle($obj_utili.getTime, @build, @loginid, @dtype, @dname, $passCount, $failCount))
+			if $execution_time == nil
+				@exetime = $execution_time
+			else
+				@exetime = $execution_time
+			end
+			puts ($obj_snddb.insertIntoReleaseTestCycle(@exetime, @build, @loginid, @dtype, @dname, $passCount, $failCount))
 		rescue Exception => e
 			$errMsgLogot = "::MSG:: Exception occurrred while sending results to DB " + e.message	
 		end
 	end
 
-	def callFinisherClient
-
-		$obj_finis.testEnd(client, $dname)		
-	end
-
 	unextTestPrgm
 	startTest(client, $d_type, $d_name, $l_id, $pass)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
-	callFinisherClient
-	
+	callFinisherClient(client)
+	$obj_finis.testEnd(client, $dname)
