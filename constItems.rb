@@ -32,6 +32,7 @@
 	$errMsgBougt = ""
 	$errMsgMlist = ""
 	$errMsgDwnld = ""
+	$errMsgDwnpl = ""	
 	$errMsgEpsdp = ""
 	$errMsgSarch = ""
 	$errMsgAdtml = ""
