@@ -11,6 +11,8 @@
 
 class Login
 
+	@@result = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testLogin
@@ -45,7 +47,8 @@ class Login
 			end
 			if client.isElementFound("NATIVE", "xpath=//*[@text='ログアウト']", 0)
 				$comment = "::MSG:: 既にログイン済み!!! 結果をOKにする"
-				$result = $resultOK
+				#$result = $resultOK
+				@@result = $resultOK
 				$passCount = $passCount + 1					
 				$finishedTest = $finishedTest + 1
 				puts "Result is -> " + $result
@@ -71,7 +74,8 @@ class Login
 					end
 					if client.isElementFound("NATIVE", "xpath=//*[@text='ログアウト']", 0)
 						puts "::MSG:: ログイン成功しました「Login successful」"
-						$result = $resultOK
+						#$result = $resultOK
+						@@result = $resultOK
 						$passCount = $passCount + 1
 						$finishedTest = $finishedTest + 1
 						@flag = true						
@@ -79,7 +83,8 @@ class Login
 						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 					else
 						puts "::MSG:: ログイン失敗しました「Wrong credentials, Test aborted」"
-						$result = $resultNG
+						#$result = $resultNG
+						@@result = $resultNG
 						$failCount = $failCount + 1
 						$finishedTest = $finishedTest + 1
 						@flag = false						
@@ -90,7 +95,8 @@ class Login
 					end
 				rescue Exception => e
 					$errMsgLogin = "::MSG:: Exception occurrred at Login operation: " + e.message
-					$result = $resultNG
+					#$result = $resultNG
+					@@result = $resultNG
 					$failCount = $failCount + 1
 					$finishedTest = $finishedTest + 1
 					puts "Result is -> " + $result
@@ -119,14 +125,14 @@ class Login
 		@test_device = "ANDROID" 
 		@testcase_num = 2
 		@testcase_summary = "ログイン"
-		@test_result = $result
+		@test_result = @@result
 		@capture_url = $captureURL
 		@err_message = $errMsgLogin
 		@comment = $comment
 
 		puts "#{@test_device}"
 		puts "#{@testcase_num}"
-		puts "#{testcase_summary}"
+		puts "#{@testcase_summary}"
 		puts "#{@test_result}"
 		puts "#{@capture_url}"
 		puts "#{@err_message}"
