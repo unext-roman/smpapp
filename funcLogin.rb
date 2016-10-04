@@ -124,6 +124,7 @@ class Login
 		@err_message = $errMsgLogin
 		@comment = $comment
 
+		client.sleep(2000)
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 		if @flag == true
@@ -235,7 +236,8 @@ class Login
 		@capture_url = $captureURL
 		@err_message = $errMsgLogin
 		@comment = $comment
-
+		
+		client.sleep(2000)
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 
