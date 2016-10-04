@@ -20,12 +20,13 @@ class Login
 
 	def testLogin(client,user,pass)
 		client.sleep(2000)
+		client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
 		s = "ログイン"
 		s.encode("Shift_JIS")
-		puts "::MSG::[ANDROID] STARTING TEST LOGIN@#{s}"
+		puts "::MSG::[ANDROID] STARTING TEST LOGIN@ログイン"
 
 		$totalTest = $totalTest + 1
 		@flag = true
@@ -109,27 +110,30 @@ class Login
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
+
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 2
+		@testcase_summary = "ログイン"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgLogin
+		@comment = $comment
+
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
 		if @flag == true
-			$tc3 = ($obj_snglp.testSinglePlay(client))
+			puts ($obj_snglp.testSinglePlay(client))
 		else
 			puts ""
 			puts "::注意::"
 			puts "::MSG:: ユーザー認証ができませんでしたので、テストが進めません。ユーザーID/PWをご確認ください。"
 			puts ""
 		end
-
-		andrt2 = RegressionTestInfo.new
-		andrt2.execution_time = $obj_utili.getTime
-		andrt2.test_device = "ANDROID" 
-		andrt2.testcase_num = 2
-		andrt2.testcase_summary = "ログイン"
-		andrt2.test_result = $result
-		andrt2.capture_url = $captureURL
-		andrt2.err_message = $errMsgLogin
-		andrt2.comment = $comment
-
-		return andrt2
-		client.sleep(2000)
 	end
 
 	####################################################
@@ -141,12 +145,13 @@ class Login
 
 	def ios_testLogin(client, user, pass)
 		client.sleep(2000)	
+		client.setDevice("ios_app:autoIpad")			
 
 		puts ""
 		puts ""
 		s1 = "ログイン"
 		s1.encode!("Shift_JIS")
-		puts "::MSG::[iOS] STARTING TEST LOGIN@#{s1}"
+		puts "::MSG::[iOS] STARTING TEST LOGIN@ログイン"
 
 		$totalTest = $totalTest + 1
 		@flag = true
@@ -155,6 +160,7 @@ class Login
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
 			client.sleep(2000)		
 			client.click("NATIVE", "xpath=//*[@text='設定・サポート']", 0, 1)
+			client.sleep(2000)
 		rescue Exception => e
 			$errMsgLogin = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 		end
@@ -216,26 +222,30 @@ class Login
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
+
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 2
+		@testcase_summary = "ログイン"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgLogin
+		@comment = $comment
+
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+
 		if @flag == true
-			$tc3 = ($obj_snglp.ios_testSinglePlay(client))
+			puts ($obj_snglp.ios_testSinglePlay(client))
 		else
 			puts ""
 			puts "::注意::"
 			puts "::MSG:: ユーザー認証ができませんでしたので、テストが進めません。ユーザーID/PWをご確認ください。"
 			puts ""
 		end
-
-		iosrt2 = RegressionTestInfo.new
-		iosrt2.execution_time = $obj_utili.getTime
-		iosrt2.test_device = "iOS"
-		iosrt2.testcase_num = 2
-		iosrt2.testcase_summary = "ログイン"
-		iosrt2.test_result = $result
-		iosrt2.capture_url = $captureURL		
-		iosrt2.err_message = $errMsgLogin
-		iosrt2.comment = $comment
-
-		return iosrt2
-		client.sleep(2000)
 	end
 end

@@ -20,7 +20,7 @@ class SinglePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST SINGLE MOVIE PLAY@単話見放題再生"
+		puts "::MSG::[ANDROID] STARTING TEST @単話見放題再生"
 
 		$totalTest = $totalTest + 1
 		
@@ -49,19 +49,23 @@ class SinglePlay
 		client.sleep(2000)
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc5 = ($obj_contp.testContinuePlay(client))
 
-		andrt3 = RegressionTestInfo.new
-		andrt3.execution_time = $obj_utili.getTime
-		andrt3.test_device = "ANDROID" 
-		andrt3.testcase_num = 3
-		andrt3.testcase_summary = "単話見放題再生"
-		andrt3.test_result = $result
-		andrt3.capture_url = $captureURL
-		andrt3.err_message = $errMsgTanwa
-		andrt3.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 3
+		@testcase_summary = "単話見放題再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgTanwa
+		@comment = ""
 
-		return andrt3
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_contp.testContinuePlay(client))
 	end
 
 	####################################################
@@ -170,19 +174,25 @@ class SinglePlay
 		SinglePlay.new.ios_playfromTitleDetails(client)
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc5 = ($obj_contp.ios_testContinuePlay(client))
 
-		iosrt3 = RegressionTestInfo.new
-		iosrt3.execution_time = $obj_utili.getTime
-		iosrt3.test_device = "iOS"
-		iosrt3.testcase_num = 3
-		iosrt3.testcase_summary = "単話見放題再生"
-		iosrt3.test_result = $result
-		iosrt3.capture_url = $captureURL		
-		iosrt3.err_message = $errMsgTanwa
-		iosrt3.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 3
+		@testcase_summary = "単話見放題再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgTanwa
+		@comment = ""
 
-		return iosrt3
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_contp.ios_testContinuePlay(client))
+
+
 	end
 
 	####################################################

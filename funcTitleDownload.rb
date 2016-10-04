@@ -19,10 +19,11 @@ class TitleDownload
 
 	def testSingleDownload(client)
 		client.sleep(2000)
+		#client.setDevice("adb:401SO")	
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @単話ダウンロード機能"
+		puts "::MSG::[ANDROID] STARTING TEST SINGLE DOWNLOAD@単話ダウンロード機能"
 
 		$totalTest = $totalTest + 1
 
@@ -38,32 +39,36 @@ class TitleDownload
 				TitleDownload.new.checkDownloadStatus(client)
 			end
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)		
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)		
 			client.sleep(2000)
 		rescue Exception => e
 			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc12 = ($obj_epsdp.testSVODEpisodePlay(client))	
 
-		andrt10 = RegressionTestInfo.new
-		andrt10.execution_time = $obj_utili.getTime
-		andrt10.test_device = "ANDROID" 
-		andrt10.testcase_num = 10
-		andrt10.testcase_summary = "単話ダウンロード機能"
-		andrt10.test_result = $result
-		andrt10.capture_url = $captureURL
-		andrt10.err_message = $errMsgDwnld
-		andrt10.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 10
+		@testcase_summary = "単話ダウンロード機能"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgDwnld
+		@comment = ""
 
-		return andrt10
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_epsdp.testSVODEpisodePlay(client))
 	end
 
 	####################################################
@@ -85,7 +90,7 @@ class TitleDownload
 			client.sleep(2000)
 			client.click("NATIVE", "text=えほん", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@id='subscription']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='kind_subscription']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=(//*[@id='recycler_view' and ./following-sibling::*[@id='error_view']]/*/*/*[@id='thumbnail'])", 0, 1)
 			client.sleep(2000)
@@ -172,20 +177,19 @@ class TitleDownload
 			if client.isElementFound("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])[1]")
 				puts "::MSG:: Download items need to delete"
 
-				ditems = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])", "id")
-				cnt = ditems.length
+				cnt = client.getElementCount("NATIVE", "xpath=(//*[@id='recycler_view']/*[@class='android.widget.LinearLayout' and ./*[@class='android.widget.LinearLayout']])")
 				puts "Current contents item is #{cnt}"
-				begin
+
+				for i in 1..cnt
 					client.sleep(3000)
-					client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*[@id='delete_button'])", 0, 1)
+					client.click("NATIVE", "xpath=//*[@contentDescription='削除']", 0, 1)
 					client.sleep(2000)
 					if client.isElementFound("NATIVE", "xpath=//*[@text='中止する']")
 						client.click("NATIVE", "xpath=//*[@text='中止する']", 0, 1)
 					elsif client.isElementFound("NATIVE", "xpath=//*[@text='はい']")
 						client.click("NATIVE", "xpath=//*[@text='はい']", 0, 1)
 					end
-					cnt += 1
-				end until cnt == 0
+				end
 			end
 		rescue Exception => e
 			$errMsgDwnld = "::MSG:: Exception occurrred while deleting downlaoded items" + e.message	
@@ -201,6 +205,7 @@ class TitleDownload
 
 	def ios_testSingleDownload(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
@@ -233,19 +238,23 @@ class TitleDownload
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc12 = ($obj_epsdp.ios_testSVODEpisodePlay(client))		
 
-		iosrt10 = RegressionTestInfo.new
-		iosrt10.execution_time = $obj_utili.getTime
-		iosrt10.test_device = "iOS" 
-		iosrt10.testcase_num = 10
-		iosrt10.testcase_summary = "単話ダウンロード機能"
-		iosrt10.test_result = $result
-		iosrt10.capture_url = $captureURL
-		iosrt10.err_message = $errMsgDwnld
-		iosrt10.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 10
+		@testcase_summary = "単話ダウンロード機能"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgDwnld
+		@comment = ""
 
-		return iosrt10
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_epsdp.ios_testSVODEpisodePlay(client))		
 	end
 
 	####################################################

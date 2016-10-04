@@ -20,11 +20,12 @@ class DownlaodPlay
 	####################################################
 
 	def testDownloadPlay(client)
-		client.sleep(2000)
+		client.sleep(20000)
+		#client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST PLAYBACK FROM DOWNLOAD LIST@単話ダウンロード再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST DOWNLOAD PLAY@単話ダウンロード再生機能"
 
 		$totalTest = $totalTest + 1
 
@@ -48,19 +49,23 @@ class DownlaodPlay
 		end			
 	
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tcEnd = ($obj_logot.testLogout(client))
 
-		andrt11 = RegressionTestInfo.new
-		andrt11.execution_time = $obj_utili.getTime
-		andrt11.test_device = "ANDROID" 
-		andrt11.testcase_num = 11
-		andrt11.testcase_summary = "単話ダウンロード再生機能"
-		andrt11.test_result = $result
-		andrt11.capture_url = $captureURL
-		andrt11.err_message = $errMsgDwnld
-		andrt11.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 11
+		@testcase_summary = "単話ダウンロード再生機能"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgDwnld
+		@comment = ""
 
-		return andrt11
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_keysh.testKeywordSearch(client))
 	end
 
 	####################################################
@@ -197,10 +202,11 @@ class DownlaodPlay
 
 	def ios_testDownloadPlay(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST PLAYBACK FROM DOWNLOAD LIST@単話ダウンロード再生機能"
+		puts "::MSG::[iOS] STARTING TEST DOWNLOAD PLAY@単話ダウンロード再生機能"
 
 		$totalTest = $totalTest + 1
 
@@ -225,20 +231,23 @@ class DownlaodPlay
 		end
 	
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tcEnd = ($obj_logot.ios_testLogout(client))	
 
-		iosrt11 = RegressionTestInfo.new
-		iosrt11.execution_time = $obj_utili.getTime
-		iosrt11.test_device = "iOS" 
-		iosrt11.testcase_num = 11
-		iosrt11.testcase_summary = "単話ダウンロード再生機能"
-		iosrt11.test_result = $result
-		iosrt11.capture_url = $captureURL
-		iosrt11.err_message = $errMsgDwnld
-		iosrt11.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 11
+		@testcase_summary = "単話ダウンロード再生機能"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgDwnld
+		@comment = ""
 
-		return iosrt11
-
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_keysh.ios_testKeywordSearch(client))
 	end
 
 	####################################################

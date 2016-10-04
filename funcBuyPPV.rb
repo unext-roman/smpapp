@@ -92,19 +92,23 @@ class BuyPPV
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc7 = ($obj_histp.testHistoryPlay(client))
 
-		andrt6 = RegressionTestInfo.new
-		andrt6.execution_time = $obj_utili.getTime
-		andrt6.test_device = "ANDROID" 
-		andrt6.testcase_num = 6
-		andrt6.testcase_summary = "作品の購入"
-		andrt6.test_result = $result
-		andrt6.capture_url = $captureURL
-		andrt6.err_message = $errMsgBuypv
-		andrt6.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 6
+		@testcase_summary = "作品の購入"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgBuypv
+		@comment = ""
 
-		return andrt6
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_histp.testHistoryPlay(client))
 	end
 
 	####################################################
@@ -210,6 +214,7 @@ class BuyPPV
 
 	def ios_testBuyingPPV(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
@@ -308,19 +313,23 @@ class BuyPPV
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc7 = ($obj_histp.ios_testHistoryPlay(client))
 
-		iosrt6 = RegressionTestInfo.new
-		iosrt6.execution_time = $obj_utili.getTime		
-		iosrt6.test_device = "iOS" 
-		iosrt6.testcase_num = 6
-		iosrt6.testcase_summary = "作品の購入"
-		iosrt6.test_result = $result
-		iosrt6.capture_url = $captureURL		
-		iosrt6.err_message = $errMsgBuypv
-		iosrt6.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 6
+		@testcase_summary = "作品の購入"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgBuypv
+		@comment = ""
 
-		return iosrt6
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_histp.ios_testHistoryPlay(client))
 	end
 
 	####################################################

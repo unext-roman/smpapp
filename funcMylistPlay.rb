@@ -17,6 +17,7 @@ class MyList
 
 	def testMylistContent(client)
 		client.sleep(2000)
+		#client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
@@ -40,19 +41,24 @@ class MyList
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc10 = ($obj_dwnld.testSingleDownload(client))		
 
-		andrt9 = RegressionTestInfo.new
-		andrt9.execution_time = $obj_utili.getTime
-		andrt9.test_device = "ANDROID" 
-		andrt9.testcase_num = 9
-		andrt9.testcase_summary = "マイリストから再生"
-		andrt9.test_result = $result
-		andrt9.capture_url = $captureURL
-		andrt9.err_message = $errMsgMlist
-		andrt9.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 9
+		@testcase_summary = "マイリストから再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgMlist
+		@comment = ""
 
-		return andrt9
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		#puts ($obj_dwnld.testSingleDownload(client))
+		puts ($obj_dwnpl.testDownloadPlay(client))
 	end
 
 	####################################################
@@ -76,11 +82,20 @@ class MyList
 
 				if client.isElementFound("NATIVE", "text=お気に入りはありません")
 					puts "::MSG:: There is no item in mylist!!!"
+					puts "::MSG:: Playback has started successfully..."
+					$result = $resultOK
+					$passCount = $passCount + 1
+					$finishedTest = $finishedTest + 1
+					puts "Result is -> " + $result	
+					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+
+					#Ph2.0 development: When no content in mylist, call addtomylist func
 				else
 					# Check here whether content is PPV or viewing duration expired or SVOD
 					MyList.new.checkPPVorSVODorPurchased(client)
 					client.sleep(2000)
-					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+					#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 					client.sleep(2000)
@@ -171,19 +186,24 @@ class MyList
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc10 = ($obj_dwnld.ios_testSingleDownload(client))		
 
-		iosrt9 = RegressionTestInfo.new
-		iosrt9.execution_time = $obj_utili.getTime
-		iosrt9.test_device = "iOS" 
-		iosrt9.testcase_num = 9
-		iosrt9.testcase_summary = "マイリストから再生"
-		iosrt9.test_result = $result
-		iosrt9.capture_url = $captureURL
-		iosrt9.err_message = $errMsgMlist
-		iosrt9.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 9
+		@testcase_summary = "マイリストから再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgMlist
+		@comment = ""
 
-		return iosrt9		
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		#puts ($obj_dwnld.ios_testSingleDownload(client))
+		puts ($obj_dwnpl.testDownloadPlay(client))			
 	end
 
 	####################################################

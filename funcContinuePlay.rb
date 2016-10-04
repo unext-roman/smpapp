@@ -20,7 +20,7 @@ class ContinuePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @つづきを再生"
+		puts "::MSG::[ANDROID] STARTING TEST CONTINUE PLAY@つづきを再生"
 
 		$totalTest = $totalTest + 1 
 
@@ -48,19 +48,23 @@ class ContinuePlay
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc6 = ($obj_buypv.testBuyingPPV(client))		
-		
-		andrt5 = RegressionTestInfo.new
-		andrt5.execution_time = $obj_utili.getTime
-		andrt5.test_device = "ANDROID" 
-		andrt5.testcase_num = 5
-		andrt5.testcase_summary = "つづきを再生"
-		andrt5.test_result = $result
-		andrt5.capture_url = $captureURL
-		andrt5.err_message = $errMsgConti
-		andrt5.comment = ""
 
-		return andrt5
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 5
+		@testcase_summary = "つづきを再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgConti
+		@comment = ""
+
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_buypv.testBuyingPPV(client))
 	end
 
 	####################################################
@@ -139,7 +143,7 @@ class ContinuePlay
 
 		puts ""
 		puts ""
-		puts "::MSG::[iOS] STARTING TEST @つづきを再生"
+		puts "::MSG::[iOS] STARTING TEST CONTINUE PLAY@つづきを再生"
 
 		$totalTest = $totalTest + 1 
 
@@ -151,7 +155,6 @@ class ContinuePlay
 		    		client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./preceding-sibling::*[./*]]][1]", 0, 1)
 					ContinuePlay.new.ios_playingOperation(client)
 				end
-
 			else
 				client.sleep(1000)
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
@@ -166,19 +169,23 @@ class ContinuePlay
 		end		
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc6 = ($obj_buypv.ios_testBuyingPPV(client))
-		
-		iosrt5 = RegressionTestInfo.new
-		iosrt5.execution_time = $obj_utili.getTime
-		iosrt5.test_device = "iOS" 
-		iosrt5.testcase_num = 5
-		iosrt5.testcase_summary = "つづきを再生"
-		iosrt5.test_result = $result
-		iosrt5.capture_url = $captureURL		
-		iosrt5.err_message = $errMsgConti
-		iosrt5.comment = ""
 
-		return iosrt5
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 5
+		@testcase_summary = "つづきを再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgConti
+		@comment = ""
+
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_buypv.ios_testBuyingPPV(client))
 	end
 
 	####################################################

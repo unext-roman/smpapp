@@ -40,19 +40,23 @@ class HistoryPlay
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc8 = ($obj_prcsp.testPurchasedItemPlay(client))		
 
-		andrt7 = RegressionTestInfo.new
-		andrt7.execution_time = $obj_utili.getTime
-		andrt7.test_device = "ANDROID" 
-		andrt7.testcase_num = 7
-		andrt7.testcase_summary = "視聴履歴から再生"
-		andrt7.test_result = $result
-		andrt7.capture_url = $captureURL
-		andrt7.err_message = $errMsgHisto
-		andrt7.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 7
+		@testcase_summary = "視聴履歴から再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgHisto
+		@comment = ""
 
-		return andrt7
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_prcsp.testPurchasedItemPlay(client))
 	end
 
 	####################################################
@@ -78,8 +82,6 @@ class HistoryPlay
 					HistoryPlay.new.checkPPVorSVODorPurchased(client)			
 				end
 			end
-			#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			#client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "text=ホーム", 0, 1)
@@ -212,6 +214,7 @@ class HistoryPlay
 
 	def ios_testHistoryPlay(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
@@ -235,19 +238,23 @@ class HistoryPlay
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))		
-		$tc8 = ($obj_prcsp.ios_testPurchasedItemPlay(client))
 
-		iosrt7 = RegressionTestInfo.new
-		iosrt7.execution_time = $obj_utili.getTime		
-		iosrt7.test_device = "iOS" 
-		iosrt7.testcase_num = 7
-		iosrt7.testcase_summary = "視聴履歴から再生"
-		iosrt7.test_result = $result
-		iosrt7.capture_url = $captureURL
-		iosrt7.err_message = $errMsgHisto
-		iosrt7.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 7
+		@testcase_summary = "視聴履歴から再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgHisto
+		@comment = ""
 
-		return iosrt7
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_prcsp.ios_testPurchasedItemPlay(client))
 	end
 
 	####################################################

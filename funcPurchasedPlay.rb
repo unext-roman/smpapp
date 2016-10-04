@@ -41,19 +41,24 @@ class PurchasePlay
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc9 = ($obj_mylst.testMylistContent(client))		
 
-		andrt8 = RegressionTestInfo.new
-		andrt8.execution_time = $obj_utili.getTime
-		andrt8.test_device = "ANDROID" 
-		andrt8.testcase_num = 8
-		andrt8.testcase_summary = "購入済みから再生"
-		andrt8.test_result = $result
-		andrt8.capture_url = $captureURL
-		andrt8.err_message = $errMsgBougt
-		andrt8.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "ANDROID" 
+		@testcase_num = 8
+		@testcase_summary = "購入済みから再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgBougt
+		@comment = ""
 
-		return andrt8
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		#puts ($obj_mylst.testMylistContent(client))
+		puts ($obj_dwnld.testSingleDownload(client))		
 	end
 
 	####################################################
@@ -158,19 +163,23 @@ class PurchasePlay
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
-		$tc9 = ($obj_mylst.ios_testMylistContent(client))	
 
-		iosrt8 = RegressionTestInfo.new
-		iosrt8.execution_time = $obj_utili.getTime		
-		iosrt8.test_device = "iOS" 
-		iosrt8.testcase_num = 8
-		iosrt8.testcase_summary = "購入済みから再生"
-		iosrt8.test_result = $result
-		iosrt8.capture_url = $captureURL		
-		iosrt8.err_message = $errMsgBougt
-		iosrt8.comment = ""
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 8
+		@testcase_summary = "購入済みから再生"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgBougt
+		@comment = ""
 
-		return iosrt8
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		client.sleep(2000)
+		puts ($obj_mylst.ios_testMylistContent(client))	
 	end
 
 	####################################################
