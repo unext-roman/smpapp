@@ -45,7 +45,7 @@ class DownlaodPlay
 			client.sleep(2000)
 			client.click("NATIVE", "text=ホーム", 0, 1)
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 	
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -60,7 +60,7 @@ class DownlaodPlay
 		@testcase_summary = "単話ダウンロード再生機能"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgDwnld
+		@err_message = $errMsgDwnpl
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
@@ -89,6 +89,12 @@ class DownlaodPlay
 				client.sleep(1000)			
 				if $dloading == true
 					puts "::MSG:: Can not perform download playing, execute later"
+					$result = $resultNG
+					$failCount = $failCount + 1
+					$finishedTest = $finishedTest + 1
+					$errMsgDwnpl = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了しました後又ご確認下さい"
+					puts "Result is -> " + $result	
+					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 				else
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@id='download_indicator']", 0, 1)
@@ -102,6 +108,12 @@ class DownlaodPlay
 				client.sleep(2000)
 				if $dloading == true
 					puts "::MSG:: Can not perform download playing, execute later"
+					$result = $resultNG
+					$failCount = $failCount + 1
+					$finishedTest = $finishedTest + 1
+					$errMsgDwnpl = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了しました後ご確認下さい"
+					puts "Result is -> " + $result	
+					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"		
 				else
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@id='download_indicator']", 0, 1)
@@ -111,7 +123,7 @@ class DownlaodPlay
 				end
 			end
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 	end
 
@@ -158,7 +170,7 @@ class DownlaodPlay
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)		
 			client.sleep(2000)
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 	end
 
@@ -188,7 +200,7 @@ class DownlaodPlay
 				i += 1				
 			end
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Downlaod is taking too much time, skipping as of now " + e.message
+			$errMsgDwnpl = "::MSG:: Downlaod is taking too much time, skipping as of now " + e.message
 		end
 		#end while !dlcnt0.include?('ダウンロード中') 	
 	end
@@ -227,7 +239,7 @@ class DownlaodPlay
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 	
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -242,7 +254,7 @@ class DownlaodPlay
 		@testcase_summary = "単話ダウンロード再生機能"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgDwnld
+		@err_message = $errMsgDwnpl
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
@@ -275,6 +287,12 @@ class DownlaodPlay
 				client.sleep(1000)			
 				if $dloading == true
 					puts "::MSG:: Can not perform download playing, execute later"
+					$result = $resultNG
+					$failCount = $failCount + 1
+					$finishedTest = $finishedTest + 1
+					$errMsgDwnpl = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了しました後ご確認下さい"
+					puts "Result is -> " + $result	
+					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 				else
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
@@ -288,6 +306,12 @@ class DownlaodPlay
 				client.sleep(2000)
 				if $dloading == true
 					puts "::MSG:: Can not perform download playing, execute later"
+					$result = $resultNG
+					$failCount = $failCount + 1
+					$finishedTest = $finishedTest + 1
+					$errMsgDwnpl = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了しました後ご確認下さい"
+					puts "Result is -> " + $result	
+					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 				else
 					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
 					client.sleep(10000)
@@ -296,7 +320,7 @@ class DownlaodPlay
 				end
 			end
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 	end
 
@@ -347,7 +371,7 @@ class DownlaodPlay
 			client.click("NATIVE", "xpath=//*[@class='UIControl']", 0, 1)
 			client.sleep(1000)
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 	end
 
@@ -376,7 +400,7 @@ class DownlaodPlay
 				i += 1				
 			end
 		rescue Exception => e
-			$errMsgDwnld = "::MSG:: Downlaod is taking too much time, skipping as of now " + e.message
+			$errMsgDwnpl = "::MSG:: Downlaod is taking too much time, skipping as of now " + e.message
 		end
 	end
 end
