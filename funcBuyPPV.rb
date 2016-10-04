@@ -17,6 +17,7 @@ class BuyPPV
 
 	def testBuyingPPV(client)
 		client.sleep(2000)
+		#client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
@@ -45,7 +46,7 @@ class BuyPPV
 						if str3 == "true"
 							puts "::MSG:: PPV 作品を見つかりました「PPV item found」"
 							client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])", i, 1)
-							client.sleep(2000)
+							client.sleep(5000)
 							puts "::MSG:: 該当作品を選びました「Item from list has been clicked」"
 							client.sleep(1000)
 							if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
@@ -57,7 +58,7 @@ class BuyPPV
 									BuyPPV.new.purchasingContent(client)
 								end
 								# breaking loop, when operation has been done successfully
-								@flag = true
+								#@flag = true
 								break
 							end
 							# count for loop
@@ -65,20 +66,31 @@ class BuyPPV
 							#end
 							#break
 						else
-							puts "::MSG:: There is no PPV content at index #{i}!!!"								
+							puts "::MSG:: There is no PPV content at index #{i}!!!"
+							@flag = false
 						end
 						i = i + 1				
 					end
 				end
-				if @flag == true
-					break
-				else
-					n = n + 1
-					client.sleep(2000)
-					client.swipe2("Down", 300, 1500)
-					client.sleep(2000)
-				end
-			end	
+				#if @flag == true
+				#	break
+				#else
+				#	n = n + 1
+				#	client.sleep(2000)
+				#	client.swipe2("Down", 300, 1500)
+				#	client.sleep(2000)
+				#end
+			end
+			if @flag == false
+				puts "::MSG:: PPV作品が見つからず購入できませんでした、「Could not find any PPV content to purchase!!!」"
+				$result = $resultNG
+				$failCount = $failCount + 1
+				$finishedTest = $finishedTest + 1
+				$errMsgBuypv = "::MSG:: 未購入のPPV作品を見つからず購入ができませんでした、PPV作品の購入が出来る用アカウントをご利用ください。"	
+				puts "Result is -> " + $result	
+				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			end
+
 		rescue Exception => e
 			$errMsgBuypv = "::MSG:: Exception occurrred while while finding ELEMENT: " + e.message	
 		end
