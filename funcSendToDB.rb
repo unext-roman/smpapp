@@ -70,7 +70,8 @@ class SendResultsToDB < ConnectDB
 		SendResultsToDB.new.createTableReleaseTestCycle
 
 		if date == nil || build_no == nil || login_id == nil || device_type == nil || device_name == nil
-			return false
+			#return false
+			puts "::MSG:: DB found NULL, Sending unsuccessful"
 		end
 		begin
 			puts "Pushing data into Cycle DB"
@@ -79,7 +80,8 @@ class SendResultsToDB < ConnectDB
 		rescue
 			return false
 		end
-		return true
+		#return true
+		puts "::MSG:: Sent results to DB sucessfully"
 	end
 
 	def insertIntoReleaseTestEachFunc(date, test_num, test_summary, result, capture_url, err_message, comment)
@@ -87,7 +89,8 @@ class SendResultsToDB < ConnectDB
 		SendResultsToDB.new.createTableReleaseTestEachFunc
 
 		if date == nil || test_num == nil || test_summary == nil || result == nil
-			return false
+			#return false
+			puts "::MSG:: DB found NULL, Sending unsuccessful"
 		end
 		begin
 			puts "::MSG:: Pushing data into Each DB"
@@ -96,6 +99,7 @@ class SendResultsToDB < ConnectDB
 		rescue
 			return false
 		end
-		return true
+		#return true
+		puts "::MSG:: Sent TC result to DB sucessfully"
 	end
 end
