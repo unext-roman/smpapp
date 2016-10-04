@@ -19,6 +19,8 @@
 	$exeTime = ""
 	$captureURL = ""
 	$tcs = 0
+	TIME = Time.new.strftime("%Y-%m-%d %H:%M:%S")
+	$execution_time = TIME
 
 	#Error Message List
 	$errMsgLogin = ""
@@ -32,9 +34,13 @@
 	$errMsgDwnld = ""
 	$errMsgEpsdp = ""
 	$errMsgSarch = ""
+	$errMsgAdtml = ""
 	$errMsgLnbko = ""
 	$errMsgDelet = ""
-
+	$errMsgEdite = ""
+	$errMsgEditd = ""
+	$errMsgEditm = ""
+	$errMsgRtngs = ""
 
 	#class names
 
