@@ -26,6 +26,15 @@ load "funcSendToDB.rb"
 load "funcTitleDownload.rb"
 load "funcDownloadPlay.rb"
 load "funcEpisodePlay.rb"
+load "funcKeySearch.rb"
+load "funcGenerSearch.rb"
+load "funcFilterDisplay.rb"
+load "funcAddToMylist.rb"
+load "funcLeanbackOpe.rb"
+load "funcEditHistory.rb"
+load "funcEditDownload.rb"
+load "funcEditMylist.rb"
+load "funcItemRatings.rb"
 load "setupHost.rb"
 load "funcRelease.rb"
 
@@ -51,6 +60,15 @@ load "funcRelease.rb"
 	$obj_dwnld = TitleDownload.new
 	$obj_dwnpl = DownlaodPlay.new
 	$obj_epsdp = EpisodePlay.new
+	$obj_keysh = KeywordSearch.new
+	$obj_gener = GenericSearch.new
+	$obj_fltrs = FilterSearch.new
+	$obj_adtml = AddToMylist.new
+	$obj_lnbck = Leanback.new
+	$obj_edith = EditHistory.new
+	$obj_editd = EditDownload.new
+	$obj_editm = EditMylist.new
+	$obj_rtngs = ItemRatings.new
 	$obj_logot = Logout.new
 	$obj_utili = Utility.new
 	$obj_snddb = SendResultsToDB.new
@@ -82,13 +100,14 @@ load "funcRelease.rb"
 	def startTest(client, dtype, dname, logid, passw)
 
 		@dtype = dtype
-		#$dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)		
+		#$dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
+		$dname = dname
 		@logid = logid
 		@passw = passw
 
 		if @dtype == "ios"
 			#client.setDevice("#{$dname}")
-			client.waitForDevice("\"@name='#{dname}'\"", 300000)
+			client.waitForDevice("\"@name='#{$dname}' AND @remote='true'\"", 300000)
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
@@ -96,7 +115,7 @@ load "funcRelease.rb"
 			$tc2 = ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
 		elsif @dtype == "android"
 			#client.setDevice("#{$dname}")
-			client.waitForDevice("\"@name='#{dname}'\"", 300000)
+			client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
@@ -120,25 +139,19 @@ load "funcRelease.rb"
 			puts "**********************************************************************"
 			puts "			TEST RESULTS 												"
 			puts ""
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc2.execution_time, $tc2.testcase_num, $tc2.testcase_summary, $tc2.test_result, $tc2.capture_url, $tc2.err_message, $tc2.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc3.execution_time, $tc3.testcase_num, $tc3.testcase_summary, $tc3.test_result, $tc3.capture_url, $tc3.err_message, $tc3.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc5.execution_time, $tc5.testcase_num, $tc5.testcase_summary, $tc5.test_result, $tc5.capture_url, $tc5.err_message, $tc5.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc6.execution_time, $tc6.testcase_num, $tc6.testcase_summary, $tc6.test_result, $tc6.capture_url, $tc6.err_message, $tc6.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc7.execution_time, $tc7.testcase_num, $tc7.testcase_summary, $tc7.test_result, $tc7.capture_url, $tc7.err_message, $tc7.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc8.execution_time, $tc8.testcase_num, $tc8.testcase_summary, $tc8.test_result, $tc8.capture_url, $tc8.err_message, $tc8.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc9.execution_time, $tc9.testcase_num, $tc9.testcase_summary, $tc9.test_result, $tc9.capture_url, $tc9.err_message, $tc9.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc10.execution_time, $tc10.testcase_num, $tc10.testcase_summary, $tc10.test_result, $tc10.capture_url, $tc10.err_message, $tc10.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc11.execution_time, $tc11.testcase_num, $tc11.testcase_summary, $tc11.test_result, $tc11.capture_url, $tc11.err_message, $tc11.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tc12.execution_time, $tc12.testcase_num, $tc12.testcase_summary, $tc12.test_result, $tc12.capture_url, $tc12.err_message, $tc12.comment))
-			puts ($obj_snddb.insertIntoReleaseTestEachFunc($tcEnd.execution_time, $tcEnd.testcase_num, $tcEnd.testcase_summary, $tcEnd.test_result, $tcEnd.capture_url, $tcEnd.err_message, $tcEnd.comment))
 			puts ($obj_snddb.insertIntoReleaseTestCycle($obj_utili.getTime, @build, @loginid, @dtype, @dname, $passCount, $failCount))
 		rescue Exception => e
 			$errMsgLogot = "::MSG:: Exception occurrred while sending results to DB " + e.message	
 		end
 	end
 
+	def callFinisherClient
+
+		$obj_finis.testEnd(client, $dname)		
+	end
+
 	unextTestPrgm
 	startTest(client, $d_type, $d_name, $l_id, $pass)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
-
-	#$obj_finis.testEnd(client, $dname)
+	callFinisherClient
+	
