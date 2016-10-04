@@ -23,7 +23,7 @@ class AddToMylist
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @マイリストに追加・削除機能"
+		puts "::MSG::[ANDROID] STARTING TEST ADDTO FAVORITE@マイリストに追加・削除機能"
 
 		$totalTest = $totalTest + 1 
 

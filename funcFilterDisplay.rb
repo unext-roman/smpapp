@@ -26,7 +26,7 @@ class FilterSearch
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @フィルタリング・表示順機能"
+		puts "::MSG::[ANDROID] STARTING TEST FILTERING SEARCH@フィルタリング・表示順機能"
 
 		$totalTest = $totalTest + 1 
 

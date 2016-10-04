@@ -31,7 +31,7 @@ class KeywordSearch
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @キーワードー検索機能"
+		puts "::MSG::[ANDROID] STARTING TEST KEYWORD SEARCH@キーワードー検索機能"
 
 		$totalTest = $totalTest + 1 
 

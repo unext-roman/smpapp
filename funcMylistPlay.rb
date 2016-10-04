@@ -21,7 +21,7 @@ class MyList
 
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @マイリストから再生機能"
+		puts "::MSG::[ANDROID] STARTING TEST PLAY FROM FAVORITE@マイリストから再生機能"
 
 		$totalTest = $totalTest + 1
 

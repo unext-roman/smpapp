@@ -23,7 +23,7 @@ class Leanback
 		
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST @リンバック操作機能"
+		puts "::MSG::[ANDROID] STARTING TEST LEANBACK OPERATION@リンバック操作機能"
 
 		$totalTest = $totalTest + 1 
 
