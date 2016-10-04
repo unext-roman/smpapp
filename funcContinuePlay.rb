@@ -62,6 +62,7 @@ class ContinuePlay
 		@err_message = $errMsgConti
 		@comment = ""
 
+		client.sleep(2000)
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 		puts ($obj_buypv.testBuyingPPV(client))
@@ -182,7 +183,8 @@ class ContinuePlay
 		@capture_url = $captureURL
 		@err_message = $errMsgConti
 		@comment = ""
-
+		
+		client.sleep(2000)
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 		puts ($obj_buypv.ios_testBuyingPPV(client))
