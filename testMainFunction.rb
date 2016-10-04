@@ -120,7 +120,7 @@ load "funcRelease.rb"
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
 			client.sleep(5000)
-			puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
+			tc2 = ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
 		else
 			puts "::MSG:: 該当デバイスが見つかりません「Confirm target test devcie」"
 		end
