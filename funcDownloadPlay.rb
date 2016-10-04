@@ -146,7 +146,7 @@ class DownlaodPlay
 			client.sleep(2000)
 			client.click("NATIVE", "text=えほん", 0, 1)
 			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@id='subscription']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='見放題']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=(//*[@id='recycler_view' and ./following-sibling::*[@id='error_view']]/*/*/*[@id='thumbnail'])", 0, 1)
 			client.sleep(2000)
@@ -161,13 +161,13 @@ class DownlaodPlay
 			end
 
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)		
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)		
 			client.sleep(2000)
 		rescue Exception => e
 			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
