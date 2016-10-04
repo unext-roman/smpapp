@@ -88,15 +88,10 @@ class SendResultsToDB < ConnectDB
 
 		SendResultsToDB.new.createTableReleaseTestEachFunc
 
-		begin
-			if date == nil || test_num == nil || test_summary == nil || result == nil
-				return false
-				puts "::MSG:: DB found NULL, Can't send data"
-			end
-		rescue	Exception => e
-			$errMsgLogin = "::MSG:: Exception occurrred while sending each data" + e.message	
+		if date == nil || test_num == nil || test_summary == nil || result == nil
+			return false
+			puts "::MSG:: DB found NULL, Can't send data"
 		end
-
 		begin
 			#puts "::MSG:: Pushing data into Each DB"
 			sql = "insert into #{@table_releasetest_each_func} (#{@each_func_key_date}, #{@each_func_key_test_num}, #{@each_func_key_test_summary}, #{@each_func_key_result}, #{@each_func_key_capture_url}, #{@each_func_key_err_message}, #{@each_func_key_comment}) values ('#{date}','#{test_num}','#{test_summary}','#{result}','#{capture_url}','#{err_message}','#{comment}');"
