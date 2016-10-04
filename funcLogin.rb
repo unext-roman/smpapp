@@ -129,6 +129,7 @@ class Login
 		@capture_url = $captureURL
 		@err_message = $errMsgLogin
 		@comment = $comment
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 
 		puts "#{@exetime}"
 		puts "#{@test_device}"
@@ -138,9 +139,6 @@ class Login
 		puts "#{@capture_url}"
 		puts "#{@err_message}"
 		puts "#{@comment}"
-
-		client.sleep(2000)
-		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 		if @flag == true
 			#puts ($obj_snglp.testSinglePlay(client))
