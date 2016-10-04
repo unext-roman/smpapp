@@ -78,7 +78,7 @@ class SendResultsToDB < ConnectDB
 			self.query(sql)
 		rescue
 			return false
-			puts "::MSG:: DBにデータ送信を失敗しました「Could not send data to DB」"
+			puts "::MSG:: DBにCycleデータ送信を失敗しました「Could not send data to DB」"
 		end
 		return true
 	end
@@ -96,7 +96,7 @@ class SendResultsToDB < ConnectDB
 			self.query(sql)
 		rescue
 			return false
-			puts "::MSG:: DBにデータ送信を失敗しました「Could not send data to DB」"
+			puts "::MSG:: DBにEachデータ送信を失敗しました「Could not send data to DB」"
 		end
 		return true
 	end
