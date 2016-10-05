@@ -17,7 +17,6 @@ class MyList
 
 	def testMylistContent(client)
 		client.sleep(2000)
-		#client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
@@ -203,7 +202,7 @@ class MyList
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 		#puts ($obj_dwnld.ios_testSingleDownload(client))
-		puts ($obj_dwnpl.testDownloadPlay(client))			
+		puts ($obj_dwnpl.ios_testDownloadPlay(client))			
 	end
 
 	####################################################
