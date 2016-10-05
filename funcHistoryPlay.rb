@@ -214,7 +214,6 @@ class HistoryPlay
 
 	def ios_testHistoryPlay(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
