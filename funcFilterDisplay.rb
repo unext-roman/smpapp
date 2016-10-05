@@ -22,7 +22,6 @@ class FilterSearch
 
 	def testFilterSearch(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
