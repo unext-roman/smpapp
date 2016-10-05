@@ -240,6 +240,7 @@ class AddToMylist
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
 		#puts ($obj_lnbck.ios_testLeanbackOperation(client)) #this module is not implemented for iOS
+		puts ($obj_lnbck.ios_testLogout(client))		
 	end
 
 	####################################################
