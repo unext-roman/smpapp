@@ -189,7 +189,6 @@ class GenericSearch
 
 	def ios_testGenericSearch(client)
 		client.sleep(2000)
-		#client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
