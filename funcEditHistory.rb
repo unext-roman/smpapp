@@ -22,7 +22,6 @@ class EditHistory
 
 	def testEditHistoryList(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")	
 
 		puts ""
 		puts ""
