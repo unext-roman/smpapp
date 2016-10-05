@@ -4,6 +4,7 @@
 # 課題 : スマホアプリ向け回帰テストの自動化
 # モジュール : ロカル機能・テスト結果をDBに送信機能
 # 開発者 : Kadomura Keito
+# 更新者 : Roman Ahmed
 # コピーライト : U-NEXT Co. Ltd.
 # バージョン : v1.0
 #############################################################################
@@ -81,7 +82,7 @@ class SendResultsToDB < ConnectDB
 			puts "::MSG:: Exception occurred while sending all results to DB"
 		end
 		#return true
-		puts "::MSG:: Sent all tc results to DB sucessfully"
+		puts "::MSG:: 全結果はDBに送信を成功しました「Results have been sent to DB successfully」"
 	end
 
 	def insertIntoReleaseTestEachFunc(date, test_num, test_summary, result, capture_url, err_message, comment)
@@ -100,6 +101,6 @@ class SendResultsToDB < ConnectDB
 			puts "::MSG:: Exception occurred while sending tc result to DB"
 		end
 		#return true
-		puts "::MSG:: Sent TC result to DB sucessfully"
+		puts "::MSG:: TC結果はDBに送信を成功しました「TC result has been sent to DB successfully」"
 	end
 end
