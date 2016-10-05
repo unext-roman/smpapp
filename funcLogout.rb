@@ -17,7 +17,6 @@ class Logout
 
 	def testLogout(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")		
 		
 		puts ""
 		puts ""
@@ -79,7 +78,7 @@ class Logout
 		@testcase_summary = "ログアウト"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgRtngs
+		@err_message = $errMsgLogot
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
@@ -95,7 +94,6 @@ class Logout
 
 	def ios_testLogout(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")		
 
 		puts ""
 		puts ""
@@ -148,7 +146,7 @@ class Logout
 		@testcase_summary = "ログアウト"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgRtngs
+		@err_message = $errMsgLogot
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
