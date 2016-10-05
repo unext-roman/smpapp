@@ -273,8 +273,8 @@ class KeywordSearch
 				end					
 			end
 			client.sleep(2000)
-			client.elementSendText("NATIVE", "xpath=//*[@class='UITextFieldBorderView']", 0, "")
-			client.sleep(2000)
+			#client.elementSendText("NATIVE", "xpath=//*[@class='UITextFieldBorderView']", 0, "")
+			#client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='つづきを再生']", 0, 1)
 			#client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./following-sibling::*[@class='UITableViewLabel'] and ./parent::*[./parent::*[@class='UNextMobile_Protected.SpotlightBlockCell']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[@class='UIView' and ./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])", 0, 1)	
 			client.sleep(2000)

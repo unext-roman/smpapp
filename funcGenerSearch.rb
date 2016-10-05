@@ -177,7 +177,7 @@ class GenericSearch
 			puts "Result is -> " + $result	
 			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 		end
-		#puts "::MSG:: Result is  #{@@gres}"
+		puts "::MSG:: Result is  #{@@gres}"
 	end
 
 	####################################################
@@ -189,6 +189,7 @@ class GenericSearch
 
 	def ios_testGenericSearch(client)
 		client.sleep(2000)
+		#client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
@@ -256,7 +257,8 @@ class GenericSearch
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
 			client.sleep(1000)
 
-			if client.isElementFound("NATIVE", "xpath=//*[@text='タイトルとの一致']") || client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]")
+			# currently this condition has problem and needs to correct
+			if client.isElementFound("NATIVE", "xpath=//*[@text='タイトルとの一致']") == true || client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]") == true
 				GenericSearch.new.icheckSearchField(client)
 			end
 		
