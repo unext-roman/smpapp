@@ -152,7 +152,7 @@ class KeywordSearch
 				puts "Result is -> " + $result	
 				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"					
 			end
-			#puts "::MSG:: Result is  #{@@res}"
+			puts "::MSG:: Result is  #{@@res}"
 			#puts "::MSG:: Total test #{$totalTest}"
 			#puts "::MSG:: Pass count #{$passCount}"
 			#puts "::MSG:: Fail count #{$failCount}"
@@ -176,6 +176,7 @@ class KeywordSearch
 
 	def ios_testKeywordSearch(client)
 		client.sleep(2000)
+		#client.setDevice("ios_app:autoIpad")
 		
 		@k1 = "lovers"
 		@k2 = "ドラゴンボール"
@@ -254,22 +255,28 @@ class KeywordSearch
 					chkkeys = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNTitleCell' and ./*[./*[@text]]]", "text")
 				else
 					chkkeys = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNTitleCell' and ./*[./*[@text]]]", "text")
-				end		
+				end
+				client.sleep(2000)
 				puts "::MSG:: String values found are #{chkkeys}"
 				key = ["LOVERS", "ドラゴンボール", "007", "AKB0048", "tgyushtdgdbjs"]
 				#key = ["WWWWWWW", "ドドドド", "1111111", "SSSSS", "tgyushtdgdbjs"]
 				key.each do |i|
 					if chkkeys.select{|x| x.match(i) }.length > 0
-						@@res = @@res.push(true) 
+						@@res = @@res.push(true)
+						puts "Matched Found"
 						#puts "::MSG:: 検索キーワードーでの関連作品を見つけました「Search keyword related contents matched」"
 					else
 						@@res = @@res.push(false)
+						puts "Not Found"
 						#puts "検索キーワードーでの関連作品を見つけませんでした「Did not find search keyword related contents」"
 					end				
 				end					
 			end
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./following-sibling::*[@class='UITableViewLabel'] and ./parent::*[./parent::*[@class='UNextMobile_Protected.SpotlightBlockCell']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[@class='UIView' and ./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])", 0, 1)	
+			client.elementSendText("NATIVE", "xpath=//*[@class='UITextFieldBorderView']", 0, "")
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='つづきを再生']", 0, 1)
+			#client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./following-sibling::*[@class='UITableViewLabel'] and ./parent::*[./parent::*[@class='UNextMobile_Protected.SpotlightBlockCell']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[@class='UIView' and ./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])", 0, 1)	
 			client.sleep(2000)
 			KeywordSearch.new.searchResult
 		rescue Exception => e
