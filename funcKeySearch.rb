@@ -176,7 +176,6 @@ class KeywordSearch
 
 	def ios_testKeywordSearch(client)
 		client.sleep(2000)
-		#client.setDevice("ios_app:autoIpad")
 		
 		@k1 = "lovers"
 		@k2 = "ドラゴンボール"
