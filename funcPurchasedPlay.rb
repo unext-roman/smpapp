@@ -179,7 +179,8 @@ class PurchasePlay
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		client.sleep(2000)
-		puts ($obj_mylst.ios_testMylistContent(client))	
+		#puts ($obj_mylst.ios_testMylistContent(client))
+		puts ($obj_dwnld.ios_testSingleDownload(client))
 	end
 
 	####################################################
