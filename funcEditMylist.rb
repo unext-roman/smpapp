@@ -151,10 +151,10 @@ class EditMylist
 			if client.isElementFound("NATIVE", "text=つづきを再生")
 				EditMylist.new.ilistEditing(client)
 			else
-				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-				client.sleep(1000)
-				client.click("NATIVE", "text=ホーム", 0, 1)
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
 				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+				client.sleep(2000)				
 				EditMylist.new.ilistEditing(client)
 			end
 		rescue Exception => e
