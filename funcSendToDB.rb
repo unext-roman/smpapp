@@ -82,7 +82,7 @@ class SendResultsToDB < ConnectDB
 			puts "::MSG:: Exception occurred while sending all results to DB"
 		end
 		#return true
-		puts "::MSG:: 全結果はDBに送信を成功しました「Results have been sent to DB successfully」"
+		puts "::MSG:: 全結果はDBに送信を成功しました「Full test results have been sent to DB successfully」"
 	end
 
 	def insertIntoReleaseTestEachFunc(date, test_num, test_summary, result, capture_url, err_message, comment)
