@@ -142,7 +142,7 @@ class EditMylist
 		
 		puts ""
 		puts ""
-		puts "::MSG::[ANDROID] STARTING TEST EDITING MYLIST@マイリストの編集機能"
+		puts "::MSG::[iOS] STARTING TEST EDITING MYLIST@マイリストの編集機能"
 
 		$totalTest = $totalTest + 1 
 
