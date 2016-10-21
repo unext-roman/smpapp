@@ -101,6 +101,7 @@ load "funcRelease.rb"
 
 	def startTest(client, dtype, dname, logid, passw)
 
+		@dname = dname
 		@dtype = dtype
 		#$dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
 		$dname = dname
@@ -125,8 +126,8 @@ load "funcRelease.rb"
 			requested_device_id = ""
 
 			devices_array.each do |device|
-			  	if device["deviceName"] == "#{$dname}"
-					requested_device_id = device["id"]
+			  	if device["deviceName"] == @dname
+					requested_device_id.to_s = device["id"].to_s
 				end
 			end
 			#And now reserve the device
