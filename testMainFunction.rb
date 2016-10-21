@@ -125,8 +125,8 @@ load "funcRelease.rb"
 			requested_device_id = nil
 
 			devices_array.each do |device|
-			  	if device["deviceName"].to_s == "#{$dname}"
-					requested_device_id = device["id"]
+			  	if device["deviceName"] == "#{$dname}"
+					requested_device_id = device["id"].to_s
 				end
 			end
 			#And now reserve the device
