@@ -125,7 +125,7 @@ load "funcRelease.rb"
 			requested_device_id = nil
 
 			devices_array.each do |device|
-			  	if device["deviceName"] == "#{$dname}"
+			  	if device["deviceName"].to_s == "#{$dname}"
 					requested_device_id = device["id"]
 				end
 			end
@@ -139,7 +139,7 @@ load "funcRelease.rb"
 			}
 			client.setDevice("#{$dname}")
 			#sagi code
-			
+
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
