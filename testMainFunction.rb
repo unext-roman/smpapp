@@ -122,11 +122,11 @@ load "funcRelease.rb"
 			#Get the device id for the desired device
 			api_result = JSON.parse(res.body)
 			devices_array = api_result["data"]
-			requested_device_id = nil
+			requested_device_id = ""
 
 			devices_array.each do |device|
 			  	if device["deviceName"] == "#{$dname}"
-					requested_device_id = device["id"].to_s
+					requested_device_id = device["id"]
 				end
 			end
 			#And now reserve the device
