@@ -6,6 +6,8 @@
 # バージョン : v1.0
 #############################################################################
 
+require 'json'
+
 #/Users/admin/Desktop/github_edited
 
 #loading android libs
@@ -108,7 +110,36 @@ load "funcRelease.rb"
 
 		if @dtype == "ios"
 			#client.setDevice("#{$dname}")
-			client.waitForDevice("\"@name='#{$dname}' AND @remote='true'\"", 300000)
+			#client.waitForDevice("\"@name='#{$dname}' AND @remote='true'\"", 300000)
+			#sagi code
+			#Request the devices list - Make sure you enter the right credential
+			uri = URI('http://10.4.136.3:8081/api/v1/devices')
+			req = Net::HTTP::Get.new(uri)
+			req.basic_auth 'unext-qa', 'Unextqa1'
+			res = Net::HTTP.start(uri.hostname, uri.port) {|http|
+			  http.request(req)
+			}
+			#Get the device id for the desired device
+			api_result = JSON.parse(res.body)
+			devices_array = api_result["data"]
+			requested_device_id = nil
+
+			devices_array.each do |device|
+			  	if device["deviceName"] == "#{$dname}"
+					requested_device_id = device["id"]
+				end
+			end
+			#And now reserve the device
+			uri = URI('http://sales.experitest.com/api/v1/devices/' + requested_device_id + '/reservations/new')
+			req = Net::HTTP::Post.new(uri)
+			req.basic_auth 'unext-qa', 'Unextqa1'
+			req.set_form_data('start' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"), 'end' => '2016-10-22-13-00-00', 'clientCurrentTimestamp' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"))
+			res = Net::HTTP.start(uri.hostname, uri.port) {|http|
+			  http.request(req)
+			}
+			client.setDevice("#{$dname}")
+			#sagi code
+			
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
