@@ -11,6 +11,8 @@
 
 class ItemRatings
 
+	@@comment = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testEditMylist
@@ -55,11 +57,10 @@ class ItemRatings
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgRtngs
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_logot.testLogout(client))		
+		#puts ($obj_plfel.testEpisodePlayFromPlayer(client))	
 	end
 
 	####################################################
@@ -128,27 +129,143 @@ class ItemRatings
 			client.sleep(2000)
 
 			if @uval != @cval
-				puts "::MSG:: 無事に評価設定しました「User ratings operaton was done successfully」"					
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				@@comment = "::MSG:: 無事に評価設定しました「User ratings operaton was done successfully」"					
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult
 			else
-				puts "評価設定時に問題が発生しました「Issue occurred while setting user ratings」"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"		
+				$errMsgRtngs = "評価設定時に問題が発生しました「Issue occurred while setting user ratings」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult	
 			end
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
 		rescue Exception => e
-			$errMsgRtngs = "::MSG:: Exception occurrred while updating ratings: " + e.message	
+			$errMsgRtngs = "::MSG:: Exception occurrred while updating ratings: " + e.message
+			$obj_rtnrs.returnNG
 		end
 	end
 
 	def getCurrentRating(client)
 		client.runNativeAPICall("NATIVE", "xpath=//*[@id='rate_picker']", 0, "view.getRate();")
+	end
+
+	####################################################
+	#Target Device: iOS
+	#Function Name: ios_testEditMylist
+	#Activity: Function for editing mylist
+	#Param: object
+	####################################################
+
+	def ios_testSakuhinRatings(client)
+		client.sleep(2000)
+		
+		puts ""
+		puts ""
+		puts "::MSG::[iOS] STARTING TEST ITEM RATINGS@評価機能"
+
+		$totalTest = $totalTest + 1 
+
+		begin
+			client.sleep(2000)
+			if client.isElementFound("NATIVE", "text=つづきを再生")
+				ItemRatings.new.iupdateRatings(client)
+			else
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+				client.sleep(2000)				
+				ItemRatings.new.iupdateRatings(client)
+			end
+		rescue Exception => e
+			$errMsgRtngs = "::MSG:: Exception occurrred while finding element: " + e.message	
+		end	
+
+		puts ($obj_utili.calculateRatio($finishedTest))		
+		
+		if $execution_time == nil
+			@exetime = $execution_time
+		else
+			@exetime = $execution_time
+		end
+		@test_device = "iOS" 
+		@testcase_num = 22
+		@testcase_summary = "作品の評価"
+		@test_result = $result
+		@capture_url = $captureURL
+		@err_message = $errMsgRtngs
+		@comment = @@comment
+
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
+		#puts ($obj_logot.ios_testEpisodePlayFromPlayer(client))			
+	end
+
+	####################################################
+	#Function Name: listEditing
+	#Activity: Function for editing history list
+	#Param: object
+	####################################################
+
+	def iupdateRatings(client)
+
+		@newrat = 0
+		@indx = 0
+
+		begin
+			if client.isElementFound("NATIVE", "text=つづきを再生")
+				#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@class='UIView'] and @accessibilityIdentifier='viewing_tilte_button.png']", 0, 1)
+				client.click("NATIVE", "xpath=//*[@class='UIImageView' and @onScreen='true' and @top='true' and ./parent::*[@class='UIView']]", 0, 1)			
+				client.sleep(2000)
+			else
+				#this line will be changed for iPhone or need to be optimized
+				client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView']]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[@class='UIView' and ./following-sibling::*[@height>0]]])", 9, 1)
+				client.sleep(2000)
+			end
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNRatingView' and ./parent::*[@class='UIView']]", 0, 1)
+			client.sleep(2000)
+			@curent = ItemRatings.new.getiCurrentRating(client)
+			puts "Current Rating is: #{@curent}"
+			@cval = @curent.to_i
+			case @cval
+			when 0
+				@indx = 4
+			when 1
+				@indx = 3
+			when 2
+				@indx = 4
+			when 3
+				@indx = 0
+			when 4
+				@indx = 1
+			when 5
+				@indx = 2
+			end
+			client.click("NATIVE", "xpath=(//*[@class='UNextMobile_Protected.UNRatingControl']/*/*[@class='UIImageView' and @width>0 and @height>0])", @indx, 1)
+			client.sleep(3000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNRatingView' and ./parent::*[@class='UIView']]", 0, 1)
+			client.sleep(1000)
+			@updrat = ItemRatings.new.getiCurrentRating(client)
+			@uval = @updrat.to_i
+			puts "Updated rating is: #{@uval}"
+			client.click("NATIVE", "xpath=//*[@text='キャンセル']", 0, 1)
+			client.sleep(2000)
+
+			if @uval != @cval
+				@@comment = "::MSG:: 無事に評価設定しました「User ratings operaton was done successfully」"					
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult
+			else
+				$errMsgRtngs = "評価設定時に問題が発生しました「Issue occurred while setting user ratings」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult
+			end
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
+			client.sleep(2000)
+		rescue Exception => e
+			$errMsgRtngs = "::MSG:: Exception occurrred while updating ratings: " + e.message
+			$obj_rtnrs.returnNG
+		end
+	end
+
+	def getiCurrentRating(client)
+		client.runNativeAPICall("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNRatingControl']", 0, "invokeMethod:'{\"selector\":\"rate\",\"arguments\":[]}'")
 	end
 end
