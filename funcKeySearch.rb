@@ -12,6 +12,7 @@
 class KeywordSearch
 
 	@@res = []
+	@@comment = ""
 
 	####################################################
 	#Target Device: Android
@@ -48,9 +49,9 @@ class KeywordSearch
 			end
 			client.sleep(1000)
 			#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='searchTextBg']]", 0, 1)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='search_word_container']]", 0, 1)			
+			#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@id='search_word_container']]", 0, 1)			
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgKsrch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -65,12 +66,12 @@ class KeywordSearch
 		@testcase_summary = "キーワードー検索機能"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgSarch
-		@comment = ""
+		@err_message = $errMsgKsrch
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_gener.testGenericSearch(client))
+		#puts ($obj_gener.testGenericSearch(client))
+		puts ($obj_fltrs.testFilterSearch(client))
 	end
 
 	####################################################
@@ -88,9 +89,9 @@ class KeywordSearch
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@id='searchButton']", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "id=editText", 0, 1)
+				client.click("NATIVE", "xpath=//*[@id='search_word_edit_text']", 0, 1)
 				client.sleep(2000)
-				client.elementSendText("NATIVE", "xpath=//*[@id='editText']", 0, index)
+				client.elementSendText("NATIVE", "xpath=//*[@id='search_word_edit_text']", 0, index)
 				client.sleep(2000)
 				client.closeKeyboard()
 				client.sleep(2000)
@@ -105,14 +106,12 @@ class KeywordSearch
 				#key = ["WWWWWWW", "ドドドド", "1111111", "SSSSS", "tgyushtdgdbjs"]
 				key.each do |i|
 					if chkkeys.select{|x| x.match(i) }.length > 0
-						@@res = @@res.push(true) 
-						puts "::MSG:: 検索キーワードーでの関連作品を見つけました「Search keyword related contents matched」"
-						client.sleep(1000)
-						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)	
+						@@res = @@res.push(true) 						
+						client.sleep(1000)						
+						client.click("NATIVE", "xpath=//*[@id='clear_search_word_button']", 0, 1)
 						client.sleep(1000)
 					else
-						@@res = @@res.push(false)
-						puts "検索キーワードーでの関連作品を見つけませんでした「Did not find search keyword related contents」"
+						@@res = @@res.push("")
 					end				
 				end					
 			end
@@ -121,7 +120,7 @@ class KeywordSearch
 			client.sleep(2000)
 			KeywordSearch.new.searchResult
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgKsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 	end
 
@@ -138,31 +137,21 @@ class KeywordSearch
 		#puts hash[true]
 		begin
 			if @@res.include?(true)					
-				puts "::MSG:: 検索キーワードーでの関連作品を見つけました「Search keyword related contents matched」"					
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				@@comment = "::MSG:: 検索キーワードーでの関連作品を見つけました「Search keyword related contents matched」"					
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult
 			else
-				puts "検索キーワードーでの関連作品を見つけませんでした「Did not find search keyword related contents」"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"					
+				$errMsgSarch = "検索キーワードーでの関連作品を見つけませんでした「Did not find search keyword related contents」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult					
 			end
 			puts "::MSG:: Result is  #{@@res}"
 			#puts "::MSG:: Total test #{$totalTest}"
 			#puts "::MSG:: Pass count #{$passCount}"
 			#puts "::MSG:: Fail count #{$failCount}"
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"					
+			$errMsgKsrch = "::MSG:: Exception occurred during search operation " + e.message
+			$obj_rtnrs.returnNG				
 		end		
 	end
 	#To-Do: Select searched item, and get into title details. future implementation
@@ -203,7 +192,7 @@ class KeywordSearch
 			#client.sleep(1000)
 			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgKsrch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -218,12 +207,12 @@ class KeywordSearch
 		@testcase_summary = "キーワードー検索機能"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgSarch
-		@comment = ""
+		@err_message = $errMsgKsrch
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_gener.ios_testGenericSearch(client))
+		#puts ($obj_gener.ios_testGenericSearch(client))
+		puts ($obj_fltrs.ios_testFilterSearch(client))
 	end
 
 	####################################################
@@ -239,7 +228,8 @@ class KeywordSearch
 		begin
 			keywords.each do |index|
 				client.sleep(2000)
-				client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
+				#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
+				client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)				
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@class='UITextFieldBorderView']", 0, 1)
 				client.sleep(2000)
@@ -255,19 +245,17 @@ class KeywordSearch
 				else
 					chkkeys = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNTitleCell' and ./*[./*[@text]]]", "text")
 				end
-				client.sleep(2000)
-				puts "::MSG:: String values found are #{chkkeys}"
+				#puts "::MSG:: String values found are #{chkkeys}"
 				key = ["LOVERS", "ドラゴンボール", "007", "AKB0048", "tgyushtdgdbjs"]
 				#key = ["WWWWWWW", "ドドドド", "1111111", "SSSSS", "tgyushtdgdbjs"]
 				key.each do |i|
 					if chkkeys.select{|x| x.match(i) }.length > 0
 						@@res = @@res.push(true)
-						puts "Matched Found"
-						#puts "::MSG:: 検索キーワードーでの関連作品を見つけました「Search keyword related contents matched」"
+						#client.sleep(1000)						
+						#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='search clear']]", 0, 1)
+						#client.sleep(1000)						
 					else
-						@@res = @@res.push(false)
-						puts "Not Found"
-						#puts "検索キーワードーでの関連作品を見つけませんでした「Did not find search keyword related contents」"
+						@@res = @@res.push("")						
 					end				
 				end					
 			end
@@ -279,7 +267,7 @@ class KeywordSearch
 			client.sleep(2000)
 			KeywordSearch.new.searchResult
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgKsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 	end
 end
