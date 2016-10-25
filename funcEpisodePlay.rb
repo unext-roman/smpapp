@@ -10,6 +10,8 @@
 
 class EpisodePlay
 
+	@@comment = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testSVODEpisodePlay
@@ -19,7 +21,6 @@ class EpisodePlay
 
 	def testSVODEpisodePlay(client)
 		client.sleep(2000)
-		#client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
@@ -63,12 +64,11 @@ class EpisodePlay
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgBougt
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		#puts ($obj_dwnpl.testDownloadPlay(client))
-		puts ($obj_mylst.testMylistContent(client))
+		#puts ($obj_mylst.testMylistContent(client))
+		puts ($obj_keysh.testKeywordSearch(client))
 	end
 
 	def getEpisodeToPlay(client)
@@ -109,6 +109,7 @@ class EpisodePlay
 			end
 		rescue Exception => e
 			$errMsgEpsdp = "::MSG:: Error occurred while episode playing.." + e.message
+			$obj_rtnrs.returnNG
 		end		
 		client.sleep(2000)
 	end
@@ -169,9 +170,8 @@ class EpisodePlay
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		#puts ($obj_dwnpl.ios_testDownloadPlay(client))
-		puts ($obj_mylst.ios_testMylistContent(client))		
+		#puts ($obj_mylst.ios_testMylistContent(client))		
+		puts ($obj_keysh.ios_testKeywordSearch(client))
 	end
 
 	def ios_getEpisodeToPlay(client)
