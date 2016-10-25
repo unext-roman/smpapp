@@ -37,8 +37,16 @@ load "funcEditHistory.rb"
 load "funcEditDownload.rb"
 load "funcEditMylist.rb"
 load "funcItemRatings.rb"
+load "funcPlayEpisodeFromPlayer.rb"
+load "funcChangeJifukiFromPlayer.rb"
+load "funcChangeVQualityFromPlayer.rb"
+load "funcTrickPlayFromPlayer.rb"
+load "funcConnectCast.rb"
+load "funcPlayWithoutLoggin.rb"
+load "funcDownloadWithoutLoggin.rb"
 load "setupHost.rb"
 load "funcRelease.rb"
+load "funcResultReturn.rb"
 
 	$host = ARGV[0]
 	$port = ARGV[1]
@@ -71,10 +79,18 @@ load "funcRelease.rb"
 	$obj_editd = EditDownload.new
 	$obj_editm = EditMylist.new
 	$obj_rtngs = ItemRatings.new
+	$obj_plfel = PlayEpisodeFromPlayer.new
+	$obj_chnjf = ChangeJifukiFromPlayer.new
+	$obj_vqual = ChangeVQualityFromPlayer.new
+	$obj_trick = TrickPlayOperation.new
+	$obj_ccast = ConnectChromecast.new
+	$obj_plwlg = PlaybackWithoutLogin.new
+	$obj_dlwlg = DownloadWithoutLogin.new
 	$obj_logot = Logout.new
 	$obj_utili = Utility.new
 	$obj_snddb = SendResultsToDB.new
 	$obj_finis = Finish.new
+	$obj_rtnrs = ResultReturn.new
 	
 	$dname = ""
 	####################################################
@@ -99,6 +115,12 @@ load "funcRelease.rb"
 
 	end
 
+	####################################################
+	#Module: Main functions
+	#Activity: Reserving a Cloud device and start Test
+	#Param: 
+	####################################################
+
 	def startTest(client, dtype, dname, logid, passw)
 
 		@dname = dname
@@ -110,13 +132,12 @@ load "funcRelease.rb"
 
 
 		if @dtype == "ios"
-			#client.setDevice("#{$dname}")
-			#client.waitForDevice("\"@name='#{$dname}' AND @remote='true'\"", 300000)
-			#sagi code
+			#tempdn
 			#Request the devices list - Make sure you enter the right credential
 			uri = URI('http://10.4.136.3:8081/api/v1/devices')
 			req = Net::HTTP::Get.new(uri)
-			req.basic_auth 'unext-qa', 'Unextqa1'
+			req.basic_auth 'admin', 'Unext1101'
+			#req.basic_auth 'unext-qa', 'Unextqa1'
 			res = Net::HTTP.start(uri.hostname, uri.port) {|http|
 			  http.request(req)
 			}
@@ -124,25 +145,24 @@ load "funcRelease.rb"
 			api_result = JSON.parse(res.body)
 			devices_array = api_result["data"]
 			requested_device_id = ""
-
+			
 			devices_array.each do |device|
 			  	if device["deviceName"] == @dname
-			  		puts "DEVICE NAME : #{device["deviceName"]}  && MYDEVICE : #{dname}"  
-			  		puts device["id"].class
-					requested_device_id.to_i = device["id"]					
+					requested_device_id = device["id"]					
 				end
 			end
 			#And now reserve the device
-			uri = URI('http://sales.experitest.com/api/v1/devices/' + requested_device_id + '/reservations/new')
+			uri = URI('http://10.4.136.3:8081/api/v1/devices/' + requested_device_id + '/reservations/new')
 			req = Net::HTTP::Post.new(uri)
-			req.basic_auth 'unext-qa', 'Unextqa1'
-			req.set_form_data('start' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"), 'end' => '2016-10-22-13-00-00', 'clientCurrentTimestamp' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"))
+			req.basic_auth 'admin', 'Unext1101'
+			#req.basic_auth 'unext-qa', 'Unextqa1'
+			req.set_form_data('start' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"), 'end' => '2016-10-30-23-00-00', 'clientCurrentTimestamp' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"))
 			res = Net::HTTP.start(uri.hostname, uri.port) {|http|
 			  http.request(req)
 			}
-			client.setDevice("#{$dname}")
-			#sagi code
-
+			client.addDevice("c24994f50118a6ae9db6a911da628b477a0ba401", "ipadair")
+			client.setDevice("#{"ios_app:" + @dname}")
+			#tempup
 			client.openDevice()
 			client.sleep(2000)
 			client.launch("jp.unext.mediaplayer", true, false)
@@ -158,9 +178,14 @@ load "funcRelease.rb"
 			puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
 		else
 			puts "::MSG:: 該当デバイスが見つかりません「Confirm target test devcie」"
-		end
-		#client.releaseDevice("#{$dname}", true, true, true)
+		end		
 	end
+
+	####################################################
+	#Module: Main functions
+	#Activity: Sending test results to DB
+	#Param: build, loginid, device type, device name
+	####################################################
 
 	def sendResultsToDB(build, loginid, dtype, dname)
 
@@ -188,4 +213,4 @@ load "funcRelease.rb"
 	unextTestPrgm
 	startTest(client, $d_type, $d_name, $l_id, $pass)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
-	$obj_finis.testEnd(client, $dname)
+	$obj_finis.testEnd(client, $d_name)
