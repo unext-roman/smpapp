@@ -8,6 +8,8 @@
 
 class PurchasePlay
 
+	@@comment = ""
+
 	####################################################
 	#target Device: Android
 	#Function Name: testPurchasedPlay
@@ -53,12 +55,10 @@ class PurchasePlay
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgBougt
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		#puts ($obj_mylst.testMylistContent(client))
-		puts ($obj_dwnld.testSingleDownload(client))		
+		#puts ($obj_dwnld.testSingleDownload(client))		
 	end
 
 	####################################################
@@ -95,30 +95,20 @@ class PurchasePlay
 					puts "Ending time : " + $endTime
 
 					if $endTime == $startTime
-						puts "::MSG:: Playback has not started, check status!!!"
-						$result = $resultNG
-						$failCount = $failCount + 1
-						$finishedTest = $finishedTest + 1
-						puts "Result is -> " + $result	
-						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+						$errMsgBougt = "::MSG::「再生が失敗しました」Playback has not started, check status!!!"
+						$obj_rtnrs.returnNG
+						$obj_rtnrs.printResult			
 					else
-						puts "::MSG:: Playback has started successfully..."
-						$result = $resultOK
-						$passCount = $passCount + 1
-						$finishedTest = $finishedTest + 1
-						puts "Result is -> " + $result	
-						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+						@@comment = "::MSG::「再生が成功しました」Playback has started successfully..."
+						$obj_rtnrs.returnOK
+						$obj_rtnrs.printResult			
 					end
 					$obj_histp.leavingPlayer(client)
 				end
 			end
 		rescue Exception => e
 			$errMsgBougt = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+			$obj_rtnrs.returnNG
 		end
 		begin
 			client.sleep(2000)
@@ -175,12 +165,10 @@ class PurchasePlay
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgBougt
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		#puts ($obj_mylst.ios_testMylistContent(client))
-		puts ($obj_dwnld.ios_testSingleDownload(client))
+		#puts ($obj_mylst.ios_testMylistContent(client))	
 	end
 
 	####################################################
@@ -239,27 +227,17 @@ class PurchasePlay
 			client.sleep(5000)
 
 			if $startTime.include? ":"
-				puts "::MSG:: 購入済みからの再生は成功です「Playback successfully」"
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1				
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+				@@comment = "::MSG:: 購入済みからの再生は成功です「Playback successfully」"
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult	
 			else
-				puts "::MSG:: 購入済みからの再生は失敗しました「Could not start playback!!!」"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				$errMsgBougt = "::MSG:: 購入済みからの再生は失敗しました「Could not start playback!!!」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult	
 			end
 		rescue Exception => e
 			$errMsgBougt = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$obj_rtnrs.returnNG
 		end
 	end
 end
