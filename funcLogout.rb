@@ -8,6 +8,8 @@
 
 class Logout
 
+	@@comment = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testLogout
@@ -34,27 +36,17 @@ class Logout
 			client.sleep(1000)
 			client.click("NATIVE", "id=button1", 0, 1)
 			if client.isElementFound("NATIVE", "text=ログイン", 0);
-				puts "::MSG:: ログアウト成功しました「Logout sucessfull」"
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				@@comment = "::MSG:: ログアウト成功しました「Logout sucessfull」"
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult
 			else
-				puts "::MSG:: ログアウト失敗しました「Logout unsucessfull」"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				$errMsgLogot = "::MSG:: ログアウト失敗しました「Logout unsucessfull」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult
 			end
 		rescue Exception => e
 			$errMsgLogot = "::MSG:: Exception occurrred while loggin out" + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$obj_rtnrs.returnNG
 		end	
 
 		begin			
@@ -78,11 +70,11 @@ class Logout
 		@testcase_summary = "ログアウト"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgLogot
+		@err_message = $errMsgRtngs
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
+		puts ($obj_plwlg.testPlayWithoutLogin(client, "roman", "qatest1"))
 	end
 
 	####################################################
@@ -112,26 +104,21 @@ class Logout
 			client.click("NATIVE", "xpath=//*[@text='ログアウト' and @class='UIButtonLabel']", 0, 1)
 			client.sleep(2000)
 			if client.isElementFound("NATIVE", "text=ログイン", 0);
-				puts "::MSG:: Logout sucessfull..."
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1		
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				@@comment = "::MSG:: ログアウト失敗しました「Logout unsucessfull」"
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult
 				client.sleep(1000)
 				client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
 				client.sleep(1000)
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
 			else
-				puts "::MSG:: Logout unsucessfull..."
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1				
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				$errMsgLogot = "::MSG:: ログアウト失敗しました「Logout unsucessfull」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult
 			end
 		rescue Exception => e
-			$errMsgLogot = "::MSG:: Exception occurrred, could not logout..: " + e.message	
+			$errMsgLogot = "::MSG:: Exception occurrred, could not logout..: " + e.message
+			$obj_rtnrs.returnNG
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -146,10 +133,10 @@ class Logout
 		@testcase_summary = "ログアウト"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgLogot
-		@comment = ""
+		@err_message = $errMsgRtngs
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
+		puts ($obj_dlwlg.ios_testDownloadWithoutLogin(client, "qa00001", "qatest1"))
 	end
 end
