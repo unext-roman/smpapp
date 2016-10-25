@@ -11,6 +11,8 @@
 
 class AddToMylist
 
+	@@comment = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testAddtoMylist
@@ -33,7 +35,7 @@ class AddToMylist
 				AddToMylist.new.addingToMylist(client)
 			else
 				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-				client.sleep(1000)
+				client.sleep(2000)
 				client.click("NATIVE", "text=ホーム", 0, 1)
 				client.sleep(2000)
 				AddToMylist.new.addingToMylist(client)
@@ -60,11 +62,10 @@ class AddToMylist
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgAdtml
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_lnbck.testLeanbackOperation(client))
+		#puts ($obj_lnbck.testLeanbackOperation(client))
 	end
 
 	####################################################
@@ -115,9 +116,9 @@ class AddToMylist
 		begin
 			@cname1 = client.getTextIn2("NATIVE", "xpath=//*[@id='textView' and ./parent::*[@class='android.widget.LinearLayout' and ./parent::*[@id='listView']]]", 0, "NATIVE", "Inside", 0, 0)
 			client.swipe2("Down", 1000, 100)
-			client.sleep(1000)
+			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='マイリスト' and @id='textView1']", 0, 1)
-			client.sleep(1000)
+			client.sleep(2000)
 			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリストに追加済' and ./parent::*[@id='otherView1']]")
 				puts "::MSG:: Added to mylist"
 			else
@@ -131,27 +132,17 @@ class AddToMylist
 			client.sleep(2000)
 			@cname2 = client.getTextIn2("NATIVE", "xpath=//*[@id='title']", 0, "NATIVE", "Inside", 0, 0)
 			if @cname2 == @cname1
-				puts "::MSG:: マイリストに追加しました「Added to Mylist successfully」"					
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				@@comment = "::MSG:: マイリストに追加しました「Added to Mylist successfully」"					
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult
 			else
-				puts "マイリストに追加できませんでした「Could not add to Mylist」"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				$errMsgAdtml = "マイリストに追加できませんでした「Could not add to Mylist」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult
 			end
 		rescue Exception => e
 			$errMsgAdtml = "::MSG:: Exception occurrred while adding to mylist: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$obj_rtnrs.returnNG
 		end
 	end
 
@@ -235,12 +226,10 @@ class AddToMylist
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgAdtml
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		#puts ($obj_lnbck.ios_testLeanbackOperation(client)) #this module is not implemented for iOS
-		puts ($obj_lnbck.ios_testLogout(client))		
+		#puts (ios_testEditHistoryList(client))
 	end
 
 	####################################################
@@ -301,27 +290,17 @@ class AddToMylist
 			client.sleep(2000)				
 			@cname2 = client.getTextIn2("NATIVE", "xpath=//*[@class='UNextMobile_Protected.LayoutableLabel' and @height=32]", 0, "NATIVE", "Inside", 0, 0)
 			if @cname2 == @cname1
-				puts "::MSG:: マイリストに追加しました「Added to Mylist successfully」"					
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				@@comment = "::MSG:: マイリストに追加しました「Added to Mylist successfully」"					
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult
 			else
-				puts "マイリストに追加できませんでした「Could not add to Mylist」"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				$errMsgAdtml = "マイリストに追加できませんでした「Could not add to Mylist」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult
 			end
 		rescue Exception => e
 			$errMsgAdtml = "::MSG:: Exception occurrred while adding to mylist: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$obj_rtnrs.returnNG
 		end
 	end
 
