@@ -12,6 +12,7 @@
 class GenericSearch
 
 	@@gres = []
+	@@comment = ""
 
 	####################################################
 	#Target Device: Android
@@ -43,7 +44,7 @@ class GenericSearch
 			client.sleep(1000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgGsrch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -58,12 +59,11 @@ class GenericSearch
 		@testcase_summary = "ジャンル検索機能"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgSarch
-		@comment = ""
+		@err_message = $errMsgGsrch
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_fltrs.testFilterSearch(client))
+		#puts ($obj_fltrs.testFilterSearch(client))
 	end
 
 	####################################################
@@ -141,7 +141,7 @@ class GenericSearch
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			GenericSearch.new.searchResult
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgGsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 	end
 
@@ -163,19 +163,13 @@ class GenericSearch
 	def searchResult
 
 		if @@gres.include?(false)					
-			puts "ジャンル検索結果に誤りが発生しました「Generic search did not work properly」"
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$errMsgSarch = "ジャンル検索結果に誤りが発生しました「Generic search did not work properly」"
+			$obj_rtnrs.returnNG
+			$obj_rtnrs.printResult
 		else
-			puts "::MSG:: ジャンル検索結果が正しいでした「Generic search works properly」"					
-			$result = $resultOK
-			$passCount = $passCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			@@comment = "::MSG:: ジャンル検索結果が正しいでした「Generic search works properly」"					
+			$obj_rtnrs.returnOK
+			$obj_rtnrs.printResult
 		end
 		puts "::MSG:: Result is  #{@@gres}"
 	end
@@ -211,7 +205,7 @@ class GenericSearch
 			client.click("NATIVE", "xpath=//*[@class='UIControl']", 0, 1)
 			client.sleep(2000)
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$errMsgGsrch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -226,12 +220,11 @@ class GenericSearch
 		@testcase_summary = "ジャンル検索機能"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgSarch
-		@comment = ""
+		@err_message = $errMsgGsrch
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_fltrs.ios_testFilterSearch(client))
+		#puts ($obj_fltrs.ios_testFilterSearch(client))
 	end
 
 	def icheckSearchField(client)
@@ -246,14 +239,15 @@ class GenericSearch
 				puts "::MSG:: Generic search can be continued!!!"
 			end
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgGsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end		
 	end
 
 	def igenerOperation(client)
 
 		begin
-			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)
 			client.sleep(1000)
 
 			# currently this condition has problem and needs to correct
@@ -343,7 +337,7 @@ class GenericSearch
 			client.sleep(2000)
 			GenericSearch.new.searchResult
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgGsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 	end
 end
