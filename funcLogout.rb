@@ -107,10 +107,10 @@ class Logout
 				@@comment = "::MSG:: ログアウト失敗しました「Logout unsucessfull」"
 				$obj_rtnrs.returnOK
 				$obj_rtnrs.printResult
-				client.sleep(1000)
-				client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
-				client.sleep(1000)
-				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
+				client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+				client.sleep(2000)
 			else
 				$errMsgLogot = "::MSG:: ログアウト失敗しました「Logout unsucessfull」"
 				$obj_rtnrs.returnNG
