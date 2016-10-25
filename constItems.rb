@@ -8,6 +8,7 @@
 
 	$resultOK = "OK"
 	$resultNG = "NG"
+	$resultNE = "NOT EXECUTED"
 	$result = ""
 	$passCount = 0
 	$failCount = 0
@@ -19,8 +20,7 @@
 	$exeTime = ""
 	$captureURL = ""
 	$tcs = 0
-	TTIME = Time.new.strftime("%Y-%m-%d %H:%M:%S")
-	$execution_time = TTIME
+	$execution_time = Time.new.strftime("%Y-%m-%d %H:%M:%S")
 
 	#Error Message List
 	$errMsgLogin = ""
@@ -34,7 +34,9 @@
 	$errMsgDwnld = ""
 	$errMsgDwnpl = ""	
 	$errMsgEpsdp = ""
-	$errMsgSarch = ""
+	$errMsgKarch = ""
+	$errMsgGsrch = ""
+	$errMsgFsrch = ""
 	$errMsgAdtml = ""
 	$errMsgLnbko = ""
 	$errMsgDelet = ""
@@ -42,9 +44,16 @@
 	$errMsgEditd = ""
 	$errMsgEditm = ""
 	$errMsgRtngs = ""
+	$errMsgPlfep = ""
+	$errMsgSubch = ""
+	$errMsgQuach = ""
+	$errMsgTrick = ""
+	$errMsgCcast = ""
+	$errMsgArply = ""
+	$errMsgPlywl = ""
+
 
 	#class names
-
 	#testLogin			:Login
 	#funcSinglePlay		:SinglePlay 	:$obj_login
 	#funcContinuePlay	:ContinuePlay 	:$obj_contp
