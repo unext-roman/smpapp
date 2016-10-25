@@ -293,6 +293,9 @@ class TitleDownload
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)		
 			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
 			client.sleep(3000)
+			if client.isElementFound("NATIVE", "xpath=//*[@text='タイトルとの一致']") == true || client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]") == true
+				$obj_gener.icheckSearchField(client)
+			end
 			client.click("NATIVE", "xpath=//*[@text='キッズ一覧']", 0, 1)
 			client.sleep(3000)
 			client.click("NATIVE", "xpath=//*[@accessibilityLabel='えほん']", 0, 1)
