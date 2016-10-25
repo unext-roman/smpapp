@@ -11,6 +11,8 @@
 
 class Login
 
+	@@comment = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testLogin
@@ -19,8 +21,8 @@ class Login
 	####################################################
 
 	def testLogin(client,user,pass)
-		client.sleep(2000)
-		
+		client.sleep(2000)		
+
 		puts ""
 		puts ""
 		s = "ログイン"
@@ -43,12 +45,9 @@ class Login
 				$errMsgLogin = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 			end
 			if client.isElementFound("NATIVE", "xpath=//*[@text='ログアウト']", 0)
-				$comment = "::MSG:: 既にログイン済み!!! 結果をOKにする"
-				$result = $resultOK
-				$passCount = $passCount + 1					
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				@@comment = "::MSG:: 既にログイン済み!!! 結果を未実施にする"
+				$obj_rtnrs.returnNE
+				$obj_rtnrs.printResult
 			else
 				begin
 					client.elementListSelect("", "text=ログイン", 0, false)
@@ -58,9 +57,6 @@ class Login
 					client.click("NATIVE", "id=password_edit_text", 0, 1)
 					client.sendText(pass)
 					client.closeKeyboard()
-					if client.waitForElement("NATIVE", "text=ログイン", 0, 10000)
-		    			# If statement
-					end
 					client.click("NATIVE", "id=login_button", 0, 1)
 					client.sleep(2000)
 
@@ -69,31 +65,21 @@ class Login
 						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']")
 					end
 					if client.isElementFound("NATIVE", "xpath=//*[@text='ログアウト']", 0)
-						puts "::MSG:: ログイン成功しました「Login successful」"
-						$result = $resultOK
-						$passCount = $passCount + 1
-						$finishedTest = $finishedTest + 1
+						@@comment = "::MSG:: ログイン成功しました「Login successful」"
+						$obj_rtnrs.returnOK
+						$obj_rtnrs.printResult
 						@flag = true						
-						puts "Result is -> " + $result
-						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 					else
-						puts "::MSG:: ログイン失敗しました「Wrong credentials, Test aborted」"
-						$result = $resultNG
-						$failCount = $failCount + 1
-						$finishedTest = $finishedTest + 1
+						$errMsgLogin = "::MSG:: ログイン失敗しました「Wrong credentials, Test aborted」"
+						$obj_rtnrs.returnNG
+						$obj_rtnrs.printResult
 						@flag = false						
-						puts "Result is -> " + $result
-						puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 						client.sleep(1000)
 					end
 				rescue Exception => e
 					$errMsgLogin = "::MSG:: Exception occurrred at Login operation: " + e.message
-					$result = $resultNG
-					$failCount = $failCount + 1
-					$finishedTest = $finishedTest + 1
-					puts "Result is -> " + $result
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"		
+					$obj_rtnrs.returnNG
 				end
 			end
 		end
@@ -121,10 +107,9 @@ class Login
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgLogin
-		@comment = $comment
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
 		if @flag == true
 			puts ($obj_snglp.testSinglePlay(client))
 		else
@@ -143,7 +128,7 @@ class Login
 	####################################################
 
 	def ios_testLogin(client, user, pass)
-		client.sleep(2000)	
+		client.sleep(2000)		
 
 		puts ""
 		puts ""
@@ -165,12 +150,9 @@ class Login
 		client.sleep(2000)
 		begin
 			if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0)	
-				$comment = "::MSG:: 既にログイン済み!!! 結果をOKにする"
-				$result = $resultOK
-				$passCount = $passCount + 1					
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"	
+				@@comment = "::MSG:: 既にログイン済み!!! 結果を未実施にする"
+				$obj_rtnrs.returnNE
+				$obj_rtnrs.printResult	
 				client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
@@ -187,21 +169,15 @@ class Login
 				client.click("NATIVE", "xpath=//*[@text='ログイン' and @class='UIButtonLabel']", 0, 1)			
 				client.sleep(3000)
 				if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0)
-					puts "::MSG:: ログイン成功しました「Login successful」"
-					$result = $resultOK
-					$passCount = $passCount + 1					
-					$finishedTest = $finishedTest + 1
+					@@comment = "::MSG:: ログイン成功しました「Login successful」"
+					$obj_rtnrs.returnOK
+					$obj_rtnrs.printResult
 					@flag = true
-					puts "Result is -> " + $result
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"	
 				else
-					puts "::MSG:: ログイン失敗しました「Wrong credentials, Test aborted」"
-					$result = $resultNG
-					$failCount = $failCount + 1
-					$finishedTest = $finishedTest + 1
+					$errMsgLogin = "::MSG:: ログイン失敗しました「Wrong credentials, Test aborted」"
+					$obj_rtnrs.returnNG
+					$obj_rtnrs.printResult
 					@flag = false
-					puts "Result is -> " + $result
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
 					client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button close']]", 0, 1)
 					client.sleep(1000)
 				end	
@@ -212,11 +188,8 @@ class Login
 			end	
 		rescue Exception => e
 			$errMsgLogin = "::MSG:: Exception occurrred at Login operation: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$obj_rtnrs.returnNG
+			$obj_rtnrs.printResult
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -232,11 +205,9 @@ class Login
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgLogin
-		@comment = $comment
-		
-		client.sleep(2000)
+		@comment = @@comment
+
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
 
 		if @flag == true
 			puts ($obj_snglp.ios_testSinglePlay(client))
