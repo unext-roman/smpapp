@@ -12,6 +12,7 @@
 class FilterSearch
 
 	@@fres = []
+	@@comment = ""
 
 	####################################################
 	#Target Device: Android
@@ -44,7 +45,7 @@ class FilterSearch
 			client.sleep(1000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgFsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -59,12 +60,12 @@ class FilterSearch
 		@testcase_summary = "フィルタリング・表示順機能"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgSarch
-		@comment = ""
+		@err_message = $errMsgFsrch
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_adtml.testAddtoMylist(client))
+		#puts ($obj_adtml.testAddtoMylist(client))
+		puts ($obj_edith.testEditHistoryList(client))
 	end
 
 	####################################################
@@ -155,7 +156,7 @@ class FilterSearch
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			FilterSearch.new.searchResult
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgFsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 	end
 
@@ -195,19 +196,13 @@ class FilterSearch
 	def searchResult
 
 		if @@fres.include?(false)			
-			puts "フィルタリング・表示順検索結果に誤りが発生しました「Filtering search did not work properly」"
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$errMsgFsrch = "::MSG::フィルタリング・表示順検索結果に誤りが発生しました「Filtering search did not work properly」"
+			$obj_rtnrs.returnNG
+			$obj_rtnrs.printResult
 		else
-			puts "::MSG:: ジャンル検索結果が正しいでした「Filtering search works properly」"					
-			$result = $resultOK
-			$passCount = $passCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			@@comment = "::MSG::フィルタリング・表示順検索結果が正しいでした「Filtering search works properly」"					
+			$obj_rtnrs.returnOK
+			$obj_rtnrs.printResult
 		end
 		puts "#{@@fres}"
 	end
@@ -244,7 +239,7 @@ class FilterSearch
 			client.click("NATIVE", "xpath=//*[@class='UIControl']", 0, 1)
 			client.sleep(2000)
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgFsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -259,12 +254,12 @@ class FilterSearch
 		@testcase_summary = "フィルタリング・表示順機能"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgSarch
-		@comment = ""
+		@err_message = $errMsgFsrch
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_adtml.ios_testAddtoMylist(client))
+		#puts ($obj_adtml.ios_testAddtoMylist(client))
+		puts ($obj_edith.ios_testEditHistoryList(client))
 	end
 
 	####################################################
@@ -276,7 +271,8 @@ class FilterSearch
 	def ifilterOperation(client)
 
 		begin
-			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='洋画一覧']", 0, 1)
 			client.sleep(2000)
@@ -353,7 +349,7 @@ class FilterSearch
 			client.sleep(2000)
 			FilterSearch.new.searchResult
 		rescue Exception => e
-			$errMsgSarch = "::MSG:: Exception occurred during search operation " + e.message
+			$errMsgFsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 	end
 end
