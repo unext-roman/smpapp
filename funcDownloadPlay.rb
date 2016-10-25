@@ -10,6 +10,7 @@
 
 class DownlaodPlay
 
+	@@comment = ""
 	$dloading = false
 
 	####################################################
@@ -60,11 +61,10 @@ class DownlaodPlay
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgDwnpl
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_keysh.testKeywordSearch(client))
+		#puts ($obj_keysh.testKeywordSearch(client))
 	end
 
 	####################################################
@@ -87,13 +87,9 @@ class DownlaodPlay
 				DownlaodPlay.new.downLoadProgress(client)
 				client.sleep(1000)			
 				if $dloading == true
-					puts "::MSG:: Can not perform download playing, execute later"
-					$result = $resultNG
-					$failCount = $failCount + 1
-					$finishedTest = $finishedTest + 1
-					$errMsgDwnpl = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了しました後又ご確認下さい"
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+					@@comment = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了した後又ご確認下さい"
+					$obj_rtnrs.returnNE
+					$obj_rtnrs.printResult
 				else
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@id='download_indicator']", 0, 1)
@@ -106,13 +102,9 @@ class DownlaodPlay
 				DownlaodPlay.new.downLoadProgress(client)
 				client.sleep(2000)
 				if $dloading == true
-					puts "::MSG:: Can not perform download playing, execute later"
-					$result = $resultNG
-					$failCount = $failCount + 1
-					$finishedTest = $finishedTest + 1
-					$errMsgDwnpl = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了しました後ご確認下さい"
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"		
+					@@comment = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了した後又ご確認下さい"
+					$obj_rtnrs.returnNE
+					$obj_rtnrs.printResult
 				else
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@id='download_indicator']", 0, 1)
@@ -253,11 +245,10 @@ class DownlaodPlay
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgDwnpl
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_keysh.ios_testKeywordSearch(client))
+		#puts ($obj_keysh.ios_testKeywordSearch(client))
 	end
 
 	####################################################
@@ -284,13 +275,9 @@ class DownlaodPlay
 				DownlaodPlay.new.ios_downLoadProgress(client)
 				client.sleep(1000)			
 				if $dloading == true
-					puts "::MSG:: Can not perform download playing, execute later"
-					$result = $resultNG
-					$failCount = $failCount + 1
-					$finishedTest = $finishedTest + 1
-					$errMsgDwnpl = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了しました後ご確認下さい"
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+					@@comment = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了した後又ご確認下さい"
+					$obj_rtnrs.returnNE
+					$obj_rtnrs.printResult
 				else
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
@@ -303,13 +290,9 @@ class DownlaodPlay
 				DownlaodPlay.new.ios_downLoadProgress(client)
 				client.sleep(2000)
 				if $dloading == true
-					puts "::MSG:: Can not perform download playing, execute later"
-					$result = $resultNG
-					$failCount = $failCount + 1
-					$finishedTest = $finishedTest + 1
-					$errMsgDwnpl = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了しました後ご確認下さい"
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+					@@comment = "::MSG:: ダウンロードするに時間が掛かりました為テストを飛ばしました、ダウンロードが完了した後又ご確認下さい"
+					$obj_rtnrs.returnNE
+					$obj_rtnrs.printResult
 				else
 					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
 					client.sleep(10000)
@@ -338,7 +321,8 @@ class DownlaodPlay
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@class='UITableView' and ./*[./*[@class='UNextMobile_Protected.SpecialBlockCell']]]", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)		
+			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='キッズ一覧']", 0, 1)
 			client.sleep(2000)
