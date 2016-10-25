@@ -161,7 +161,8 @@ load "funcResultReturn.rb"
 			  http.request(req)
 			}
 			client.addDevice("c24994f50118a6ae9db6a911da628b477a0ba401", "ipadair")
-			client.setDevice("#{"ios_app:" + @dname}")
+			#client.setDevice("#{"ios_app:" + @dname}")
+			client.setDevice("#{@dname}")
 			#tempup
 			client.openDevice()
 			client.sleep(2000)
@@ -213,4 +214,4 @@ load "funcResultReturn.rb"
 	unextTestPrgm
 	startTest(client, $d_type, $d_name, $l_id, $pass)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
-	$obj_finis.testEnd(client, "#{$d_name}")
+	$obj_finis.testEnd(client, $d_name)

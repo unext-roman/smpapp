@@ -14,8 +14,11 @@ class Finish
 	#Param: object
 	####################################################
 
-	def testEnd(client)
+	def testEnd(client, dname)
+		@dname = dname
+
 		puts "Test Finished, Releasing Client."
 		client.releaseClient();
+		client.releaseDevice("#{@dname}", true, false, true)
 	end
 end
