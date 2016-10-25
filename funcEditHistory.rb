@@ -12,6 +12,7 @@
 class EditHistory
 
 	@@eres = []
+	@@comment = ""
 
 	####################################################
 	#Target Device: Android
@@ -57,7 +58,7 @@ class EditHistory
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgEdith
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		puts ($obj_editd.testEditDownloadList(client))		
@@ -79,7 +80,8 @@ class EditHistory
 
 			if client.isElementFound("NATIVE", "text=視聴履歴がありません")
 				puts "::MSG:: There is no item in history list!!!"
-				@@eres = @@eres.push(true)
+				@@eres = @@eres.push(false)
+				$errMsgEdith = "::MSG:: 視聴履歴一覧に編集するの項目がありませんでした、作品を用意してから又ご確認下さい"
 			else
 				cnt = client.getElementCount("NATIVE", "xpath=(//*[@id='recycler_view']/*[@class='android.widget.LinearLayout' and ./*[@class='android.widget.LinearLayout']])")
 				puts "Current contents item is #{cnt}"
@@ -136,19 +138,13 @@ class EditHistory
 
 		@res = res
 		if @res.include?(false)
-			puts "編集操作に問題が発生しました「Issue occurred while editing」"
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"		
+			$errMsgEdith = "編集操作に問題が発生しました「Issue occurred while editing」"
+			$obj_rtnrs.returnNG
+			$obj_rtnrs.printResult	
 		else
-			puts "::MSG:: 編集に問題ありませんでした「Editing has been done successfully」"					
-			$result = $resultOK
-			$passCount = $passCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			@@comment = "::MSG:: 編集に問題ありませんでした「Editing has been done successfully」"					
+			$obj_rtnrs.returnOK
+			$obj_rtnrs.printResult
 		end
 		puts "Result is: #{@res}"
 	end
@@ -197,7 +193,7 @@ class EditHistory
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgEdith
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 		puts ($obj_editd.ios_testEditDownloadList(client))		
@@ -285,5 +281,5 @@ class EditHistory
 		rescue Exception => e
 			$errMsgEdith = "::MSG:: Exception occurrred while editing history list: " + e.message	
 		end
-	end	
+	end
 end
