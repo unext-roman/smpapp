@@ -8,6 +8,8 @@
 
 class HistoryPlay
 
+	@@comment = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testHistoryPlay
@@ -52,11 +54,10 @@ class HistoryPlay
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgHisto
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_prcsp.testPurchasedItemPlay(client))
+		#puts ($obj_prcsp.testPurchasedItemPlay(client))
 	end
 
 	####################################################
@@ -74,7 +75,6 @@ class HistoryPlay
 			client.click("NATIVE", "xpath=//*[@text='視聴履歴']", 0, 1)
 			
 			if client.isElementFound("NATIVE", "xpath=//*[@text='視聴履歴']")
-				puts "::MSG:: History list opened"
 				client.sleep(2000)
 				if client.isElementFound("NATIVE", "text=視聴履歴がありません")
 					puts "::MSG:: There is no item in history list!!!"
@@ -181,27 +181,18 @@ class HistoryPlay
 			puts "Ending time : " + $endTime
 
 			if $endTime == $startTime
-				puts "::MSG:: Playback has not started, check status!!!"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+				$errMsgHisto = "::MSG::「再生が失敗しました」Playback has not started, check status!!!"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult		
 			else
-				puts "::MSG:: Playback has started successfully..."
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+				@@comment = "::MSG::「再生が成功しました」Playback has started successfully..."
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult			
 			end
 		rescue Exception => e
 			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$obj_rtnrs.returnNG
+			$obj_rtnrs.printResult	
 		end
 	end
 
@@ -249,11 +240,10 @@ class HistoryPlay
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgHisto
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_prcsp.ios_testPurchasedItemPlay(client))
+		#puts ($obj_prcsp.ios_testPurchasedItemPlay(client))
 	end
 
 	####################################################
@@ -356,9 +346,7 @@ class HistoryPlay
 
 	def ios_playbackCheckFromList(client)
 
-		client.sleep(10000)
-		puts "::MSG:: Playing operation started..."
-			
+		client.sleep(15000)
 		begin		
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
 			$startTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
@@ -366,28 +354,18 @@ class HistoryPlay
 
 			client.sleep(5000)
 			if $startTime.include? ":"
-				puts "::MSG:: 視聴履歴からの再生は成功です「Playback successfully」"
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1				
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+				@@comment = "::MSG:: 視聴履歴からの再生は成功です「Playback successfully」"
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult		
 			else
-				puts "::MSG:: 視聴履歴からの再生は失敗しました「Could not start playback!!!」"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+				$errMsgHisto = "::MSG:: 視聴履歴からの再生は失敗しました「Could not start playback!!!」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult		
 			end
 
 		rescue Exception => e
 			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"			
+			$obj_rtnrs.returnNG
 		end
 	end
 end
