@@ -11,6 +11,8 @@
 
 class Leanback
 
+	@@comment = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testAddtoMylist
@@ -54,8 +56,7 @@ class Leanback
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		puts ($obj_edith.testEditHistoryList(client))
+		#puts ($obj_edith.testEditHistoryList(client))
 	end
 
 	####################################################
@@ -170,19 +171,13 @@ class Leanback
 
 		@val = val
 		if @val == 3
-			puts "::MSG:: リンバック操作に問題ありませんでした「Leaback operation has performed successfully」"					
-			$result = $resultOK
-			$passCount = $passCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			@@comment = "::MSG:: リンバック操作に問題ありませんでした「Leaback operation has performed successfully」"					
+			$obj_rtnrs.returnOK
+			$obj_rtnrs.printResult
 		else
-			puts "リンバック操作に問題が発生しました「Issue occurred during leanback operation」"
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$errMsgLnbko = "リンバック操作に問題が発生しました「Issue occurred during leanback operation」"
+			$obj_rtnrs.returnNG
+			$obj_rtnrs.printResult
 		end	
 	end
 
