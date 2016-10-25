@@ -8,6 +8,8 @@
 
 class MyList
 
+	@@comment = ""
+
 	####################################################
 	#target Device: Android
 	#Function Name: testMylistContent
@@ -52,12 +54,10 @@ class MyList
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgMlist
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		#puts ($obj_dwnld.testSingleDownload(client))
-		puts ($obj_dwnpl.testDownloadPlay(client))
+		#puts ($obj_dwnpl.testDownloadPlay(client))
 	end
 
 	####################################################
@@ -80,14 +80,13 @@ class MyList
 				client.sleep(2000)
 
 				if client.isElementFound("NATIVE", "text=お気に入りはありません")
-					puts "::MSG:: There is no item in mylist!!!"
-					puts "::MSG:: Playback has started successfully..."
-					$result = $resultOK
-					$passCount = $passCount + 1
-					$finishedTest = $finishedTest + 1
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
-
+					@@comment = "::MSG::「マイリストに作品がありません」There is no item in mylist!!!"
+					$obj_rtnrs.returnNE
+					$obj_rtnrs.printResult
+					client.sleep(2000)
+					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+					client.sleep(2000)
+					client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 					#Ph2.0 development: When no content in mylist, call addtomylist func
 				else
 					# Check here whether content is PPV or viewing duration expired or SVOD
@@ -197,12 +196,10 @@ class MyList
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgMlist
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
-		#puts ($obj_dwnld.ios_testSingleDownload(client))
-		puts ($obj_dwnpl.ios_testDownloadPlay(client))			
+		#puts ($obj_dwnpl.testDownloadPlay(client))			
 	end
 
 	####################################################
@@ -221,8 +218,14 @@ class MyList
 			client.sleep(2000)		
 			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリスト']")
 				client.sleep(2000)
-				if client.isElementFound("NATIVE", "text=お気に入りはありません")
-					puts "::MSG:: お気に入りはありません「There is no item in mylist!」"
+				if client.isElementFound("NATIVE", "text=マイリストがありません")
+					@@comment = "::MSG::「マイリストに作品がありません」There is no item in mylist!!!"
+					$obj_rtnrs.returnNE
+					$obj_rtnrs.printResult
+					client.sleep(2000)
+					client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[./*[@text='マイリスト']]]", 0, 1)				
+					client.sleep(2000)
+					client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)			
 				else
 					# Check here whether content is PPV or viewing duration expired or SVOD
 					MyList.new.ios_checkPPVorSVODorPurchased(client)
