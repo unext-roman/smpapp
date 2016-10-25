@@ -52,10 +52,10 @@ class Login
 				begin
 					client.elementListSelect("", "text=ログイン", 0, false)
 					client.click("NATIVE", "text=ログイン", 0, 1)
-					client.click("NATIVE", "id=id_edit_text", 0, 1)
-					client.sendText(user)
-					client.click("NATIVE", "id=password_edit_text", 0, 1)
-					client.sendText(pass)
+					client.elementSendText("NATIVE", "xpath=//*[@id='id_edit_text']", 0, user)
+					client.sleep(2000)			
+					client.elementSendText("NATIVE", "xpath=//*[@id='password_edit_text']", 0, pass)
+					client.sleep(1000)
 					client.closeKeyboard()
 					client.click("NATIVE", "id=login_button", 0, 1)
 					client.sleep(2000)
@@ -160,14 +160,14 @@ class Login
 			else
 				client.click("NATIVE", "xpath=//*[@accessibilityLabel='ログイン']", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='ログインID']]", 0, 1)
-				client.sendText(user)
-				client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='パスワード']]", 0, 1)
-				client.sendText(pass)
+				client.elementSendText("NATIVE", "xpath=//*[@class='UITextFieldBorderView' and ./parent::*[@class='UITextField' and ./preceding-sibling::*[@text='ログインID']]]", 0, user)
+				client.sleep(2000)
+				client.elementSendText("NATIVE", "xpath=//*[@class='UITextFieldBorderView' and ./parent::*[@class='UITextField' and ./preceding-sibling::*[@text='パスワード']]]", 0, pass)
+				client.sleep(1000)
 				client.closeKeyboard()
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='ログイン' and @class='UIButtonLabel']", 0, 1)			
-				client.sleep(3000)
+				client.sleep(2000)
 				if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0)
 					@@comment = "::MSG:: ログイン成功しました「Login successful」"
 					$obj_rtnrs.returnOK
@@ -189,7 +189,6 @@ class Login
 		rescue Exception => e
 			$errMsgLogin = "::MSG:: Exception occurrred at Login operation: " + e.message
 			$obj_rtnrs.returnNG
-			$obj_rtnrs.printResult
 		end
 
 		puts ($obj_utili.calculateRatio($finishedTest))
