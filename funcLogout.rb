@@ -133,7 +133,7 @@ class Logout
 		@testcase_summary = "ログアウト"
 		@test_result = $result
 		@capture_url = $captureURL
-		@err_message = $errMsgRtngs
+		@err_message = $errMsgLogot
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
