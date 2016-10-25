@@ -12,6 +12,8 @@
 class EditDownload
 
 	@@dres = []
+	@@comment = ""
+	@@flag = ""
 
 	####################################################
 	#Target Device: Android
@@ -57,10 +59,11 @@ class EditDownload
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgEditd
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		puts ($obj_editm.testEditFavoriteList(client))
+		#puts ($obj_editm.testEditFavoriteList(client))
+		puts ($obj_plfel.testEpisodePlayFromPlayer(client))	
 	end
 
 	####################################################
@@ -78,9 +81,9 @@ class EditDownload
 			client.sleep(2000)
 
 			if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
-				puts "::MSG:: There is no item in download list!!!"
 				@@dres = @@dres.push(false)
 				$errMsgEditd = "::MSG:: ダウンロード一覧に編集するの項目がありませんでした、作品を用意してから又ご確認下さい"
+				@@flag = "false"
 			else
 				cnt = client.getElementCount("NATIVE", "xpath=(//*[@id='recycler_view']/*[@class='android.widget.LinearLayout' and ./*[@class='android.widget.LinearLayout']])")
 				puts "Current contents item is #{cnt}"
@@ -128,14 +131,19 @@ class EditDownload
 					end
 				end	
 			end
-			EditHistory.new.returnResult(@@dres)
+			if @@flag == "false"
+				$obj_rtnrs.returnNE
+				$obj_rtnrs.printResult
+			else
+				$obj_edith.returnResult(@@dres)
+			end
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "text=ホーム", 0, 1)
 		rescue Exception => e
 			$errMsgEditd = "::MSG:: Exception occurrred while editing download list: " + e.message
 			@@dres = @@dres.push(false)
-			EditHistory.new.returnResult(@@dres)
+			$obj_edith.returnResult(@@dres)
 		end
 	end
 
@@ -183,10 +191,11 @@ class EditDownload
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgEditd
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		puts ($obj_editm.ios_testEditFavoriteList(client))
+		#puts ($obj_editm.ios_testEditFavoriteList(client))
+		puts ($obj_plfel.ios_testEpisodePlayFromPlayer(client))	
 	end
 
 	####################################################
@@ -204,10 +213,15 @@ class EditDownload
 			client.sleep(2000)
 
 			if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
-				puts "::MSG:: There is no item in download list!!!"
 				@@dres = @@dres.push(false)
 				$errMsgEditd = "::MSG:: ダウンロード一覧に編集するの項目がありませんでした、作品を用意してから又ご確認下さい"
-				EditHistory.new.returnResult(@@dres)
+				@@flag = "false"
+				if @@flag == "false"
+					$obj_rtnrs.returnNE
+					$obj_rtnrs.printResult
+				else
+					$obj_edith.returnResult(@@dres)
+				end
 			else
 				cnt = client.getElementCount("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayIndicator' and @onScreen='true' and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]")
 				puts "Current contents item is #{cnt}"
@@ -247,7 +261,7 @@ class EditDownload
 				client.sleep(2000)						
 				if client.isElementFound("NATIVE", "xpath=//*[@text='ダウンロード済みの作品がありません']", 0)
 					@@dres = @@dres.push(true)
-					EditHistory.new.returnResult(@@dres)
+					$obj_edith.returnResult(@@dres)
 				else
 					getTitlead = client.getTextIn2("NATIVE", "xpath=//*[@onScreen='true' and @x=30 and @y=164 and @class='UNextMobile_Protected.LayoutableLabel']", 0, "NATIVE", "Inside", 0, 0)
 					puts "Element before editing: #{getTitlead}"
@@ -256,7 +270,7 @@ class EditDownload
 					else
 						@@dres = @@dres.push(true)
 					end
-					EditHistory.new.returnResult(@@dres)
+					$obj_edith.returnResult(@@dres)
 				end
 			end
 			
@@ -267,7 +281,7 @@ class EditDownload
 		rescue Exception => e
 			$errMsgEditd = "::MSG:: Exception occurrred while editing download list: " + e.message
 			@@dres = @@dres.push(false)
-			EditHistory.new.returnResult(@@dres)	
+			$obj_edith.returnResult(@@dres)	
 		end
 	end	
 end
