@@ -10,6 +10,8 @@
 
 class TitleDownload
 
+	@@comment = ""
+
 	####################################################
 	#Target Device: Android
 	#Function Name: testSingleDownload
@@ -19,7 +21,6 @@ class TitleDownload
 
 	def testSingleDownload(client)
 		client.sleep(2000)
-		#client.setDevice("adb:401SO")	
 
 		puts ""
 		puts ""
@@ -64,10 +65,9 @@ class TitleDownload
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgDwnld
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
 		puts ($obj_epsdp.testSVODEpisodePlay(client))
 	end
 
@@ -108,27 +108,17 @@ class TitleDownload
 				client.click("NATIVE", "xpath=//*[@id='button1']", 0, 1)
 			end
 			if client.isElementFound("NATIVE", "xpath=//*[@id='download_progress']")
-				puts "::MSG:: ダウンロードを開始しました「Download has started」"
-				$result = $resultOK
-				$passCount = $passCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				@@comment = "::MSG:: ダウンロードを開始しました「Download has started」"
+				$obj_rtnrs.returnOK
+				$obj_rtnrs.printResult	
 			else
-				puts "::MSG:: ダウンロードを失敗しました!!!「Downloading failed, Check status」"
-				$result = $resultNG
-				$failCount = $failCount + 1
-				$finishedTest = $finishedTest + 1
-				puts "Result is -> " + $result	
-				puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+				$errMsgDwnld = "::MSG:: ダウンロードを失敗しました!!!「Downloading failed, Check status」"
+				$obj_rtnrs.returnNG
+				$obj_rtnrs.printResult
 			end
 		rescue Exception => e
 			$errMsgDwnld = "::MSG:: Exception occurrred during Download operation..: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$obj_rtnrs.returnNG
 		end			
 	end
 
@@ -205,7 +195,6 @@ class TitleDownload
 
 	def ios_testSingleDownload(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
@@ -235,6 +224,7 @@ class TitleDownload
 			client.sleep(1000)
 		rescue Exception => e
 			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$obj_rtnrs.returnNG
 		end			
 
 		puts ($obj_utili.calculateRatio($finishedTest))
@@ -250,10 +240,9 @@ class TitleDownload
 		@test_result = $result
 		@capture_url = $captureURL
 		@err_message = $errMsgDwnld
-		@comment = ""
+		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		client.sleep(2000)
 		puts ($obj_epsdp.ios_testSVODEpisodePlay(client))		
 	end
 
@@ -283,6 +272,7 @@ class TitleDownload
 			end
 		rescue Exception => e
 			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
+			$obj_rtnrs.returnNG
 		end		
 	end	
 
@@ -300,7 +290,8 @@ class TitleDownload
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
 			client.sleep(3000)
-			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)		
+			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
 			client.sleep(3000)
 			client.click("NATIVE", "xpath=//*[@text='キッズ一覧']", 0, 1)
 			client.sleep(3000)
@@ -325,28 +316,18 @@ class TitleDownload
 				#str1 = str0.each_char{ |c| str0.delete!(c) if c.ord<48 or c.ord>57 }
 				proval = str0.split(//).map {|x| x[/\d+/]}.compact.join("").to_i
 				if proval > 1
-					puts "::MSG:: ダウンロードを開始しました「Download has started」"
-					$result = $resultOK
-					$passCount = $passCount + 1
-					$finishedTest = $finishedTest + 1
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+					@@comment = "::MSG:: ダウンロードを開始しました「Download has started」"
+					$obj_rtnrs.returnOK
+					$obj_rtnrs.printResult
 				else
 					puts "::MSG:: ダウンロードを失敗しました!!!「Downloading failed, Check status」"
-					$result = $resultNG
-					$failCount = $failCount + 1
-					$finishedTest = $finishedTest + 1
-					puts "Result is -> " + $result	
-					puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+					$obj_rtnrs.returnNG
+					$obj_rtnrs.printResult
 				end
 			end
 		rescue Exception => e
 			$errMsgDwnld = "::MSG:: Exception occurrred during Download operation..: " + e.message
-			$result = $resultNG
-			$failCount = $failCount + 1
-			$finishedTest = $finishedTest + 1
-			puts "Result is -> " + $result	
-			puts "Pass count is P/T-> #{$passCount} / #{$totalTest}"
+			$obj_rtnrs.returnNG
 		end
 	end
 
@@ -374,6 +355,7 @@ class TitleDownload
 			end
 		rescue Exception => e
 			$errMsgDwnld = "::MSG:: Exception occurrred while deleting downlaoded items" + e.message	
+			$obj_rtnrs.returnNG
 		end		
 	end
 end
