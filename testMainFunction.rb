@@ -213,4 +213,4 @@ load "funcResultReturn.rb"
 	unextTestPrgm
 	startTest(client, $d_type, $d_name, $l_id, $pass)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
-	$obj_finis.testEnd(client, $d_name)
+	$obj_finis.testEnd(client, "#{$d_name}")
