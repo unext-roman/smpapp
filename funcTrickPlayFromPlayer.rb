@@ -117,7 +117,9 @@ class TrickPlayOperation
 		client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
 		@@curTime1 = client.elementGetText("NATIVE", "xpath=//*[@id='time']", 0)			
 		puts "現在の時間 : " + @@curTime1
-		if @@curTime1.size < 7
+		if @@curTime1.length <= 5
+			@@curTime1.prepend("#{@@timeval}")
+		elsif @@curTime1.size < 7
 			@@curTime1.prepend("#{@@timeval}")
 		end
 		cast1 = Time.parse("#{@@curTime1}")
@@ -125,6 +127,11 @@ class TrickPlayOperation
 		client.click("NATIVE", "xpath=//*[@id='forward_button']", 0, 1)
 		@@afterTime = client.elementGetText("NATIVE", "xpath=//*[@id='time']", 0)
 		puts "30秒操作後の時間 : " + @@afterTime
+		if @@afterTime.length <= 5
+			@@afterTime.prepend("#{@@timeval}")
+		elsif @@afterTime.size < 7
+			@@afterTime.prepend("#{@@timeval}")
+		end
 		#cast2 = @@afterTime.scan(/\d/).join('')
 		cast2 = Time.parse("#{@@afterTime}")
 		@@flag = "TH"
@@ -135,14 +142,21 @@ class TrickPlayOperation
 		client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
 		@@curTime2 = client.elementGetText("NATIVE", "xpath=//*[@id='time']", 0)			
 		puts "現在の時間 : " + @@curTime2
-		if @@curTime2.size < 7
+		if @@curTime2.size <= 5
 			@@curTime2.prepend("#{@@timeval}")
-		end
+		elsif @@curTime2.size < 7
+			@@curTime2.prepend("#{@@timeval}")				
+		end	
 		cast1 = Time.parse("#{@@curTime2}")
 
 		client.click("NATIVE", "xpath=//*[@id='rewind_button']", 0, 1)
 		@@beforeTime = client.elementGetText("NATIVE", "xpath=//*[@id='time']", 0)
 		puts "10秒操作後の時間 : " + @@beforeTime
+		if @@beforeTime.length <= 5
+			@@beforeTime.prepend("#{@@timeval}")
+		elsif @@beforeTime.size < 7
+			@@beforeTime.prepend("#{@@timeval}")
+		end	
 		cast2 = Time.parse("#{@@beforeTime}")
 		@@flag = "TN"
 		TrickPlayOperation.new.checkFlag(@@flag, cast1, cast2)
@@ -283,7 +297,9 @@ class TrickPlayOperation
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)	
 			@@curTime1 = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
 			puts "現在の時間 : " + @@curTime1
-			if @@curTime1.size < 7
+			if @@curTime1.length <= 5
+				@@curTime1.prepend("#{@@timeval}")
+			elsif @@curTime1.size < 7
 				@@curTime1.prepend("#{@@timeval}")
 			end
 			cast1 = Time.parse("#{@@curTime1}")
@@ -291,6 +307,11 @@ class TrickPlayOperation
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button forward']]", 0, 1)
 			@@afterTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
 			puts "30秒操作後の時間 : " + @@afterTime
+			if @@afterTime.length <= 5
+				@@afterTime.prepend("#{@@timeval}")
+			elsif @@afterTime.size < 7
+				@@afterTime.prepend("#{@@timeval}")
+			end			
 			cast2 = Time.parse("#{@@afterTime}")
 			@@flag = "TH"
 		rescue Exception => e
@@ -305,14 +326,21 @@ class TrickPlayOperation
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
 			@@curTime2 = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
 			puts "現在の時間 : " + @@curTime2
-			if @@curTime1.size < 7
-				@@curTime1.prepend("#{@@timeval}")
-			end		
+			if @@curTime2.size <= 5
+				@@curTime2.prepend("#{@@timeval}")
+			elsif @@curTime2.size < 7
+				@@curTime2.prepend("#{@@timeval}")				
+			end	
 			cast1 = Time.parse("#{@@curTime2}")
 
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button rewind']]", 0, 1)
 			@@beforeTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
 			puts "10秒操作後の時間 : " + @@beforeTime
+			if @@beforeTime.length <= 5
+				@@beforeTime.prepend("#{@@timeval}")
+			elsif @@beforeTime.size < 7
+				@@beforeTime.prepend("#{@@timeval}")
+			end			
 			cast2 = Time.parse("#{@@beforeTime}")
 			@@flag = "TN"
 		rescue Exception => e
