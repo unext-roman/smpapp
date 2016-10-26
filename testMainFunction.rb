@@ -161,8 +161,8 @@ load "funcResultReturn.rb"
 			  http.request(req)
 			}
 			client.addDevice("c24994f50118a6ae9db6a911da628b477a0ba401", "ipadair")
-			client.setDevice("#{"ios_app:" + @dname}")
-			#client.setDevice("#{@dname}")
+			#client.setDevice("#{"ios_app:" + @dname}")
+			client.setDevice("#{@dname}")
 			#tempup
 			client.openDevice()
 			client.sleep(2000)
