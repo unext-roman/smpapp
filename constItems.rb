@@ -51,6 +51,7 @@
 	$errMsgCcast = ""
 	$errMsgArply = ""
 	$errMsgPlywl = ""
+	$errMsgDldwl = ""
 
 
 	#class names
