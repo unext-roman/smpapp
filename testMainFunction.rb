@@ -156,13 +156,13 @@ load "funcResultReturn.rb"
 			req = Net::HTTP::Post.new(uri)
 			req.basic_auth 'admin', 'Unext1101'
 			#req.basic_auth 'unext-qa', 'Unextqa1'
-			req.set_form_data('start' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"), 'end' => '2016-10-30-23-00-00', 'clientCurrentTimestamp' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"))
+			req.set_form_data('start' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"), 'end' => '2016-11-30-23-00-00', 'clientCurrentTimestamp' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"))
 			res = Net::HTTP.start(uri.hostname, uri.port) {|http|
 			  http.request(req)
 			}
 			client.addDevice("c24994f50118a6ae9db6a911da628b477a0ba401", "ipadair")
-			#client.setDevice("#{"ios_app:" + @dname}")
-			client.setDevice("#{@dname}")
+			client.setDevice("#{"ios_app:" + @dname}")
+			#client.setDevice("#{@dname}")
 			#tempup
 			client.openDevice()
 			client.sleep(2000)
