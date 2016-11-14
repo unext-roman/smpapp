@@ -86,7 +86,7 @@ class PlayEpisodeFromPlayer
 			if client.isElementFound("NATIVE", "xpath=//*[@id='search_kind_selector']")
 				client.click("NATIVE", "text=見放題", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 1, 1)
+				client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 0, 1)
 				client.sleep(2000)
 				client.swipe2("Down", 500, 500)
 				client.sleep(1000)
