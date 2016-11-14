@@ -244,7 +244,7 @@ class PlayEpisodeFromPlayer
 			if client.isElementFound("NATIVE", "xpath=//*[@class='UISegmentedControl']")
 				client.click("NATIVE", "text=見放題", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", 1, 1)
+				client.click("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", 0, 1)
 				client.sleep(2000)
 				client.swipe2("Down", 1000, 1000)
 				client.sleep(1000)
