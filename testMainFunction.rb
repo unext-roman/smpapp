@@ -62,7 +62,6 @@ load "funcResultReturn.rb"
 	client = Mobile::Client.new("#{$host}","#{$port}", true)
 
 	$obj_instl = InstallApps.new
-	$obj_archv = ArchiveDL.new
 	$obj_login = Login.new
 	$obj_snglp = SinglePlay.new
 	$obj_contp = ContinuePlay.new
