@@ -26,28 +26,9 @@ class SinglePlay
 
 		$totalTest = $totalTest + 1
 		
-		begin
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='洋画' and @id='textView']", 0, 1)
-			client.sleep(2000)
-			if client.waitForElement("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='11月新規入荷！見放題で楽しめる厳選良作 洋画編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 20000)
-		    	# If statement
-			end
-			if client.isElementFound("NATIVE", "text=11月新規入荷！見放題で楽しめる厳選良作 洋画編")
-				client.click("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='11月新規入荷！見放題で楽しめる厳選良作 洋画編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 1)
-				client.sleep(2000)
-			#else
-				#click on a SVOD item, by other way
-			end
-		rescue Exception => e
-			$errMsgTanwa = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
-		end
+		SinglePlay.new.getSvodContent(client)
 		SinglePlay.new.playfromTitleDetails(client)
 		client.sleep(2000)
-
-		puts ($obj_utili.calculateRatio($finishedTest))
 
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -63,8 +44,39 @@ class SinglePlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_contp.testContinuePlay(client))
-		puts ($obj_buypv.testBuyingPPV(client))
+	end
+
+	####################################################
+	#Function Name: getSvodContent
+	#Activity: Function for getting SVOD content to be played
+	#Param: object
+	####################################################
+
+	def getSvodContent(client)
+		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='洋画' and @id='textView']", 0, 1)
+			client.sleep(2000)
+			if client.isElementFound("NATIVE", "text=見放題で楽しめる厳選良作！洋画編")
+				client.click("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='見放題で楽しめる厳選良作！洋画編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 1)
+				client.sleep(2000)
+			else
+				client.click("NATIVE", "xpath=//*[@id='searchButton']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=邦画一覧", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=すべての作品", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=見放題", 0, 1)
+				client.sleep(3000)
+				client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 0, 1)
+				client.sleep(2000)
+			end
+		rescue Exception => e
+			$errMsgTanwa = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end		
 	end
 
 	####################################################
@@ -77,7 +89,7 @@ class SinglePlay
 
 		begin
 			client.sleep(1000)
-			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='thumbnail_container']]", 0, 1)		#2.11.0~
 			client.sleep(15000)
 			puts "::MSG:: 再生を開始する「Playing operation started」"
 			client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
@@ -120,9 +132,21 @@ class SinglePlay
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+			if client.isElementFound("NATIVE", "xpath=//*[@id='search_kind_selector']", 0)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=ホーム", 0, 1)
+			else
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+			end
 		rescue Exception => e
 			$errMsgTanwa = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 		end			
@@ -146,15 +170,12 @@ class SinglePlay
 
 		begin
 			client.sleep(5000)		
-			if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 10000)
-		    	# If statement
-			end
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
 			client.sleep(3000)
 			client.click("NATIVE", "xpath=//*[@text='洋画' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
 			client.sleep(2000)
-			if client.waitForElement("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='11月新規入荷！見放題で楽しめる厳選良作 洋画編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 10000)
-		    	client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='11月新規入荷！見放題で楽しめる厳選良作 洋画編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 1)
+			if client.waitForElement("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！洋画編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 10000)
+		    	client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！洋画編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 1)
 		    	client.sleep(2000)
 		    else
 		    	client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView']]/*/*[@class='UNextMobile_Protected.PayItemBagde' and @top='false'])", 0, 1)
@@ -164,9 +185,6 @@ class SinglePlay
 			$errMsgTanwa = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 		end
 		SinglePlay.new.ios_playfromTitleDetails(client)
-
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -181,8 +199,6 @@ class SinglePlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_contp.ios_testContinuePlay(client))
-		puts ($obj_buypv.ios_testBuyingPPV(client))	
 	end
 
 	####################################################
@@ -218,7 +234,9 @@ class SinglePlay
 			end
 		rescue Exception => e
 			$errMsgTanwa = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
-			$obj_rtnrs.returnNG
+			$result = $resultNG
+			$failCount = $failCount + 1
+			$finishedTest = $finishedTest + 1
 		end
 		begin			
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
