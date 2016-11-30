@@ -15,6 +15,7 @@ load "Client.rb"
 load "constItems.rb"
 load "releaseTest_info.rb"
 load "utilitiesFunc.rb"
+load "funcSelectiveTests.rb"
 load "funcStartup.rb"
 load "funcLogin.rb"
 load "funcLogout.rb"
@@ -54,12 +55,15 @@ load "funcResultReturn.rb"
 	$pass = ARGV[3]
 	$d_type = ARGV[4]
 	$d_name = ARGV[5]
-	$b_no = ARGV[6]
+ 	$build_env = ARGV[6]
+	$env_type = ARGV[7]	
+	$t_pattern = ARGV[8]
+ 	$t_no = ARGV[9]
 
 	client = Mobile::Client.new("#{$host}","#{$port}", true)
-	client.setProjectBaseDirectory("/Users/admin/workspace/PR_Regression")
 
-	$obj_strtp = Startup.new
+	$obj_instl = InstallApps.new
+	$obj_archv = ArchiveDL.new
 	$obj_login = Login.new
 	$obj_snglp = SinglePlay.new
 	$obj_contp = ContinuePlay.new
@@ -88,11 +92,11 @@ load "funcResultReturn.rb"
 	$obj_dlwlg = DownloadWithoutLogin.new
 	$obj_logot = Logout.new
 	$obj_utili = Utility.new
+	$obj_slctv = SelectiveTest.new
 	$obj_snddb = SendResultsToDB.new
 	$obj_finis = Finish.new
 	$obj_rtnrs = ResultReturn.new
 	
-	$dname = ""
 	####################################################
 	#Module: Calling test functions
 	#Activity: Perform main operation
@@ -110,7 +114,7 @@ load "funcResultReturn.rb"
 		puts "*     =========      ||    \\|| ||=======  //  \\      ||				"
 		puts "*																		"
 		puts "*			AUTOMATION SYSTEM											"
-		puts "*			  v 1.0														"
+		puts "*			  v 2.0														"
 		puts "**********************************************************************"
 
 	end
@@ -121,19 +125,29 @@ load "funcResultReturn.rb"
 	#Param: 
 	####################################################
 
-	def startTest(client, dtype, dname, logid, passw)
+	def startTest(client, dtype, dname, logid, passw, ttype, tcsno, wifis)
 
-		@dname = dname
-		@dtype = dtype
 		#$dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
-		$dname = dname
+		@dtype = dtype
+		@dname = dname
 		@logid = logid
 		@passw = passw
+		@ttype = ttype
+		@tcsno = tcsno
+		@wifis = wifis
+		@build = build
 
+		if @ttype == "select"
+			x = @tcsno.split ","
+			$total_tc = x.length
+		else
+			$total_tc = 37
+		end
 
 		if @dtype == "ios"
-			#tempdn
-			#Request the devices list - Make sure you enter the right credential
+			$obj_utili.andConnectingWifi(client, @dtype, @dname, @wifis)
+
+			#temp: code for reserving a remote iOS device
 			uri = URI('http://10.4.136.3:8081/api/v1/devices')
 			req = Net::HTTP::Get.new(uri)
 			req.basic_auth 'admin', 'Unext1101'
@@ -156,27 +170,40 @@ load "funcResultReturn.rb"
 			req = Net::HTTP::Post.new(uri)
 			req.basic_auth 'admin', 'Unext1101'
 			#req.basic_auth 'unext-qa', 'Unextqa1'
-			req.set_form_data('start' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"), 'end' => '2016-11-30-23-00-00', 'clientCurrentTimestamp' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"))
+			req.set_form_data('start' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"), 'end' => '2016-12-30-23-00-00', 'clientCurrentTimestamp' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"))
 			res = Net::HTTP.start(uri.hostname, uri.port) {|http|
 			  http.request(req)
 			}
 			client.addDevice("c24994f50118a6ae9db6a911da628b477a0ba401", "ipadair")
 			client.setDevice("#{"ios_app:" + @dname}")
 			#client.setDevice("#{@dname}")
-			#tempup
+			#temp
+
 			client.openDevice()
 			client.sleep(2000)
+			if @build == nil
+				puts "::MSG:: Apps will be using currently installed build"
+			else
+				puts ($obj_instl.ios_testInstallApps(client, @build))
+			end
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
-			puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))
+			$obj_slctv.iosSelectiveTests(client, @logid, @passw, @ttype, @tcsno)
 		elsif @dtype == "android"
+			$obj_utili.andConnectingWifi(client, @dtype, @dname, @wifis)			
 			#client.setDevice("#{$dname}")
 			client.waitForDevice("\"@name='#{$dname}' AND @remote='true'\"", 300000)
 			client.openDevice()
 			client.sleep(2000)
+			#CURRENTLY AUTO BUILD FOR ANDROID IS NOT PREPARED, WHEN JENKINS AUTO BUILD WILL BE DELIVERED, TEST CAN BE RESUMED
+			#if @build == nil
+			#	puts "::MSG:: Apps will be using currently installed build"
+			#else
+			#	puts ($obj_instl.testInstallApps(client, @build))
+			#end
 			client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)
-			client.sleep(5000)
-			puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
+			client.sleep(5000)			
+			$obj_slctv.andSelectiveTests(client, @logid, @passw, @ttype, @tcsno)		
 		else
 			puts "::MSG:: 該当デバイスが見つかりません「Confirm target test devcie」"
 		end		
@@ -212,6 +239,6 @@ load "funcResultReturn.rb"
 	end
 
 	unextTestPrgm
-	startTest(client, $d_type, $d_name, $l_id, $pass)
+	startTest(client, $d_type, $d_name, $l_id, $pass, $t_type, $t_no, $wifis)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
 	$obj_finis.testEnd(client, $d_name)

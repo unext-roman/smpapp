@@ -12,6 +12,7 @@
 class Login
 
 	@@comment = ""
+	@@exec = false
 
 	####################################################
 	#Target Device: Android
@@ -21,7 +22,7 @@ class Login
 	####################################################
 
 	def testLogin(client,user,pass)
-		client.sleep(2000)		
+		client.sleep(2000)
 
 		puts ""
 		puts ""
@@ -30,7 +31,6 @@ class Login
 		puts "::MSG::[ANDROID] STARTING TEST LOGIN@ログイン"
 
 		$totalTest = $totalTest + 1
-		@flag = true
 
 		if client.isElementFound("NATIVE", "text=ご利用開始の前に")
 			puts ($obj_strtp.testStartupCheck(client))
@@ -47,7 +47,9 @@ class Login
 			if client.isElementFound("NATIVE", "xpath=//*[@text='ログアウト']", 0)
 				@@comment = "::MSG:: 既にログイン済み!!! 結果を未実施にする"
 				$obj_rtnrs.returnNE
-				$obj_rtnrs.printResult
+				@@exec = true
+				$obj_slctv.checkExecStatus(@@exec)
+				$obj_slctv.checkFlagValue(@@exec)
 			else
 				begin
 					client.elementListSelect("", "text=ログイン", 0, false)
@@ -68,12 +70,14 @@ class Login
 						@@comment = "::MSG:: ログイン成功しました「Login successful」"
 						$obj_rtnrs.returnOK
 						$obj_rtnrs.printResult
-						@flag = true						
+						@flag = true
+						$obj_slctv.checkFlagValue(@flag)			
 					else
 						$errMsgLogin = "::MSG:: ログイン失敗しました「Wrong credentials, Test aborted」"
 						$obj_rtnrs.returnNG
 						$obj_rtnrs.printResult
-						@flag = false						
+						@flag = false
+						$obj_slctv.checkFlagValue(@flag)				
 						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 						client.sleep(1000)
 					end
@@ -82,6 +86,8 @@ class Login
 					$obj_rtnrs.returnNG
 				end
 			end
+			@@exec = true
+			$obj_slctv.checkExecStatus(@@exec)	
 		end
 	
 		begin	
@@ -93,8 +99,6 @@ class Login
 		rescue Exception => e
 			$errMsgLogin = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 		end
-
-		puts ($obj_utili.calculateRatio($finishedTest))
 
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -110,14 +114,6 @@ class Login
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		if @flag == true
-			puts ($obj_snglp.testSinglePlay(client))
-		else
-			puts ""
-			puts "::注意::"
-			puts "::MSG:: ユーザー認証ができませんでしたので、テストが進めません。ユーザーID/PWをご確認ください。"
-			puts ""
-		end
 	end
 
 	####################################################
@@ -128,7 +124,7 @@ class Login
 	####################################################
 
 	def ios_testLogin(client, user, pass)
-		client.sleep(2000)		
+		client.sleep(2000)	
 
 		puts ""
 		puts ""
@@ -137,7 +133,6 @@ class Login
 		puts "::MSG::[iOS] STARTING TEST LOGIN@ログイン"
 
 		$totalTest = $totalTest + 1
-		@flag = true
 
 		begin
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
@@ -152,7 +147,9 @@ class Login
 			if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0)	
 				@@comment = "::MSG:: 既にログイン済み!!! 結果を未実施にする"
 				$obj_rtnrs.returnNE
-				$obj_rtnrs.printResult	
+				@@exec = true
+				$obj_slctv.checkExecStatus(@@exec)
+				$obj_slctv.checkFlagValue(@@exec)
 				client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
@@ -173,11 +170,13 @@ class Login
 					$obj_rtnrs.returnOK
 					$obj_rtnrs.printResult
 					@flag = true
+					$obj_slctv.checkFlagValue(@flag)	
 				else
 					$errMsgLogin = "::MSG:: ログイン失敗しました「Wrong credentials, Test aborted」"
 					$obj_rtnrs.returnNG
 					$obj_rtnrs.printResult
 					@flag = false
+					$obj_slctv.checkFlagValue(@flag)	
 					client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button close']]", 0, 1)
 					client.sleep(1000)
 				end	
@@ -185,13 +184,14 @@ class Login
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 				client.sleep(2000)
-			end	
+			end
+			@@exec = true
+			$obj_slctv.checkExecStatus(@@exec)	
 		rescue Exception => e
 			$errMsgLogin = "::MSG:: Exception occurrred at Login operation: " + e.message
 			$obj_rtnrs.returnNG
+			$obj_rtnrs.printResult
 		end
-
-		puts ($obj_utili.calculateRatio($finishedTest))
 
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -207,14 +207,5 @@ class Login
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-
-		if @flag == true
-			puts ($obj_snglp.ios_testSinglePlay(client))
-		else
-			puts ""
-			puts "::注意::"
-			puts "::MSG:: ユーザー認証ができませんでしたので、テストが進めません。ユーザーID/PWをご確認ください。"
-			puts ""
-		end
 	end
 end
