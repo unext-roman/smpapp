@@ -187,12 +187,43 @@ load "funcResultReturn.rb"
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
 			$obj_slctv.iosSelectiveTests(client, @logid, @passw, @ttype, @tcsno)
-		elsif @dtype == "android"
-			$obj_utili.andConnectingWifi(client, @dtype, @dname, @wifis)			
+		elsif @dtype == "android"						
 			#client.setDevice("#{$dname}")
-			client.waitForDevice("\"@name='#{$dname}' AND @remote='true'\"", 300000)
+			#client.waitForDevice("\"@name='#{$dname}' AND @remote='true'\"", 300000)
+			#temp: code for reserving a remote iOS device
+			uri = URI('http://10.4.136.3:8081/api/v1/devices')
+			req = Net::HTTP::Get.new(uri)
+			req.basic_auth 'admin', 'Unext1101'
+			#req.basic_auth 'unext-qa', 'Unextqa1'
+			res = Net::HTTP.start(uri.hostname, uri.port) {|http|
+			  http.request(req)
+			}
+			#Get the device id for the desired device
+			api_result = JSON.parse(res.body)
+			devices_array = api_result["data"]
+			requested_device_id = ""
+			
+			devices_array.each do |device|
+			  	if device["deviceName"] == @dname
+					requested_device_id = device["id"]					
+				end
+			end
+			#And now reserve the device
+			uri = URI('http://10.4.136.3:8081/api/v1/devices/' + requested_device_id + '/reservations/new')
+			req = Net::HTTP::Post.new(uri)
+			req.basic_auth 'admin', 'Unext1101'
+			#req.basic_auth 'unext-qa', 'Unextqa1'
+			req.set_form_data('start' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"), 'end' => '2016-12-30-23-00-00', 'clientCurrentTimestamp' => Time.new.strftime("%Y-%m-%d-%H-%M-%S"))
+			res = Net::HTTP.start(uri.hostname, uri.port) {|http|
+			  http.request(req)
+			}
+			client.addDevice("CB5A233UKX", "401SO")
+			client.setDevice("#{@dname}")
+			#temp
+
 			client.openDevice()
 			client.sleep(2000)
+			$obj_utili.andConnectingWifi(client, @dtype, @dname, @wifis)
 			#CURRENTLY AUTO BUILD FOR ANDROID IS NOT PREPARED, WHEN JENKINS AUTO BUILD WILL BE DELIVERED, TEST CAN BE RESUMED
 			#if @build == nil
 			#	puts "::MSG:: Apps will be using currently installed build"
