@@ -93,8 +93,8 @@ class InstallApps
 		client.sleep(2000)
 		
 		@build = build
-		@ios_dev_build_path = "C:\\automation_builds\\ios\\dev\\BuildArtifacts\\UNextMobile-iOS-AdHoc-CI\\"
-		@ios_rel_build_path = "C:\\automation_builds\\ios\\dev\\BuildArtifacts\\UNextMobile-iOS-AdHoc-CI\\" #currently RELEASE build is not covered by CI 
+		@ios_dev_build_path = "C:/automation_builds/ios/dev/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/"
+		@ios_rel_build_path = "C:/automation_builds/ios/dev/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/" #currently RELEASE build is not covered by CI 
 
 		@flag = false
 
