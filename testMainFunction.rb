@@ -143,8 +143,6 @@ load "funcResultReturn.rb"
 		end
 
 		if @dtype == "ios"
-			$obj_utili.andConnectingWifi(client, @dtype, @dname, @wifis)
-
 			#temp: code for reserving a remote iOS device
 			uri = URI('http://10.4.136.3:8081/api/v1/devices')
 			req = Net::HTTP::Get.new(uri)
@@ -178,6 +176,8 @@ load "funcResultReturn.rb"
 			#temp
 
 			client.openDevice()
+			client.sleep(2000)
+			$obj_utili.andConnectingWifi(client, @dtype, @dname, @wifis)
 			client.sleep(2000)
 			if @build == nil
 				puts "::MSG:: Apps will be using currently installed build"
