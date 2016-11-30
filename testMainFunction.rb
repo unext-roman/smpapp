@@ -123,7 +123,7 @@ load "funcResultReturn.rb"
 	#Param: 
 	####################################################
 
-	def startTest(client, dtype, dname, logid, passw, ttype, tcsno, wifis)
+	def startTest(client, dtype, dname, logid, passw, ttype, tcsno, wifis, build)
 
 		#$dname = client.waitForDevice("\"@name='#{dname}' AND @remote='true'\"", 300000)
 		@dtype = dtype
@@ -237,6 +237,6 @@ load "funcResultReturn.rb"
 	end
 
 	unextTestPrgm
-	startTest(client, $d_type, $d_name, $l_id, $pass, $t_type, $t_no, $wifis)
+	startTest(client, $d_type, $d_name, $l_id, $pass, $t_pattern, $t_no, $env_type, $build_env)
 	sendResultsToDB($b_no, $l_id, $d_type, $d_name)
 	$obj_finis.testEnd(client, $d_name)
