@@ -135,7 +135,7 @@ class Utility
 						client.sleep(3000)
 						if client.isElementFound("NATIVE", "xpath=//*[@text='接続されました']", 0)
 							puts "::MSG:: 既に接続しました「 Already connected to ST environment"
-							client.click("NATIVE", "xpath=//*[@text='キャンセル']", 0, 1)
+							client.click("NATIVE", "xpath=//*[@text='完了']", 0, 1)
 							client.sleep(2000)
 							client.sendText("{HOME}")
 							client.sleep(2000)
@@ -160,7 +160,7 @@ class Utility
 						client.sleep(3000)
 						if client.isElementFound("NATIVE", "xpath=//*[@text='接続されました']", 0)
 							puts "::MSG:: 既に接続しました「 Already connected to Main environment"
-							client.click("NATIVE", "xpath=//*[@text='キャンセル']", 0, 1)
+							client.click("NATIVE", "xpath=//*[@text='完了']", 0, 1)
 							client.sleep(2000)
 							client.sendText("{HOME}")
 							client.sleep(2000)
