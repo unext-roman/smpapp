@@ -21,7 +21,8 @@ class DownlaodPlay
 	####################################################
 
 	def testDownloadPlay(client)
-		client.sleep(20000)
+		client.sleep(2000)
+		client.setDevice("adb:401SO")
 
 		puts ""
 		puts ""
@@ -47,8 +48,6 @@ class DownlaodPlay
 		rescue Exception => e
 			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
-	
-		puts ($obj_utili.calculateRatio($finishedTest))
 
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -56,7 +55,7 @@ class DownlaodPlay
 			@exetime = $execution_time
 		end
 		@test_device = "ANDROID" 
-		@testcase_num = 11
+		@testcase_num = 15
 		@testcase_summary = "単話ダウンロード再生機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -64,7 +63,6 @@ class DownlaodPlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_keysh.testKeywordSearch(client))
 	end
 
 	####################################################
@@ -141,16 +139,12 @@ class DownlaodPlay
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=(//*[@id='recycler_view' and ./following-sibling::*[@id='error_view']]/*/*/*[@id='thumbnail'])", 0, 1)
 			client.sleep(2000)
-			client.swipe2("Down", 300, 1500)
+			client.swipe2("Down", 400, 1500)
 		    client.sleep(1000)
-			if client.waitForElement("NATIVE", "xpath=//*[@id='otherView' and @class='jp.co.unext.widget.DownloadCircleIndicator']", 0, 10000)
-				#If statement
-			end
-			client.click("NATIVE", "xpath=//*[@id='otherView' and @class='jp.co.unext.widget.DownloadCircleIndicator']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@class='android.widget.FrameLayout']]", 0, 1)
 			if client.isElementFound("NATIVE", "xpath=//*[@id='alertTitle']")
 				client.click("NATIVE", "xpath=//*[@id='button1']", 0, 1)
 			end
-
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
@@ -172,7 +166,16 @@ class DownlaodPlay
 	####################################################
 
 	def downLoadProgress(client)
-
+		client.sleep(10000)
+		if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
+			puts "::MSG:: Empty download list"
+			DownlaodPlay.new.downloadContents(client)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(1000)
+			client.click("NATIVE", "text=ダウンロード済み", 0, 1)
+			client.sleep(2000)
+		end
 		begin
 			for i in 1..5
 				dlcnt0 = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*[@id='image_container'])[1]", "text")
@@ -205,6 +208,7 @@ class DownlaodPlay
 
 	def ios_testDownloadPlay(client)
 		client.sleep(2000)
+		client.setDevice("ios_app:autoIpad")
 
 		puts ""
 		puts ""
@@ -231,16 +235,14 @@ class DownlaodPlay
 		rescue Exception => e
 			$errMsgDwnpl = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
-	
-		puts ($obj_utili.calculateRatio($finishedTest))
 
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
 			@exetime = $execution_time
 		end
-		@test_device = "ANDROID" 
-		@testcase_num = 11
+		@test_device = "iOS" 
+		@testcase_num = 15
 		@testcase_summary = "単話ダウンロード再生機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -248,7 +250,6 @@ class DownlaodPlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_keysh.ios_testKeywordSearch(client))
 	end
 
 	####################################################
@@ -265,7 +266,6 @@ class DownlaodPlay
 			client.click("NATIVE", "xpath=//*[@text='ダウンロード済み']", 0, 1)
 			client.sleep(2000)
 			if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
-				puts "::MSG:: Empty download list"
 				DownlaodPlay.new.ios_downloadContents(client)
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
@@ -317,12 +317,10 @@ class DownlaodPlay
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@class='UITableView' and ./*[./*[@class='UNextMobile_Protected.SpecialBlockCell']]]", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)		
-			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
+			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)		
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='キッズ一覧']", 0, 1)
 			client.sleep(2000)
@@ -364,6 +362,15 @@ class DownlaodPlay
 	####################################################
 
 	def ios_downLoadProgress(client)
+		client.sleep(10000)
+		if client.isElementFound("NATIVE", "text=ダウンロード済みの作品がありません")
+			DownlaodPlay.new.ios_downloadContents(client)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='ダウンロード済み']", 0, 1)
+			client.sleep(2000)
+		end
 		begin
 			for i in 1..5
 				dlcnt0 = client.getAllValues("NATIVE", "xpath=//*[@class='UILabel' and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", "text")
