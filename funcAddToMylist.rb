@@ -22,7 +22,6 @@ class AddToMylist
 
 	def testAddtoMylist(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST ADDTO FAVORITE@マイリストに追加・削除機能"
@@ -49,8 +48,6 @@ class AddToMylist
 			$errMsgAdtml = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -65,7 +62,6 @@ class AddToMylist
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_lnbck.testLeanbackOperation(client))
 	end
 
 	####################################################
@@ -77,7 +73,8 @@ class AddToMylist
 	def addingToMylist(client)
 
 		begin
-			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリスト' and @id='titleView']")
+			#if client.isElementFound("NATIVE", "xpath=//*[@text='マイリスト' and @id='titleView']")
+				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 				client.sleep(2000)
 				client.click("NATIVE", "text=マイリスト", 0, 1)
@@ -90,10 +87,10 @@ class AddToMylist
 				client.sleep(3000)
 				client.swipe2("Down", 500, 100)
 				client.sleep(2000)
-			else
-				client.swipe2("Down", 500, 100)
-				client.sleep(2000)
-			end
+			#else
+			#	client.swipe2("Down", 500, 100)
+			#	client.sleep(2000)
+			#end
 			client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])", 0, 1)
 			client.sleep(2000)
 			AddToMylist.new.addOperation(client)
@@ -114,17 +111,22 @@ class AddToMylist
 		@cname1 = ""
 		@cname2 = ""
 		begin
-			@cname1 = client.getTextIn2("NATIVE", "xpath=//*[@id='textView' and ./parent::*[@class='android.widget.LinearLayout' and ./parent::*[@id='listView']]]", 0, "NATIVE", "Inside", 0, 0)
+			#@cname1 = client.getTextIn2("NATIVE", "xpath=//*[@id='textView' and ./parent::*[@class='android.widget.LinearLayout' and ./parent::*[@id='listView']]]", 0, "NATIVE", "Inside", 0, 0)
+			@cname1 = client.getTextIn2("NATIVE", "xpath=//*[@id='title']", 0, "NATIVE", "Inside", 0, 0)	#id changed from 2.11.0~
 			client.swipe2("Down", 1000, 100)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@text='マイリスト' and @id='textView1']", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@text='マイリスト' and @id='textView1']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='マイリスト' and @id='favorite_button_text']", 0, 1)		#id changed from 2.11.0~
 			client.sleep(2000)
-			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリストに追加済' and ./parent::*[@id='otherView1']]")
+			#if client.isElementFound("NATIVE", "xpath=//*[@text='マイリストに追加済' and ./parent::*[@id='otherView1']]")
+			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリストに追加済' and ./parent::*[@id='favorite_button_text']]")		#id changed from 2.11.0~
 				puts "::MSG:: Added to mylist"
 			else
 				puts "::MSG:: Could not add to mylist"
 			end
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.swipe2("Up", 300, 500)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
@@ -186,7 +188,6 @@ class AddToMylist
 
 	def ios_testAddtoMylist(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST MYLIST EDITING@マイリストに追加・削除機能"
@@ -213,8 +214,6 @@ class AddToMylist
 			$errMsgAdtml = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -229,7 +228,6 @@ class AddToMylist
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts (ios_testEditHistoryList(client))
 	end
 
 	####################################################
