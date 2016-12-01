@@ -97,7 +97,8 @@ class InstallApps
 		client.sleep(2000)
 		
 		@build = build
-		@ios_dev_build_path = "C:/automation_builds/ios/dev/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/"
+		#@ios_dev_build_path = "C:/automation_builds/ios/dev/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/"
+		@ios_dev_build_path = "C:\\automation_builds\\ios\\dev\\BuildArtifacts\\UNextMobile-iOS-AdHoc-CI\\"
 		@ios_rel_build_path = "C:/automation_builds/ios/dev/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/" #currently RELEASE build is not covered by CI 		
 
 		@flag = false
@@ -112,7 +113,8 @@ class InstallApps
 			elsif @build == "rel"
 				last_upd_file = Dir.glob("#{@ios_rel_build_path}*.ipa").max_by {|f| File.mtime(f)}
 				puts "::MSG:: LAST UPDATED FILE IS : #{last_upd_file}"
-				@flag = true			# After preparing REL test build in Jenkins, set this as True				
+				#@flag = true			# After preparing REL test build in Jenkins, set this as True	
+				@flag = false			
 			else
 				@flag = false
 				puts "::MSG:: Could not find target build to install. Continue test with currently installed build!"
