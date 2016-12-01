@@ -24,7 +24,7 @@ class EditMylist
 
 	def testEditFavoriteList(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST EDITING MYLIST@マイリストの編集機能"
@@ -46,8 +46,6 @@ class EditMylist
 			$errMsgEditm = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -62,7 +60,6 @@ class EditMylist
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_rtngs.testSakuhinRatings(client))
 	end
 
 	####################################################
@@ -79,7 +76,7 @@ class EditMylist
 			client.click("NATIVE", "text=マイリスト", 0, 1)
 			client.sleep(2000)
 
-			if client.isElementFound("NATIVE", "text=お気に入りはありません")
+			if client.isElementFound("NATIVE", "text=マイリストがありません")
 				@@mres = @@mres.push(false)
 				$errMsgEditm = "::MSG:: マイリスト一覧に編集するの項目がありませんでした、作品を用意してから又ご確認下さい"
 				@@flag = "false"
@@ -109,7 +106,7 @@ class EditMylist
 				client.click("NATIVE", "text=マイリスト", 0, 1)
 				client.sleep(2000)
 
-				if client.isElementFound("NATIVE", "text=お気に入りはありません")
+				if client.isElementFound("NATIVE", "text=マイリストがありません")
 					@@mres = @@mres.push(true)
 				else
 					getTitlead = client.getTextIn2("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='title'])", 0, "NATIVE", "Inside", 0, 0)
@@ -126,10 +123,11 @@ class EditMylist
 				$obj_rtnrs.printResult
 			else
 				$obj_edith.returnResult(@@mres)
-			end			
+			end	
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "text=ホーム", 0, 1)
+			client.sleep(2000)
 		rescue Exception => e
 			$errMsgEditm = "::MSG:: Exception occurrred while editing download list: " + e.message
 			@@mres = @@mres.push(false)
@@ -146,7 +144,7 @@ class EditMylist
 
 	def ios_testEditFavoriteList(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST EDITING MYLIST@マイリストの編集機能"
@@ -168,8 +166,6 @@ class EditMylist
 			$errMsgEditm = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -184,7 +180,6 @@ class EditMylist
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_rtngs.ios_testSakuhinRatings(client))
 	end
 
 	####################################################
