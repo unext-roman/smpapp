@@ -97,8 +97,7 @@ class InstallApps
 		client.sleep(2000)
 		
 		@build = build
-		#@ios_dev_build_path = "C:/automation_builds/ios/dev/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/"
-		@ios_dev_build_path = "C:\\automation_builds\\ios\\dev\\BuildArtifacts\\UNextMobile-iOS-AdHoc-CI\\"
+		@ios_dev_build_path = "C:/automation_builds/ios/dev/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/"		
 		@ios_rel_build_path = "C:/automation_builds/ios/dev/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/" #currently RELEASE build is not covered by CI 		
 
 		@flag = false
@@ -107,7 +106,7 @@ class InstallApps
 
 		begin
 			if @build == "dev"
-				last_upd_file = Dir.glob("#{@ios_dev_build_path}").max_by {|f| File.ctime(f)}
+				last_upd_file = Dir.glob("#{@ios_dev_build_path}*.ipa").max_by {|f| File.ctime(f)}
 				puts "::MSG:: LAST UPDATED FILE IS : #{last_upd_file}"
 				@flag = true
 			elsif @build == "rel"
