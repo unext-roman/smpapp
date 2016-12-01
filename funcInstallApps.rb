@@ -112,8 +112,7 @@ class InstallApps
 			elsif @build == "rel"
 				last_upd_file = Dir.glob("#{@ios_rel_build_path}*.ipa").max_by {|f| File.mtime(f)}
 				puts "::MSG:: LAST UPDATED FILE IS : #{last_upd_file}"
-				#@flag = true			# After preparing REL test build in Jenkins, set this as True
-				@flag = false
+				@flag = true			# After preparing REL test build in Jenkins, set this as True				
 			else
 				@flag = false
 				puts "::MSG:: Could not find target build to install. Continue test with currently installed build!"
