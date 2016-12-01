@@ -23,7 +23,6 @@ class KeywordSearch
 
 	def testKeywordSearch(client)
 		client.sleep(2000)
-		
 		@k1 = "lovers"
 		@k2 = "ドラゴンボール"
 		@k3 = "007"
@@ -54,15 +53,13 @@ class KeywordSearch
 			$errMsgKsrch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
 			@exetime = $execution_time
 		end
 		@test_device = "ANDROID" 
-		@testcase_num = 13
+		@testcase_num = 12
 		@testcase_summary = "キーワードー検索機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -70,8 +67,6 @@ class KeywordSearch
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_gener.testGenericSearch(client))
-		puts ($obj_fltrs.testFilterSearch(client))
 	end
 
 	####################################################
@@ -165,7 +160,6 @@ class KeywordSearch
 
 	def ios_testKeywordSearch(client)
 		client.sleep(2000)
-		
 		@k1 = "lovers"
 		@k2 = "ドラゴンボール"
 		@k3 = "007"
@@ -195,15 +189,13 @@ class KeywordSearch
 			$errMsgKsrch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
 			@exetime = $execution_time
 		end
 		@test_device = "iOS" 
-		@testcase_num = 13
+		@testcase_num = 12
 		@testcase_summary = "キーワードー検索機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -211,8 +203,6 @@ class KeywordSearch
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_gener.ios_testGenericSearch(client))
-		puts ($obj_fltrs.ios_testFilterSearch(client))
 	end
 
 	####################################################
