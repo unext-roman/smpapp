@@ -19,7 +19,6 @@ class BuyPPV
 
 	def testBuyingPPV(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST BUYING PPV@PPV作品の購入"
@@ -114,6 +113,7 @@ class BuyPPV
 	def purchasingContent(client)
 
 		begin
+			#client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
 			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='thumbnail_container']]", 0, 1)		#2.11.0~
 			client.sleep(3000)
 			if client.isElementFound("NATIVE", "text=レンタル／購入")
@@ -175,7 +175,6 @@ class BuyPPV
 
 	def ios_testBuyingPPV(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST BUYING PPV@PPV作品の購入"
