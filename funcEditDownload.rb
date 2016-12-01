@@ -24,7 +24,6 @@ class EditDownload
 
 	def testEditDownloadList(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST EDITING DOWNLOAD@ダウンロードの編集機能"
@@ -46,8 +45,6 @@ class EditDownload
 			$errMsgEditd = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -62,8 +59,6 @@ class EditDownload
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_editm.testEditFavoriteList(client))
-		puts ($obj_plfel.testEpisodePlayFromPlayer(client))	
 	end
 
 	####################################################
@@ -156,7 +151,6 @@ class EditDownload
 
 	def ios_testEditDownloadList(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST EDITING DOWNLOAD@ダウンロードの編集機能"
@@ -178,8 +172,6 @@ class EditDownload
 			$errMsgEditd = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -194,8 +186,6 @@ class EditDownload
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_editm.ios_testEditFavoriteList(client))
-		puts ($obj_plfel.ios_testEpisodePlayFromPlayer(client))	
 	end
 
 	####################################################
