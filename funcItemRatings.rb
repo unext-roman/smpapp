@@ -22,7 +22,7 @@ class ItemRatings
 
 	def testSakuhinRatings(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST ITEM RATINGS@評価機能"
@@ -43,8 +43,6 @@ class ItemRatings
 		rescue Exception => e
 			$errMsgRtngs = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -60,7 +58,6 @@ class ItemRatings
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_plfel.testEpisodePlayFromPlayer(client))	
 	end
 
 	####################################################
@@ -86,7 +83,8 @@ class ItemRatings
 			end
 			client.swipe2("Down", 1000, 100)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@id='ratingView' and ./parent::*[@id='otherView']]", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@id='ratingView' and ./parent::*[@id='otherView']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='rate_button']", 0, 1)	#id changed from 2.11.0~
 			client.sleep(2000)
 			@curent = ItemRatings.new.getCurrentRating(client)
 			puts "Current Rating is: #{@curent}"
@@ -120,7 +118,8 @@ class ItemRatings
 			end
 			client.click("NATIVE", "xpath=(//*[@id='rate_picker']/*[@class='android.widget.ImageView'])", @indx, 1)	
 			client.sleep(3000)
-			client.click("NATIVE", "xpath=//*[@id='ratingView' and ./parent::*[@id='otherView']]", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@id='ratingView' and ./parent::*[@id='otherView']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='rate_button']", 0, 1)	#id changed from 2.11.0~
 			client.sleep(1000)
 			@updrat = ItemRatings.new.getCurrentRating(client)
 			@uval = @updrat.to_i
@@ -157,7 +156,7 @@ class ItemRatings
 
 	def ios_testSakuhinRatings(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST ITEM RATINGS@評価機能"
@@ -178,8 +177,6 @@ class ItemRatings
 		rescue Exception => e
 			$errMsgRtngs = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -195,7 +192,7 @@ class ItemRatings
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_logot.ios_testEpisodePlayFromPlayer(client))			
+	
 	end
 
 	####################################################
@@ -268,4 +265,5 @@ class ItemRatings
 	def getiCurrentRating(client)
 		client.runNativeAPICall("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNRatingControl']", 0, "invokeMethod:'{\"selector\":\"rate\",\"arguments\":[]}'")
 	end
+
 end
