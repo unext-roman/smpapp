@@ -25,7 +25,7 @@ class ConnectChromecast
 
 	def testConnectingCast(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST CONNECTING A CHROMECAST@キャスト接続・切断機能"
@@ -47,8 +47,6 @@ class ConnectChromecast
 			$errMsgCcast = "::MSG:: Exception occurrred while finding element: " + e.message
 			$obj_rtnrs.returnNG
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -64,7 +62,39 @@ class ConnectChromecast
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_logot.testLogout(client))
+	end
+
+	def setTargetWifi(client)
+		begin
+			client.run("am start -n com.android.settings/.wifi.WifiSettings")
+			client.sleep(7000)
+			if client.swipeWhileNotFound2("Down", 500, 1500, "NATIVE", "xpath=//*[@text='QA2-2G']", 0, 3000, 5, true)
+				client.sleep(3000)
+				if client.isElementFound("NATIVE", "xpath=//*[@text='接続されました']", 0)
+					puts "::MSG:: 既に接続しました「 Already connected to Main environment"
+					client.click("NATIVE", "xpath=//*[@text='キャンセル']", 0, 1)
+					client.sleep(2000)
+					client.sendText("{HOME}")
+					client.sleep(2000)
+				else					
+					if client.isElementFound("NATIVE", "xpath=//*[@id='password']", 0)
+					    client.elementSendText("NATIVE", "xpath=//*[@id='password']", 0, "unexttest")
+					    client.sleep(2000)
+					end
+					if client.isElementFound("NATIVE", "xpath=//*[@text='接続']", 0)
+						client.click("NATIVE", "xpath=//*[@text='接続']", 0, 1)
+						client.sleep(2000)
+					end
+					puts "::MSG:: 本番環境に接続しました「 Conencted to Main environment"
+					client.sendText("{HOME}")
+					client.sleep(2000)
+				end
+			end	
+		rescue Exception => e
+			$errMsgCcast = "::MSG:: Exception occurrred while setting wifi " + e.message
+		end	
+		client.launch("jp.unext.mediaplayer/jp.co.unext.unextmobile.MainActivity", true, false)	
+		client.sleep(5000)
 	end
 
 	####################################################
@@ -74,14 +104,15 @@ class ConnectChromecast
 	####################################################
 
 	def castOperation(client)
-		
+
+		ConnectChromecast.new.setTargetWifi(client)		
 		begin
-			if client.isElementFound("NATIVE", "xpath=//*[@contentDescription='Cast button. Disconnected']", 0)
+			if client.isElementFound("NATIVE", "xpath=//*[@contentDescription='キャスト アイコン。接続解除済み']", 0)
 				@@flag = true
 				ConnectChromecast.new.connectCast(client)
 				ConnectChromecast.new.castPlayback(client)
 				ConnectChromecast.new.disconnectCast(client)
-			elsif client.isElementFound("NATIVE", "xpath=//*[@contentDescription='Cast button. Connected']", 0)
+			elsif client.isElementFound("NATIVE", "xpath=//*[@contentDescription='キャスト アイコン。接続済み']", 0)
 				@@flag = true
 				ConnectChromecast.new.disconnectCast(client)
 				ConnectChromecast.new.connectCast(client)
@@ -113,7 +144,8 @@ class ConnectChromecast
 		puts "::MSG::キャスト接続"
 		begin
 			if @@flag == true
-				client.click("NATIVE", "xpath=//*[@contentDescription='Cast button. Disconnected']", 0, 1)
+				#client.click("NATIVE", "xpath=//*[@contentDescription='Cast button. Disconnected']", 0, 1)
+				client.click("NATIVE", "xpath=//*[@contentDescription='キャスト アイコン。接続解除済み']", 0, 1)		#xpath changed from 2.11.0~				
 				client.sleep(2000)
 				if client.isElementFound("NATIVE", "xpath=//*[@text='付近の端末']", 0)
 					@@flag = false
@@ -122,7 +154,8 @@ class ConnectChromecast
 					client.click("NATIVE", "xpath=//*[@id='mr_chooser_route_name']", 0, 1)
 					@@flag = true
 					client.sleep(3000)
-					if client.isElementFound("NATIVE", "xpath=//*[@contentDescription='Cast button. Connected']", 0)
+					#if client.isElementFound("NATIVE", "xpath=//*[@contentDescription='Cast button. Connected']", 0)
+					if client.isElementFound("NATIVE", "xpath=//*[@contentDescription='キャスト アイコン。接続済み']", 0)	
 						@@cres = @@cres.push(true)
 					else
 						@@cres = @@cres.push(false)
@@ -140,11 +173,12 @@ class ConnectChromecast
 		puts "::MSG::キャスト切断"
 		begin
 			if @@flag == true
-				client.click("NATIVE", "xpath=//*[@contentDescription='Cast button. Connected']", 0, 1)
+				#client.click("NATIVE", "xpath=//*[@contentDescription='Cast button. Connected']", 0, 1)
+				client.click("NATIVE", "xpath=//*[@contentDescription='キャスト アイコン。接続済み']", 0, 1)
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='キャストを停止']", 0, 1)
 				client.sleep(2000)
-				if client.isElementFound("NATIVE", "xpath=//*[@contentDescription='Cast button. Disconnected']", 0)
+				if client.isElementFound("NATIVE", "xpath=//*[@contentDescription='キャスト アイコン。接続解除済み']", 0)
 					@@cres = @@cres.push(true)
 					@@flag = false
 				else
@@ -165,7 +199,7 @@ class ConnectChromecast
 				client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='download_indicator'])[3]", 0, 1)
 				client.sleep(@@play)
 
-				if client.isElementFound("NATIVE", "xpath=//*[@id='casting']", 0) && client.isElementFound("NATIVE", "xpath=//*[@contentDescription='Cast button. Connected']", 0)
+				if client.isElementFound("NATIVE", "xpath=//*[@id='casting']", 0) && client.isElementFound("NATIVE", "xpath=//*[@contentDescription='キャスト アイコン。接続済み']", 0)
 					@@cres = @@cres.push(true)
 				else
 					@@cres = @@cres.push(false)
@@ -186,7 +220,7 @@ class ConnectChromecast
 
 	def ios_testConnectingCast(client)
 		client.sleep(2000)
-		
+
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST CONNECTING A CHROMECAST@キャスト接続・切断機能"
@@ -208,8 +242,6 @@ class ConnectChromecast
 			$errMsgCcast = "::MSG:: Exception occurrred while finding element: " + e.message
 			$obj_rtnrs.returnNG
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -225,7 +257,6 @@ class ConnectChromecast
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_logot.testLogout(client))
 	end
 
 	####################################################
@@ -234,8 +265,44 @@ class ConnectChromecast
 	#Param: object
 	####################################################
 
+	def iSetTargetWifi(client)
+		begin
+			client.launch("com.apple.Preferences", true, true)
+			client.click("NATIVE", "xpath=//*[@text='Wi-Fi' and @x=118]", 0, 1)
+			client.sleep(3000)
+			if client.isElementFound("NATIVE", "xpath=//*[@text='QA2-2G' and @x>700 and @y<400]", 0)
+				puts "::MSG:: 既に接続しました「 Already connected to Main environment"
+				client.sleep(3000)
+			else
+				client.sleep(7000)
+				client.longClick("NATIVE", "xpath=//*[@text='QA2-2G' and @x>700 and @y>400]", 0, 1, 0, 0)
+				client.sleep(3000)
+				if client.isElementFound("NATIVE", "xpath=//*[@text='このネットワーク設定を削除' and ./parent::*[@text='このネットワーク設定を削除']]", 0)
+					puts "::MSG:: 既に接続しました「 Already connected to Main environment"
+					client.sleep(2000)
+				else
+					if client.isElementFound("NATIVE", "xpath=//*[@text='パスワード' and ./parent::*[@text='パスワード' and ./parent::*[@text='パスワード']]]", 0)
+						client.elementSendText("NATIVE", "xpath=//*[@text='パスワード' and ./parent::*[@text='パスワード' and ./parent::*[@text='パスワード']]]", 0, "unexttest")
+						client.sleep(2000)
+					end
+					if client.isElementFound("NATIVE", "xpath=//*[@text='接続']", 0)
+						client.click("NATIVE", "xpath=//*[@text='接続']", 0, 1)
+						client.sleep(2000)
+					end
+					puts "::MSG:: 本番環境に接続しました「 Conencted to Main environment"
+					client.sendText("{HOME}")
+				end
+			end
+		rescue Exception => e
+			$errMsgCcast = "::MSG:: Exception occurrred while setting wifi " + e.message
+		end		
+		client.launch("jp.unext.mediaplayer", true, false)
+		client.sleep(5000)
+	end
+
 	def castiOperation(client)
 		
+		ConnectChromecast.new.iSetTargetWifi(client)		
 		begin
 			if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='cast off' and @hidden='false']", 0)
 				@@flag = true
@@ -257,11 +324,11 @@ class ConnectChromecast
 				$obj_rtnrs.returnNG
 				$obj_rtnrs.printResult
 			elsif @@cres.include?(false)
-				$errMsgCcast = "::MSG:: キャスト操作時に問題が発生しました「Chromecast conencting/disconencting is successful」"
+				$errMsgCcast = "::MSG:: キャスト操作時に問題が発生しました「Chromecast conencting/disconencting is unsuccessful. Check chromecasr」"
 				$obj_rtnrs.returnNG
 				$obj_rtnrs.printResult
 			else
-				@@comment = "キャスト操作が無事でした「Chromecast conencting/disconencting is successful」"
+				@@comment = "::MSG:: キャスト操作が無事でした「Chromecast conencting/disconencting is successful」"
 				$obj_rtnrs.returnOK
 				$obj_rtnrs.printResult
 			end
@@ -329,7 +396,8 @@ class ConnectChromecast
 		puts "::MSG::キャスト再生"
 		begin
 			if @@flag == true
-				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView']", 0, 1)
+				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @x<300]", 0, 1)
+				
 				client.sleep(@@play)
 				if client.isElementFound("NATIVE", "xpath=//*[@text='荒ぶる和食_romにキャスト中' and ./parent::*[@class='UIView']]", 0) && client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='cast on' and ./parent::*[./preceding-sibling::*[@accessibilityLabel='Chromecast']]]", 0)
 					@@cres = @@cres.push(true)
