@@ -19,7 +19,6 @@ class HistoryPlay
 
 	def testHistoryPlay(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST PLAY FORM HISTORY@視聴履歴から再生"
@@ -41,8 +40,6 @@ class HistoryPlay
 			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -57,7 +54,6 @@ class HistoryPlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_prcsp.testPurchasedItemPlay(client))
 	end
 
 	####################################################
@@ -100,7 +96,8 @@ class HistoryPlay
 
 		begin
 			client.sleep(1000)
-			nolstitem = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])", "id")
+			#nolstitem = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])", "id")
+			nolstitem = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='play_indicator'])", "id")
 			puts "Number of image view visible in the screen:\n #{nolstitem}"
 			cnt = nolstitem.length
 			puts "Number of contents found in the list is : #{cnt}"
@@ -116,10 +113,11 @@ class HistoryPlay
 					client.click("NATIVE", "xpath=(//*[@id='drawerList']/*/*[@id='imageView'])[#{i}]")
 					client.sleep(1000)
 					if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
-						puts "::MSG:: Using a PPV or SVOD content for this test"
+						puts "::MSG:: Using already BOUGHT or SVOD content for this test"
 						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
 						client.sleep(1000)
-						client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])[#{i}]")
+						#client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])[#{i}]")
+						client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='play_indicator'])[#{i}]")
 						client.sleep(10000)
 						HistoryPlay.new.playbackCheck(client)
 						HistoryPlay.new.leavingPlayer(client)
@@ -192,7 +190,6 @@ class HistoryPlay
 		rescue Exception => e
 			$errMsgHisto = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
 			$obj_rtnrs.returnNG
-			$obj_rtnrs.printResult	
 		end
 	end
 
@@ -205,7 +202,6 @@ class HistoryPlay
 
 	def ios_testHistoryPlay(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST PLAYING FROM HISTORY@視聴履歴から再生"
@@ -227,8 +223,6 @@ class HistoryPlay
 			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))		
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -243,7 +237,6 @@ class HistoryPlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_prcsp.ios_testPurchasedItemPlay(client))
 	end
 
 	####################################################
@@ -301,7 +294,7 @@ class HistoryPlay
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNMovieItemCell']", i, 1)			
 				client.sleep(2000)
 				if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
-					puts "::MSG:: Using a PPV or SVOD content for this test"
+					puts "::MSG:: Using already BOUGHT or SVOD content for this test"
 					client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView']", i, 1)
@@ -327,11 +320,10 @@ class HistoryPlay
 	def ios_leavingPlayer(client)
 
 		begin
-			puts "::MSG:: Tapped on seekbar..."
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
-			client.sleep(2000)
+			client.sleep(500)
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
 		rescue Exception => e
 			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
