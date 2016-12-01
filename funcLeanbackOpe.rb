@@ -22,7 +22,7 @@ class Leanback
 
 	def testLeanbackOperation(client)
 		client.sleep(2000)
-		
+
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST LEANBACK OPERATION@リンバック操作機能"
@@ -40,8 +40,6 @@ class Leanback
 			Leanback.new.browseLeanback(client)
 		end
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -56,7 +54,6 @@ class Leanback
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_edith.testEditHistoryList(client))
 	end
 
 	####################################################
@@ -92,19 +89,27 @@ class Leanback
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "text=視聴履歴", 0, 1)
+				if client.isElementFound("NATIVE", "text=視聴履歴", 0)
+					client.click("NATIVE", "text=視聴履歴", 0, 1)
+				end
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "text=マイリスト", 0, 1)
+				if client.isElementFound("NATIVE", "text=マイリスト", 0)
+					client.click("NATIVE", "text=マイリスト", 0, 1)
+				end
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "text=購入済み", 0, 1)
+				if client.isElementFound("NATIVE", "text=購入済み", 0)
+					client.click("NATIVE", "text=購入済み", 0, 1)
+				end
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "text=ダウンロード済み", 0, 1)
+				if client.isElementFound("NATIVE", "text=ダウンロード済み", 0)
+					client.click("NATIVE", "text=ダウンロード済み", 0, 1)
+				end
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 				client.sleep(2000)
@@ -157,6 +162,8 @@ class Leanback
 				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 				client.sleep(2000)
 				client.swipe2("Up", 500, 500)
+				client.sleep(2000)
+				client.click("NATIVE", "text=ホーム", 0, 1)
 				client.sleep(2000)
 				client.click("NATIVE", "text=ホーム", 0, 1)
 			end
