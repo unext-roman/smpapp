@@ -25,7 +25,7 @@ class ChangeJifukiFromPlayer
 
 	def testChangingJifukiFromPlayer(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST CHANGING JIFUKI FORM PLAYER@再生中字幕・吹替動作機能"
@@ -46,8 +46,6 @@ class ChangeJifukiFromPlayer
 		rescue Exception => e
 			$errMsgRtngs = "::MSG:: Exception occurrred while finding element: " + e.message
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -63,8 +61,6 @@ class ChangeJifukiFromPlayer
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_vqual.testVQualityFromPlayer(client))	
-		puts ($obj_trick.testTrickPlayFromPlayer(client))
 	end
 
 	####################################################
@@ -84,7 +80,8 @@ class ChangeJifukiFromPlayer
 			client.sleep(1000)
 			client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='thumbnail_container']]", 0, 1)		#2.11.0~
 			client.sleep(15000)
 			client.click("NATIVE", "xpath=//*[@id='player_settings_button']", 0, 1)
 			client.sleep(500)
@@ -165,7 +162,7 @@ class ChangeJifukiFromPlayer
 
 	def ios_testChangingJifukiFromPlayer(client)
 		client.sleep(2000)
-		
+
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST CHANGING JIFUKI FORM PLAYER@再生中字幕・吹替動作機能"
@@ -186,8 +183,6 @@ class ChangeJifukiFromPlayer
 		rescue Exception => e
 			$errMsgSubch = "::MSG:: Exception occurrred while finding element: " + e.message
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -203,8 +198,6 @@ class ChangeJifukiFromPlayer
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_vqual.ios_testVQualityFromPlayer(client))	
-		puts ($obj_trick.ios_testTrickPlayFromPlayer(client))
 	end
 
 	####################################################
@@ -269,9 +262,9 @@ class ChangeJifukiFromPlayer
 		begin
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button tools']]", 0, 1)
-			client.sleep(3000)
-			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='navbar button back']]", 0, 1)
 			client.sleep(500)
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='navbar button back']]", 0, 1)
+			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='search clear']]", 0, 1)
