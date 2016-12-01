@@ -21,7 +21,6 @@ class TitleDownload
 
 	def testSingleDownload(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST SINGLE DOWNLOAD@単話ダウンロード機能"
@@ -52,8 +51,6 @@ class TitleDownload
 			$errMsgDwnld = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -68,7 +65,6 @@ class TitleDownload
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		puts ($obj_epsdp.testSVODEpisodePlay(client))
 	end
 
 	####################################################
@@ -103,11 +99,14 @@ class TitleDownload
 			if client.waitForElement("NATIVE", "xpath=//*[@id='otherView' and @class='jp.co.unext.widget.DownloadCircleIndicator']", 0, 10000)
 				#If statement
 			end
-			client.click("NATIVE", "xpath=//*[@id='otherView' and @class='jp.co.unext.widget.DownloadCircleIndicator']", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@id='otherView' and @class='jp.co.unext.widget.DownloadCircleIndicator']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@class='android.widget.FrameLayout']]", 0, 1)		#id changed from 2.11.0~	
+			client.sleep(3000)
 			if client.isElementFound("NATIVE", "xpath=//*[@id='alertTitle']")
 				client.click("NATIVE", "xpath=//*[@id='button1']", 0, 1)
 			end
-			if client.isElementFound("NATIVE", "xpath=//*[@id='download_progress']")
+			#if client.isElementFound("NATIVE", "xpath=//*[@id='download_progress']")
+			if client.isElementFound("NATIVE", "xpath=//*[@id='progress_text']")		#id changed from 2.11.0~
 				@@comment = "::MSG:: ダウンロードを開始しました「Download has started」"
 				$obj_rtnrs.returnOK
 				$obj_rtnrs.printResult	
@@ -195,7 +194,6 @@ class TitleDownload
 
 	def ios_testSingleDownload(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST SINGLE DOWNLOAD@単話ダウンロード機能"
@@ -227,8 +225,6 @@ class TitleDownload
 			$obj_rtnrs.returnNG
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -243,7 +239,6 @@ class TitleDownload
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		puts ($obj_epsdp.ios_testSVODEpisodePlay(client))		
 	end
 
 	####################################################
@@ -288,9 +283,9 @@ class TitleDownload
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button back']]", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNDrawerCellbackgroundView' and ./preceding-sibling::*[@text='ホーム']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
 			client.sleep(3000)
-			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)		
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)	
 			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)		
 			client.sleep(3000)
 			if client.isElementFound("NATIVE", "xpath=//*[@text='タイトルとの一致']") == true || client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]") == true
@@ -310,7 +305,10 @@ class TitleDownload
 			end
 			if client.isElementFound("NATIVE", "xpath=//*[@accessibilityIdentifier='icon_download_unselect']")
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNIndicatorView' and ./parent::*[@class='UNextMobile_Protected.PlayIndicator' and ./parent::*[@class='UITableViewCellContentView']]]", 0, 1)
-				client.sleep(2000)			
+				client.sleep(2000)
+				if client.isElementFound("NATIVE", "xpath=//*[@text='“U-NEXT”は 通知を送信します。 よろしいですか？']", 0)
+					client.click("NATIVE", "xpath=//*[@text='OK']", 0, 1)
+				end	
 				if client.isElementFound("NATIVE", "xpath=//*[@text='ダウンロードを開始します。']")
 					client.click("NATIVE", "xpath=//*[@text='OK']", 0, 1)
 				end
