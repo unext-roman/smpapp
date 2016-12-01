@@ -25,7 +25,7 @@ class SelectiveTest
 
 		if @ttype == "select"
 			if @tcsno == "0"
-				puts "::MSG:: 単品テストの為に該当テストパターンが選択されていません!!!"
+				puts "::MSG:: 単品テストの為に該当テストパターンが選択されていません!!!「SELECTIVE TEST CASES HAVE NOT BEEN SELECTED」"
 			else
 				x = @tcsno.split ","
 				cnt = x.length
@@ -572,7 +572,7 @@ class SelectiveTest
 
 		if @ttype == "select"
 			if @tcsno == "0"
-				puts "::MSG:: 単品テストの為に該当テストパターンが選択されていません!!!"
+				puts "::MSG:: 単品テストの為に該当テストパターンが選択されていません!!!「SELECTIVE TEST CASES HAVE NOT BEEN SELECTED」"
 			else
 				x = @tcsno.split ","
 				cnt = x.length
