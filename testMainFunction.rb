@@ -137,6 +137,7 @@ load "funcResultReturn.rb"
 
 		if @ttype == "select"
 			x = @tcsno.split ","
+			puts "::MSG::TCs to be EXECUTED : #{x}"
 			$total_tc = x.length
 		else
 			$total_tc = 37
@@ -186,6 +187,7 @@ load "funcResultReturn.rb"
 			end
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
+			
 			$obj_slctv.iosSelectiveTests(client, @logid, @passw, @ttype, @tcsno)
 		elsif @dtype == "android"						
 			#client.setDevice("#{$dname}")
