@@ -23,7 +23,6 @@ class FilterSearch
 
 	def testFilterSearch(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST FILTERING SEARCH@フィルタリング・表示順機能"
@@ -48,15 +47,13 @@ class FilterSearch
 			$errMsgFsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
 			@exetime = $execution_time
 		end
 		@test_device = "ANDROID" 
-		@testcase_num = 15
+		@testcase_num = 14
 		@testcase_summary = "フィルタリング・表示順機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -64,8 +61,6 @@ class FilterSearch
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_adtml.testAddtoMylist(client))
-		puts ($obj_edith.testEditHistoryList(client))
 	end
 
 	####################################################
@@ -216,7 +211,6 @@ class FilterSearch
 
 	def ios_testFilterSearch(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST FILTER SEARCH@フィルタリング・表示順機能"
@@ -242,15 +236,13 @@ class FilterSearch
 			$errMsgFsrch = "::MSG:: Exception occurred during search operation " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
 			@exetime = $execution_time
 		end
 		@test_device = "iOS" 
-		@testcase_num = 15
+		@testcase_num = 14
 		@testcase_summary = "フィルタリング・表示順機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -258,8 +250,6 @@ class FilterSearch
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_adtml.ios_testAddtoMylist(client))
-		puts ($obj_edith.ios_testEditHistoryList(client))
 	end
 
 	####################################################
