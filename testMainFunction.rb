@@ -144,6 +144,7 @@ load "funcResultReturn.rb"
 		end
 
 		if @dtype == "ios"
+
 			#temp: code for reserving a remote iOS device
 			uri = URI('http://10.4.136.3:8081/api/v1/devices')
 			req = Net::HTTP::Get.new(uri)
@@ -178,16 +179,15 @@ load "funcResultReturn.rb"
 
 			client.openDevice()
 			client.sleep(2000)
-			$obj_utili.andConnectingWifi(client, @dtype, @dname, @wifis)
-			client.sleep(2000)
-			if @build == nil
-				puts "::MSG:: Apps will be using currently installed build"
-			else
-				puts ($obj_instl.ios_testInstallApps(client, @build))
-			end
+			#$obj_utili.andConnectingWifi(client, @dtype, @dname, @wifis)
+			#client.sleep(2000)
+			#if @build == nil
+			#	puts "::MSG:: Apps will be using currently installed build"
+			#else
+			#	puts ($obj_instl.ios_testInstallApps(client, @build))
+			#end
 			client.launch("jp.unext.mediaplayer", true, false)
 			client.sleep(5000)
-			
 			$obj_slctv.iosSelectiveTests(client, @logid, @passw, @ttype, @tcsno)
 		elsif @dtype == "android"						
 			#client.setDevice("#{$dname}")
