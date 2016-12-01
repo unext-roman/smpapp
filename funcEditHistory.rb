@@ -23,7 +23,6 @@ class EditHistory
 
 	def testEditHistoryList(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST EDITING HISTORY@視聴履歴の編集機能"
@@ -45,8 +44,6 @@ class EditHistory
 			$errMsgEdith = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -61,7 +58,6 @@ class EditHistory
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		puts ($obj_editd.testEditDownloadList(client))		
 	end
 
 	####################################################
@@ -158,7 +154,6 @@ class EditHistory
 
 	def ios_testEditHistoryList(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST EDITING HISTORY@視聴履歴の編集機能"
@@ -180,8 +175,6 @@ class EditHistory
 			$errMsgEdith = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -196,7 +189,6 @@ class EditHistory
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		puts ($obj_editd.ios_testEditDownloadList(client))		
 	end
 
 	####################################################
