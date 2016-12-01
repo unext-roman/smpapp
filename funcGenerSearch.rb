@@ -23,7 +23,6 @@ class GenericSearch
 
 	def testGenericSearch(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST GENERIC SEARCH@ジャンル検索機能"
@@ -47,15 +46,13 @@ class GenericSearch
 			$errMsgGsrch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
 			@exetime = $execution_time
 		end
 		@test_device = "ANDROID" 
-		@testcase_num = 14
+		@testcase_num = 13
 		@testcase_summary = "ジャンル検索機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -63,7 +60,6 @@ class GenericSearch
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_fltrs.testFilterSearch(client))
 	end
 
 	####################################################
@@ -183,7 +179,6 @@ class GenericSearch
 
 	def ios_testGenericSearch(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST GENERIC SEARCH@ジャンル検索機能"
@@ -208,15 +203,13 @@ class GenericSearch
 			$errMsgGsrch = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
 			@exetime = $execution_time
 		end
 		@test_device = "iOS" 
-		@testcase_num = 14
+		@testcase_num = 13
 		@testcase_summary = "ジャンル検索機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -224,7 +217,6 @@ class GenericSearch
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_fltrs.ios_testFilterSearch(client))
 	end
 
 	def icheckSearchField(client)
