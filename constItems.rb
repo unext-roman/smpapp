@@ -21,6 +21,12 @@
 	$captureURL = ""
 	$tcs = 0
 	$execution_time = Time.new.strftime("%Y-%m-%d %H:%M:%S")
+	$loginFlag = false
+	$execFlag = false
+	$ratioFlag = true
+	$tstTyp = ""
+	$dev_last_upd_time = Dir.glob("/Users/admin/ownCloud/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/*.ipa").max_by {|f| File.mtime(f)}
+
 
 	#Error Message List
 	$errMsgLogin = ""
@@ -53,17 +59,8 @@
 	$errMsgPlywl = ""
 	$errMsgDldwl = ""
 
-
-	#class names
-	#testLogin			:Login
-	#funcSinglePlay		:SinglePlay 	:$obj_login
-	#funcContinuePlay	:ContinuePlay 	:$obj_contp
-	#funcBuyPPV 		:BuyPPV 		:$obj_buypv
-	#funcHistoryPlay	:HistoryPlay 	:$obj_histp
-	#funcPurchasedPlay 	:PurchasePlay 	:$obj_prcsp
-	#funcMylistPlay 	:MyList 		:$obj_mylst
-	#funcLogout 		:Logout 		:$obj_logot
-
+	#Strings
+	
 
 	#devices names
 	#client.setDevice("adb:401SO")		
