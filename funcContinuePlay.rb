@@ -45,9 +45,6 @@ class ContinuePlay
 		rescue Exception => e
 			$errMsgConti = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 		end
-
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -62,7 +59,6 @@ class ContinuePlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_buypv.testBuyingPPV(client))
 	end
 
 	####################################################
@@ -96,7 +92,7 @@ class ContinuePlay
 			end
 		rescue Exception => e
 			$errMsgConti = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
-			$obj_rtnrs.returnNG		
+			$obj_rtnrs.returnNG
 		end
 		begin
 			if client.waitForElement("NATIVE", "xpath=//*[@class='android.view.View']", 0, 120000)
@@ -151,8 +147,6 @@ class ContinuePlay
 			$errMsgConti = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 		end		
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -167,7 +161,6 @@ class ContinuePlay
 		@comment = @@comment
 		
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_buypv.ios_testBuyingPPV(client))
 	end
 
 	####################################################
@@ -203,7 +196,7 @@ class ContinuePlay
 			end
 		rescue Exception => e
 			$errMsgConti = "::MSG:: Exception occurrred, could not get playback time..: " + e.message
-			$obj_rtnrs.returnNG			
+			$obj_rtnrs.returnNG
 		end
 		begin
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
