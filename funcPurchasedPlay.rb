@@ -42,8 +42,6 @@ class PurchasePlay
 			$errMsgBougt = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -58,7 +56,6 @@ class PurchasePlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_dwnld.testSingleDownload(client))		
 	end
 
 	####################################################
@@ -152,8 +149,6 @@ class PurchasePlay
 			$errMsgBougt = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -168,7 +163,6 @@ class PurchasePlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_mylst.ios_testMylistContent(client))	
 	end
 
 	####################################################
