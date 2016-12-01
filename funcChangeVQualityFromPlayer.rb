@@ -25,7 +25,7 @@ class ChangeVQualityFromPlayer
 
 	def testVQualityFromPlayer(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST CHANGING VIDEO QUALITY FORM PLAYER@再生中画質変更動作動作機能"
@@ -46,8 +46,6 @@ class ChangeVQualityFromPlayer
 		rescue Exception => e
 			$errMsgQuach = "::MSG:: Exception occurrred while finding element: " + e.message
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -63,7 +61,6 @@ class ChangeVQualityFromPlayer
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_trick.testTrickPlayFromPlayer(client))	
 	end
 
 	####################################################
@@ -83,7 +80,8 @@ class ChangeVQualityFromPlayer
 			client.sleep(1000)
 			client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='thumbnail_container']]", 0, 1)		#2.11.0~
 			client.sleep(15000)
 			client.click("NATIVE", "xpath=//*[@id='player_settings_button']", 0, 1)
 			client.sleep(500)
@@ -182,7 +180,7 @@ class ChangeVQualityFromPlayer
 
 	def ios_testVQualityFromPlayer(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST CHANGING VIDEO QUALITY FORM PLAYER@再生中画質変更動作動作機能"
@@ -203,8 +201,6 @@ class ChangeVQualityFromPlayer
 		rescue Exception => e
 			$errMsgQuach = "::MSG:: Exception occurrred while finding element: " + e.message
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -220,7 +216,6 @@ class ChangeVQualityFromPlayer
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_vqual.ios_testTrickPlayFromPlayer(client))	
 	end
 
 	####################################################
