@@ -31,7 +31,7 @@ class TrickPlayOperation
 
 	def testTrickPlayFromPlayer(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST TRICK PLAY FORM PLAYER@再生中10秒・30秒操作動作機能"
@@ -53,8 +53,6 @@ class TrickPlayOperation
 			$errMsgTrick = "::MSG:: Exception occurrred while finding element: " + e.message
 			$obj_rtnrs.returnNG
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -70,8 +68,6 @@ class TrickPlayOperation
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_vqual.testOfflineDuringPlayback(client))	
-		puts ($obj_logot.testLogout(client))	
 	end
 
 	####################################################
@@ -84,7 +80,7 @@ class TrickPlayOperation
 
 		begin
 			client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='download_indicator'])[3]", 0, 1)
-			client.sleep(10000)
+			client.sleep(15000)
 
 			for i in 0..2
 				TrickPlayOperation.new.thirtySecOperation(client)
@@ -178,7 +174,7 @@ class TrickPlayOperation
 				diff1 = @curr - @aftr
 				puts "Time difference:flag #{diff1.to_i}:#{@flag}"
 
-				if diff1.to_i >= 30 
+				if diff1.to_i >= 29 
 					@@tres = @@tres.push(true)
 				else
 					@@tres = @@tres.push(false)
@@ -187,7 +183,7 @@ class TrickPlayOperation
 				diff2 = @aftr - @curr
 				puts "Time difference:flag #{diff2.to_i}:#{@flag}"
 
-				if diff2.to_i >= 9 # during operation 2-3 sec loss happen
+				if diff2.to_i >= 8 # during operation 2-3 sec loss happen
 					@@tres = @@tres.push(true)
 				else
 					@@tres = @@tres.push(false)
@@ -209,7 +205,7 @@ class TrickPlayOperation
 
 	def ios_testTrickPlayFromPlayer(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST TRICK PLAY FORM PLAYER@再生中10秒・30秒操作動作機能"
@@ -231,8 +227,6 @@ class TrickPlayOperation
 			$errMsgTrick = "::MSG:: Exception occurrred while finding element: " + e.message
 			$obj_rtnrs.returnNG
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -248,8 +242,6 @@ class TrickPlayOperation
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_vqual.ios_testConnectingAirplay(client))	
-		puts ($obj_logot.ios_testLogout(client))
 	end
 
 	####################################################
@@ -302,7 +294,7 @@ class TrickPlayOperation
 			elsif @@curTime1.size < 7
 				@@curTime1.prepend("#{@@timeval}")
 			end
-			cast1 = Time.parse("#{@@curTime1}")
+			cast1 = Time.parse("#{@@curTime1}")			
 
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='player button forward']]", 0, 1)
 			@@afterTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
@@ -311,7 +303,7 @@ class TrickPlayOperation
 				@@afterTime.prepend("#{@@timeval}")
 			elsif @@afterTime.size < 7
 				@@afterTime.prepend("#{@@timeval}")
-			end			
+			end
 			cast2 = Time.parse("#{@@afterTime}")
 			@@flag = "TH"
 		rescue Exception => e
@@ -340,7 +332,7 @@ class TrickPlayOperation
 				@@beforeTime.prepend("#{@@timeval}")
 			elsif @@beforeTime.size < 7
 				@@beforeTime.prepend("#{@@timeval}")
-			end			
+			end
 			cast2 = Time.parse("#{@@beforeTime}")
 			@@flag = "TN"
 		rescue Exception => e
