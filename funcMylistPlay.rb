@@ -19,7 +19,6 @@ class MyList
 
 	def testMylistContent(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST PLAY FROM FAVORITE@マイリストから再生機能"
@@ -41,8 +40,6 @@ class MyList
 			$errMsgMlist = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -57,7 +54,6 @@ class MyList
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_dwnpl.testDownloadPlay(client))
 	end
 
 	####################################################
@@ -76,7 +72,6 @@ class MyList
 			client.sleep(2000)
 			
 			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリスト']")
-				puts "::MSG:: Mylist opened"
 				client.sleep(2000)
 
 				if client.isElementFound("NATIVE", "text=お気に入りはありません")
@@ -127,12 +122,13 @@ class MyList
 					puts "::MSG:: Using a PPV or SVOD content for this test"
 					client.sleep(500)
 					#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
-		 			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", i, 1)
+		 			#client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", i, 1)
+		 			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='thumbnail_container']]", 0, 1)		#id changed from 2.11.0~
 					client.sleep(10000)
 					$obj_histp.playbackCheck(client)
 					$obj_histp.leavingPlayer(client)
 				else
-					puts "::MSG:: 見放題か購入済み以外の作品を確認していません、「Except SVOD or Purchased item, plaback paused」"
+					puts "::MSG:: 見放題か購入済み以外の作品を確認していません、「Except SVOD or Purchased item, plaback aborted」"
 					i = i + 1
 					#puts "::MSG:: Could not find any SVOD content to play! Is it OK to buy PPV content? Type YES"
 					#strin = gets.chomp
@@ -161,7 +157,6 @@ class MyList
 
 	def ios_testMylistContent(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST PLAYING FROM MYLIST@マイリストから再生機能"
@@ -183,8 +178,6 @@ class MyList
 			$errMsgMlist = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -198,8 +191,7 @@ class MyList
 		@err_message = $errMsgMlist
 		@comment = @@comment
 
-		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_dwnpl.testDownloadPlay(client))			
+		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))	
 	end
 
 	####################################################
@@ -218,7 +210,7 @@ class MyList
 			client.sleep(2000)		
 			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリスト']")
 				client.sleep(2000)
-				if client.isElementFound("NATIVE", "text=マイリストがありません")
+				if client.isElementFound("NATIVE", "text=マイリストに作品がありません")
 					@@comment = "::MSG::「マイリストに作品がありません」There is no item in mylist!!!"
 					$obj_rtnrs.returnNE
 					$obj_rtnrs.printResult
@@ -229,8 +221,6 @@ class MyList
 				else
 					# Check here whether content is PPV or viewing duration expired or SVOD
 					MyList.new.ios_checkPPVorSVODorPurchased(client)
-					client.sleep(2000)
-					client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[./*[@text='マイリスト']]]", 0, 1)				
 					client.sleep(2000)
@@ -254,25 +244,24 @@ class MyList
 
 		begin
 			client.sleep(1000)
-			nolstitem = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./parent::*[./parent::*[./parent::*[./parent::*[@class='UITableViewWrapperView']]]]]]", "class")
-			puts "Number of playable content visible in the screen:\n #{nolstitem}"
-			cnt = nolstitem.length
+			cnt = client.getElementCount("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]")
 			puts "Number of contents found in the list is : #{cnt}"
 
-			for i in 0..cnt
+			for i in 0..cnt - 1
 				client.click("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", i, 1)			
 				client.sleep(2000)
 				if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
-					puts "::MSG:: Using a PPV or SVOD content for this test"
+					puts "::MSG:: Using already BOUGHT or SVOD content for this test"
 					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and ./parent::*[./preceding-sibling::*[@class='UNextMobile_Protected.UNGradientView'] and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
 					client.sleep(20000)
 					$obj_prcsp.ios_playbackCheckFromTitleDetails(client)
 					$obj_histp.ios_leavingPlayer(client)
-					break
-				else
 					client.sleep(2000)
 					client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
-					i = i + 1
+					break
+				else
+					client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)					
+					client.sleep(2000)
 				end
 			end #for
 		rescue Exception => e
