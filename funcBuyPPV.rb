@@ -18,7 +18,7 @@ class BuyPPV
 	####################################################
 
 	def testBuyingPPV(client)
-		client.sleep(2000)		
+		client.sleep(2000)
 
 		puts ""
 		puts ""
@@ -28,48 +28,37 @@ class BuyPPV
 		@flag = "false"
 
 		begin
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='searchButton']", 0, 1)
 			client.sleep(2000)
-			client.click("NATIVE", "text=洋画", 0, 1)
+			client.click("NATIVE", "text=邦画一覧", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=すべての作品", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=ポイント", 0, 1)
 			client.sleep(2000)
 
-			#for n in 1..2
-				noimgvw = client.getAllValues("NATIVE", "xpath=//*[@id='imageView' and @busy='true']", "id")
-				puts "Number of image view visible in the screen:\n #{noimgvw}"
-				cnt = noimgvw.length
-				for i in 0..cnt - 1
-					if client.isElementFound("NATIVE", "xpath=//*[@id='p_badge']")
-						str3 = client.elementGetProperty("NATIVE", "xpath=//*[@id='p_badge']", i, "onScreen")					
-						if str3 == "true"
-							puts "::MSG:: PPV 作品を見つかりました「PPV item found」"
-							client.click("NATIVE", "xpath=(//*[@id='recyclerView']/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])", i, 1)
-							client.sleep(2000)
-							if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
-								puts "::MSG:: 該当作品は既に購入済みもしくはPPVではありません「This content has already bought or not PPV!!!」"
-								client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
-							else
-								BuyPPV.new.purchasingContent(client)
-								@flag = "true"
-								break
-							end
-						else
-							puts "::MSG:: There is no PPV content found at [#{i}]!!!"
-							@flag = "false"
-						end
-						i += 1
+			for n in 1..2
+				for i in 0..4
+					if i == 4
+						client.sleep(1000)
+						client.swipe2("Down", 300, 2000)
+						client.sleep(3000)
 					else
-						puts "::MSG:: There are no PPV contents found to buy!!!"
-						@flag = "false"
-					end				
-				end
-				#if @flag == "false"
-				#	client.swipe2("Down", 400, 1500)
-				#	client.sleep(4000)
-				#	n += 1					
-				#elsif @flag == "true"
-				#	break
-				#end
-			#end
+						client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", i, 1)
+						#client.swipeWhileNotFound2("Down", 300, 2000, "NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='p_badge' and @top='true' and ./parent::*[@id='image_container']])", i, 1000, 1, true)
+						client.sleep(2000)
+						if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
+							puts "::MSG:: 該当作品は既に購入済みもしくはPPVではありません「This content has already bought or not PPV!!!」"
+							client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+							@flag = "false"
+						else
+							BuyPPV.new.purchasingContent(client)
+							@flag = "true"
+							break
+						end
+					end			
+				end				
+			end
 			if @flag == "false"
 				puts "::MSG:: PPV作品が見つからず購入できませんでした、「Could not find any PPV content to purchase!!!」"
 				@@comment = "::MSG:: 未購入のPPV作品を見つからず購入ができませんでした、PPV作品の購入が出来る用アカウントをご利用ください。"	
@@ -79,15 +68,25 @@ class BuyPPV
 			$errMsgBuypv = "::MSG:: Exception occurrred while while finding ELEMENT: " + e.message	
 		end
 		begin
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "text=ホーム", 0, 1)
+			if client.isElementFound("NATIVE", "xpath=//*[@id='search_kind_selector']", 0)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=ホーム", 0, 1)
+			else
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=ホーム", 0, 1)
+			end
 		rescue Exception => e
 			$errMsgBuypv = "::MSG:: Exception occurrred while while finding ELEMENT: " + e.message	
 		end
-
-		puts ($obj_utili.calculateRatio($finishedTest))
 
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -103,9 +102,8 @@ class BuyPPV
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_histp.testHistoryPlay(client))
-		puts ($obj_dwnld.testSingleDownload(client))
 	end
+
 
 	####################################################
 	#Function Name: purchasingContent
@@ -116,7 +114,7 @@ class BuyPPV
 	def purchasingContent(client)
 
 		begin
-			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='otherView1']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@id='download_indicator' and ./parent::*[@id='thumbnail_container']]", 0, 1)		#2.11.0~
 			client.sleep(3000)
 			if client.isElementFound("NATIVE", "text=レンタル／購入")
 				puts "::MSG:: Entered into purchase modal"
@@ -144,7 +142,7 @@ class BuyPPV
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
 		rescue Exception => e
 			$errMsgBuypv = "::MSG:: Exception occurrred while buying PPV: " + e.message
-			$obj_rtnrs.returnNG		
+			$obj_rtnrs.returnNG
 		end				
 	end
 
@@ -193,7 +191,7 @@ class BuyPPV
 			count = client.getElementCount("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView']]/*/*[@class='UNextMobile_Protected.PayItemBagde' and @top='true'])")
 			puts "Number of contents found in the screen is : #{count}"
 
-			for i in 1..count - 1
+			for i in 0..count - 1
 				str1 = client.elementGetProperty("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PayItemBagde' and @top='true']", i, "hidden")
 				puts "Payment badge at #{i} index has Hidden property of #{str1}"
 				puts "::MSG:: PPV 作品を見つかりました「PPV item found」"
@@ -271,8 +269,6 @@ class BuyPPV
 			$errMsgBuypv = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
 		end
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
@@ -287,8 +283,6 @@ class BuyPPV
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_histp.ios_testHistoryPlay(client))
-		puts ($obj_dwnld.ios_testSingleDownload(client))
 	end
 
 	####################################################
@@ -322,7 +316,7 @@ class BuyPPV
 			end
 		rescue Exception => e
 			$errMsgBuypv = "::MSG:: Exception occurrred while buying PPV: " + e.message
-			$obj_rtnrs.returnNG	
+			$obj_rtnrs.returnNG
 		end
 		begin
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
