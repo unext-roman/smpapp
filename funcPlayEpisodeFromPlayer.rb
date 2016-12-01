@@ -14,6 +14,7 @@ class PlayEpisodeFromPlayer
 	@@eres = []
 	@@epnm = []
 	@@comment = ""
+	@@chkres = ""
 
 	####################################################
 	#Target Device: Android
@@ -24,7 +25,7 @@ class PlayEpisodeFromPlayer
 
 	def testEpisodePlayFromPlayer(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST EPISODE PLAY FORM PLAYER@再生中エピソード一覧から再生機能"
@@ -45,8 +46,6 @@ class PlayEpisodeFromPlayer
 		rescue Exception => e
 			$errMsgPlfep = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -62,7 +61,6 @@ class PlayEpisodeFromPlayer
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		puts ($obj_chnjf.testChangingJifukiFromPlayer(client))	
 	end
 
 	####################################################
@@ -76,9 +74,6 @@ class PlayEpisodeFromPlayer
 		begin
 			client.click("NATIVE", "xpath=//*[@id='searchButton']", 0, 1)
 			client.sleep(2000)
-			if client.waitForElement("NATIVE", "partial_text=アニメ一覧", 0, 10000)
-    			# If statement
-			end
 			client.click("NATIVE", "text=アニメ一覧", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "text=すべての作品", 0, 1)
@@ -86,10 +81,47 @@ class PlayEpisodeFromPlayer
 			if client.isElementFound("NATIVE", "xpath=//*[@id='search_kind_selector']")
 				client.click("NATIVE", "text=見放題", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 0, 1)
+				strtext = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*[@id='title'])", "text")
+				if strtext.include?("こちら葛飾区亀有公園前派出所")
+					client.click("NATIVE", "text=こちら葛飾区亀有公園前派出所")
+					client.sleep(2000)
+					client.swipe2("Down", 500, 500)
+					client.sleep(2000)
+				else
+					for j in 0..3
+						client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", j, 1)
+						client.sleep(2000)
+						client.swipe2("Down", 500, 500)
+						client.sleep(2000)
+						geteno = client.getTextIn2("NATIVE", "xpath=//*[@id='textView2' and ./preceding-sibling::*[@id='imageView']]", 0, "NATIVE", "Inside", 0, 0)
+						puts "No of Episode in this Title is : #{geteno}"
+						noe = geteno.scan(/\d+/).first
+						puts "No of Episode in this Title is : #{noe}"
+						if noe.to_i > 4
+							@@chkres = true
+							break
+						else
+							client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+							client.sleep(2000)
+							@@chkres = false
+						end
+					end				
+				end
+				if @@chkres == false
+					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+					client.sleep(2000)
+					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+					client.sleep(2000)
+					client.elementSendText("NATIVE", "xpath=//*[@id='search_word_edit_text']", 0, "naruto")
+					client.sleep(1000)
+					client.sendText("{ENTER}")
+					client.sleep(1000)
+					client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 0, 1)
+					client.sleep(2000)
+					client.swipe2("Down", 500, 500)
+					client.sleep(2000)
+				end
 				client.sleep(2000)
-				client.swipe2("Down", 500, 500)
-				client.sleep(1000)
 				if client.isElementFound("NATIVE", "xpath=//*[@text='エピソードを選択']")
 					client.click("NATIVE", "text=エピソードを選択", 0, 1)
 					client.sleep(2000)
@@ -168,16 +200,9 @@ class PlayEpisodeFromPlayer
 	#Param: object
 	####################################################
 
-	####################################################
-	#Target Device: Android
-	#Function Name: testEpisodePlayFromPlayer
-	#Activity: Function for playing episode form player episode list
-	#Param: object
-	####################################################
-
 	def ios_testEpisodePlayFromPlayer(client)
 		client.sleep(2000)
-		
+	
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST EPISODE PLAY FORM PLAYER@再生中エピソード一覧から再生機能"
@@ -198,8 +223,6 @@ class PlayEpisodeFromPlayer
 		rescue Exception => e
 			$errMsgPlfep = "::MSG:: Exception occurrred while finding element: " + e.message	
 		end	
-
-		puts ($obj_utili.calculateRatio($finishedTest))		
 		
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -215,7 +238,6 @@ class PlayEpisodeFromPlayer
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		puts ($obj_chnjf.ios_testChangingJifukiFromPlayer(client))	
 	end
 
 	####################################################
@@ -227,16 +249,12 @@ class PlayEpisodeFromPlayer
 	def iplayFromPlayer(client)
 
 		begin
-			#client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
 			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./following-sibling::*[@class='UIButtonLabel'] and ./parent::*[@class='UIButton' and ./parent::*[@class='UNextMobile_Protected.UNChromecastButtonContainer']]]", 0, 1)
 			client.sleep(2000)
 			if client.isElementFound("NATIVE", "xpath=//*[@text='タイトルとの一致']") == true || client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]") == true
 				$obj_gener.icheckSearchField(client)
 			end
 			client.sleep(2000)
-			if client.waitForElement("NATIVE", "xpath=//*[@text='アニメ一覧']", 0, 10000)
-    			# If statement
-			end
 			client.click("NATIVE", "xpath=//*[@text='アニメ一覧']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@accessibilityLabel='すべての作品']", 0, 1)
@@ -244,9 +262,48 @@ class PlayEpisodeFromPlayer
 			if client.isElementFound("NATIVE", "xpath=//*[@class='UISegmentedControl']")
 				client.click("NATIVE", "text=見放題", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", 0, 1)
-				client.sleep(2000)
-				client.swipe2("Down", 1000, 1000)
+				strtext = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.LayoutableLabel' and @x>1100 and @height=32]", "text")
+				if strtext.include?("こちら葛飾区亀有公園前派出所")
+					#client.click("NATIVE", "text=こちら葛飾区亀有公園前派出所")
+					client.click("NATIVE", "xpath=//*[@text='こちら葛飾区亀有公園前派出所' and @class='UNextMobile_Protected.LayoutableLabel']")					
+					client.sleep(2000)
+					client.swipe2("Down", 1000, 1000)
+					client.sleep(2000)
+				else
+					for j in 0..3
+						client.click("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", j, 1)
+						client.sleep(2000)
+						client.swipe2("Down", 1000, 1000)
+						client.sleep(2000)
+						geteno = client.getTextIn2("NATIVE", "xpath=//*[@class='UILabel' and @x>1100 and @height=42]", 0, "NATIVE", "Inside", 0, 0)
+						puts "No of Episode in this Title is : #{geteno}"
+						noe = geteno.scan(/\d+/).first
+						puts "No of Episode in this Title is : #{noe}"
+						if noe.to_i > 4
+							@@chkres = true
+							break
+						else
+							client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
+							client.sleep(2000)
+							@@chkres = false
+						end
+					end
+				end
+				if @@chkres == false
+					client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and @top='true']", 0, 1)
+					client.sleep(2000)
+					client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and @top='true']", 0, 1)
+					client.sleep(2000)
+					client.elementSendText("NATIVE", "xpath=//*[@class='UITextFieldBorderView']", 0, "naruto")
+					client.sleep(1000)
+					client.sendText("{ENTER}")
+					client.sleep(1000)
+					client.click("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", 0, 1)
+					client.sleep(2000)
+					client.swipe2("Down", 1000, 1000)
+					client.sleep(2000)
+				end
+
 				client.sleep(1000)
 				if client.isElementFound("NATIVE", "xpath=//*[@text='エピソードを選択']")
 					client.click("NATIVE", "xpath=//*[@text='エピソードを選択']", 0, 1)
@@ -271,7 +328,7 @@ class PlayEpisodeFromPlayer
 					else
 						@@eres = @@eres.push(false)
 					end
-					client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='icon sort']]", 0, 1)
+					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
 					client.sleep(500)
 					client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='icon sort']]", 0, 1)
 					client.sleep(2000)
