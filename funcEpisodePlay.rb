@@ -21,7 +21,6 @@ class EpisodePlay
 
 	def testSVODEpisodePlay(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST EPISODE PLAY@見放題エピソード再生機能"
@@ -39,19 +38,29 @@ class EpisodePlay
 				client.click("NATIVE", "text=ホーム", 0, 1)
 				client.sleep(2000)
 				EpisodePlay.new.getEpisodeToPlay(client)
+			end				
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			client.sleep(2000)
+			if client.isElementFound("NATIVE", "xpath=//*[@id='search_kind_selector']", 0)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=ホーム", 0, 1)
+			else
+				client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=ホーム", 0, 1)
 			end
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "text=ホーム", 0, 1)
 		rescue Exception => e
 			$errMsgEpsdp = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end			
-
-		puts ($obj_utili.calculateRatio($finishedTest))
 
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -59,7 +68,7 @@ class EpisodePlay
 			@exetime = $execution_time
 		end
 		@test_device = "ANDROID" 
-		@testcase_num = 12
+		@testcase_num = 11
 		@testcase_summary = "見放題エピソード再生機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -67,9 +76,13 @@ class EpisodePlay
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_mylst.testMylistContent(client))
-		puts ($obj_keysh.testKeywordSearch(client))
 	end
+
+	####################################################
+	#Function Name: getEpisodeToPlay
+	#Activity: Function for getting SVOD drama to be played
+	#Param: object
+	####################################################
 
 	def getEpisodeToPlay(client)
 
@@ -78,19 +91,21 @@ class EpisodePlay
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='海外ドラマ' and @id='textView']", 0, 1)
 			client.sleep(2000)
-			if client.waitForElement("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 20000)
-		   		# If statement
-			end
 			if client.isElementFound("NATIVE", "xpath=//*[@text='見放題で楽しめる厳選良作！海外ドラマ編']")
 				client.click("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 1)
 				client.sleep(2000)
 			else
-				client.swipe2("Down", 250, 2000)
+				client.click("NATIVE", "xpath=//*[@id='searchButton']", 0, 1)
 				client.sleep(2000)
-				client.click("NATIVE", "xpath=(//*[@id='recyclerView' and ./preceding-sibling::*[./*[@text='見放題で楽しめる厳選良作！海外ドラマ編']]]/*/*/*[@id='imageView' and ./parent::*[@id='maskLayout']])[1]", 0, 1)
+				client.click("NATIVE", "text=国内ドラマ一覧", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=すべての作品", 0, 1)
+				client.sleep(2000)
+				client.click("NATIVE", "text=見放題", 0, 1)
+				client.sleep(3000)
+				client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 0, 1)
 				client.sleep(2000)
 			end
-			client.sleep(2000)
 			client.swipe2("Down", 250, 2000)
 			client.sleep(3000)
 		rescue Exception => e
@@ -123,7 +138,6 @@ class EpisodePlay
 
 	def ios_testSVODEpisodePlay(client)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST SVOD EPISODE PLAY@見放題エピソード再生機能"
@@ -154,15 +168,13 @@ class EpisodePlay
 			$errMsgEpsdp = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
 
-		puts ($obj_utili.calculateRatio($finishedTest))
-
 		if $execution_time == nil
 			@exetime = $execution_time
 		else
 			@exetime = $execution_time
 		end
 		@test_device = "iOS" 
-		@testcase_num = 12
+		@testcase_num = 11
 		@testcase_summary = "見放題エピソード再生機能"
 		@test_result = $result
 		@capture_url = $captureURL
@@ -170,8 +182,6 @@ class EpisodePlay
 		@comment = ""
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-		#puts ($obj_mylst.ios_testMylistContent(client))		
-		puts ($obj_keysh.ios_testKeywordSearch(client))
 	end
 
 	def ios_getEpisodeToPlay(client)
