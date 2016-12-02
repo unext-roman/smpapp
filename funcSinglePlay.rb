@@ -256,13 +256,11 @@ class SinglePlay
 		end
 		begin			
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
-			client.sleep(2000)
+			client.sleep(1000)
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			client.sleep(300)
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
 			client.sleep(2000)
-			if client.waitForElement("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main_nav_close']]", 0, 10000)
-		    	# If statement
-			end
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@class='UNextMobile_Protected.UNTitleListHeaderView']]", 0, 1)
