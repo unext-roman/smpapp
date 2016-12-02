@@ -26,7 +26,7 @@
 	$ratioFlag = true
 	$tstTyp = ""
 	$dev_last_upd_time = Dir.glob("/Users/admin/ownCloud/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/*.ipa").max_by {|f| File.mtime(f)}
-	$tcCountFlag = false
+	$tcCountFlag = true
 
 
 	#Error Message List
