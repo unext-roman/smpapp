@@ -563,7 +563,6 @@ class SelectiveTest
 	####################################################
 
 	def iosSelectiveTests(client, logid, passw, ttype, tcsno)
-		puts "STARTING SELECTIVE TEST"
 
 		@logid = logid
 		@passw = passw
