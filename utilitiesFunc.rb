@@ -61,7 +61,11 @@ class Utility
 	def calculateRatio(finishedtc)
 
 		@ftc_val = finishedtc
-		@totalTC = $total_tc
+		if $tcCountFlag == false
+			@totalTC = $total_tc + 1
+		else
+			@totalTC = $total_tc
+		end
 
 		rat_val = (@ftc_val * 100 ) / @totalTC #$tcs #$totalTest
 
