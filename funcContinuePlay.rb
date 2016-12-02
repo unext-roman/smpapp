@@ -200,8 +200,7 @@ class ContinuePlay
 		end
 		begin
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_pause']", 0, 1)
-			client.sleep(2000)
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
+			client.sleep(300)
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='navbar_button_back.png']", 0, 1)
 		rescue Exception => e
 			$errMsgConti = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
