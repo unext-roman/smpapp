@@ -168,22 +168,7 @@ class SinglePlay
 
 		$totalTest = $totalTest + 1 
 
-		begin
-			client.sleep(5000)		
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
-			client.sleep(3000)
-			client.click("NATIVE", "xpath=//*[@text='洋画' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
-			client.sleep(2000)
-			if client.waitForElement("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！洋画編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 10000)
-		    	client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView' and ./*[@text='見放題で楽しめる厳選良作！洋画編']]]/*/*/*[@class='UNextMobile_Protected.UNAsyncImageView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.HomeTitleCell']]])[1]", 0, 1)
-		    	client.sleep(2000)
-		    else
-		    	client.click("NATIVE", "xpath=(//*[@class='UICollectionView' and ./preceding-sibling::*[@class='UIView']]/*/*[@class='UNextMobile_Protected.PayItemBagde' and @top='false'])", 0, 1)
-				client.sleep(2000)
-			end
-		rescue Exception => e
-			$errMsgTanwa = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
-		end
+		SinglePlay.new.igetSvodContent(client)
 		SinglePlay.new.ios_playfromTitleDetails(client)
 		if $execution_time == nil
 			@exetime = $execution_time
@@ -202,6 +187,37 @@ class SinglePlay
 	end
 
 	####################################################
+	#Function Name: getSvodContent
+	#Activity: Function for getting SVOD content to be played
+	#Param: object
+	####################################################
+
+	def igetSvodContent(client)
+		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='洋画' and ./parent::*[@class='UITableViewCellContentView']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='button search']]", 0, 1)
+			client.sleep(2000)
+			if client.isElementFound("NATIVE", "xpath=//*[@text='タイトルとの一致']") == true || client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]") == true
+				$obj_gener.icheckSearchField(client)
+			end
+			client.click("NATIVE", "text=邦画一覧", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=すべての作品", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "text=見放題", 0, 1)
+			client.sleep(3000)
+			client.click("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", 0, 1)
+			client.sleep(2000)
+		rescue Exception => e
+			$errMsgTanwa = "::MSG:: Exception occurrred while finding ELEMENT" + e.message
+		end		
+	end
+
+	####################################################
 	#Function Name: playfromTitleDetails
 	#Activity: Function for playing from title details
 	#Param: object
@@ -211,7 +227,7 @@ class SinglePlay
 
 		begin	
 			client.sleep(1000)		
-			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @onScreen='true' and @width>0 and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and @width>0 and ./parent::*[./preceding-sibling::*[@class='UNextMobile_Protected.UNGradientView'] and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
 			client.sleep(15000)	
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
 			$startTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
