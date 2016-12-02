@@ -9,6 +9,7 @@
 class BuyPPV
 
 	@@comment = ""
+	@@flag = false
 
 	####################################################
 	#target Device: Android
@@ -24,7 +25,6 @@ class BuyPPV
 		puts "::MSG::[ANDROID] STARTING TEST BUYING PPV@PPV作品の購入"
 
 		$totalTest = $totalTest + 1
-		@flag = "false"
 
 		begin
 			client.click("NATIVE", "xpath=//*[@id='searchButton']", 0, 1)
@@ -37,28 +37,25 @@ class BuyPPV
 			client.sleep(2000)
 
 			for n in 1..2
-				for i in 0..4
-					if i == 4
-						client.sleep(1000)
-						client.swipe2("Down", 300, 2000)
-						client.sleep(3000)
-					else
-						client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", i, 1)
-						#client.swipeWhileNotFound2("Down", 300, 2000, "NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='p_badge' and @top='true' and ./parent::*[@id='image_container']])", i, 1000, 1, true)
-						client.sleep(2000)
-						if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
-							puts "::MSG:: 該当作品は既に購入済みもしくはPPVではありません「This content has already bought or not PPV!!!」"
-							client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
-							@flag = "false"
-						else
-							BuyPPV.new.purchasingContent(client)
-							@flag = "true"
+				if @@flag == true
+					break
+				else
+					for i in 0..4
+						if @@flag == true
 							break
-						end
-					end			
-				end				
+						else						
+							if i == 4
+								client.sleep(1000)
+								client.swipe2("Down", 300, 2000)
+								client.sleep(3000)
+							#	BuyPPV.new.checkContentsToBuy(client, i)
+							end
+							BuyPPV.new.checkContentsToBuy(client, i)
+						end			
+					end	
+				end			
 			end
-			if @flag == "false"
+			if @@flag == false
 				puts "::MSG:: PPV作品が見つからず購入できませんでした、「Could not find any PPV content to purchase!!!」"
 				@@comment = "::MSG:: 未購入のPPV作品を見つからず購入ができませんでした、PPV作品の購入が出来る用アカウントをご利用ください。"	
 				$obj_rtnrs.returnNE
@@ -103,6 +100,19 @@ class BuyPPV
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
 	end
 
+	def checkContentsToBuy(client, i)
+		client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", i, 1)
+		#client.swipeWhileNotFound2("Down", 300, 2000, "NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='p_badge' and @top='true' and ./parent::*[@id='image_container']])", i, 1000, 1, true)
+		client.sleep(2000)
+		if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
+			puts "::MSG:: 該当作品は既に購入済みもしくはPPVではありません「This content has already bought or not PPV!!!」"
+			#client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
+			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
+			@@flag = false
+		else
+			BuyPPV.new.purchasingContent(client)
+		end	
+	end
 
 	####################################################
 	#Function Name: purchasingContent
@@ -127,6 +137,7 @@ class BuyPPV
 						@@comment = "::MSG:: PPV作品の購入を成功しました、「Content has been purchased successfully」"
 						$obj_rtnrs.returnOK
 						$obj_rtnrs.printResult
+						@@flag = true
 					else
 						$errMsgBuypv = "::MSG:: PPV作品を購入できませんでした、「Could not purchase PPV content!!!」"
 						$obj_rtnrs.returnNG
@@ -156,7 +167,8 @@ class BuyPPV
 
 		begin
 			client.sleep(5000)
-			client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
+			#client.click("NATIVE", "xpath=//*[@id='seek_controller']", 0, 1)
+			client.click("NATIVE", "xpath=//*[@class='android.widget.FrameLayout']", 0, 1)
 			client.click("NATIVE", "xpath=//*[@id='play_pause_button']", 0, 1)
 			client.click("NATIVE", "xpath=//*[@id='toolbar']", 0, 1)
 			client.sleep(500)
@@ -201,7 +213,7 @@ class BuyPPV
 					if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
 						puts "::MSG:: 該当作品は既に購入済みもしくはPPVではありません「This content has already bought or not PPV!!!」"
 						client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
-		 				@flag = "false"
+		 				@@flag = false
 						client.sleep(2000)
 					else
 						puts "::MSG:: 本作品は未購入ので買えます「This content is PPV and can be purchased」"
@@ -219,8 +231,8 @@ class BuyPPV
 								client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='レンタル / 購入']]", 0, 1)
 								msg2 = "::MSG:: 前提条件が合っていません、U-Nextポイントをチャージしてから再度実行して下さい「Precondition does not meet! Charge U-Next point and test again later」"
 								$errMsgBuypv = msg1 + " " + msg2
-								$obj_rtnrs.returnNG
-								$obj_rtnrs.printResult	
+
+								@@flag = false
 								break
 							else
 								puts "::MSG:: [#{str3}] uCoinで購入「Buying content with [#{str3}] uCoin」"
@@ -233,7 +245,7 @@ class BuyPPV
 							client.sleep(2000)
 							client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.PlayingStateView' and ./parent::*[./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]]", 0, 1)
 							BuyPPV.new.ios_buyingConfirmation(client)
-							@flag = "true"
+							@@flag = true
 							client.sleep(1000)
 						else
 							puts "::MSG:: 購入モーダルが開けません「Could not get purchase modal, check status!!!」"
@@ -248,7 +260,7 @@ class BuyPPV
 					$obj_rtnrs.printResult	
 				end
 			end
-			if @flag == "false"
+			if @@flag == false
 				@@comment = "::MSG:: PPV作品が見つかりません「No purchasable PPV items found!!!」"
 				$obj_rtnrs.returnNE
 				$obj_rtnrs.printResult	
