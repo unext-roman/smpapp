@@ -265,9 +265,12 @@ class SinglePlay
 			end
 			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
 			client.sleep(2000)
-			if client.waitForElement("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 10000)
-		    	# If statement
-			end
+			client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@class='UNextMobile_Protected.UNTitleListHeaderView']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and ./preceding-sibling::*[@accessibilityLabel='']]", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UIControl']", 0, 1)
+			client.sleep(1000)
 			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
