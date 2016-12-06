@@ -70,13 +70,10 @@ class HistoryPlay
 			client.sleep(1000)
 			client.click("NATIVE", "xpath=//*[@text='視聴履歴']", 0, 1)
 			
-			if client.isElementFound("NATIVE", "xpath=//*[@text='視聴履歴']")
-				client.sleep(2000)
-				if client.isElementFound("NATIVE", "text=視聴履歴がありません")
-					puts "::MSG:: There is no item in history list!!!"
-				else
-					HistoryPlay.new.checkPPVorSVODorPurchased(client)			
-				end
+			if client.isElementFound("NATIVE", "text=視聴履歴がありません")
+				puts "::MSG:: There is no item in history list!!!"
+			else
+				HistoryPlay.new.checkPPVorSVODorPurchased(client)			
 			end
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 			client.sleep(2000)
@@ -96,38 +93,20 @@ class HistoryPlay
 
 		begin
 			client.sleep(1000)
-			#nolstitem = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])", "id")
-			nolstitem = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='play_indicator'])", "id")
-			puts "Number of image view visible in the screen:\n #{nolstitem}"
-			cnt = nolstitem.length
+			cnt = client.getElementCount("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='play_indicator'])")
 			puts "Number of contents found in the list is : #{cnt}"
-
-			if cnt == 1
-				client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])")
-				client.sleep(20000)
-				HistoryPlay.new.playbackCheck(client)
-				HistoryPlay.new.leavingPlayer(client)
+			client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='play_indicator'])", 0, 1)	#id chnaged from 2.11.0~	
+			client.sleep(2000)
+			if client.isElementFound("NATIVE", "text=レンタル／購入")
+				puts "::MSG:: Entered into purchase modal"
 				client.sleep(2000)
-			else
-				for i in 1..cnt
-					client.click("NATIVE", "xpath=(//*[@id='drawerList']/*/*[@id='imageView'])[#{i}]")
-					client.sleep(1000)
-					if client.isElementFound("NATIVE", "text=見放題") || client.isElementFound("NATIVE", "text=購入済み")
-						puts "::MSG:: Using already BOUGHT or SVOD content for this test"
-						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
-						client.sleep(1000)
-						#client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='download_indicator'])[#{i}]")
-						client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='play_indicator'])[#{i}]")
-						client.sleep(10000)
-						HistoryPlay.new.playbackCheck(client)
-						HistoryPlay.new.leavingPlayer(client)
-						client.sleep(2000)
-					else
-						i = i + 1				
-					end
-					break #for
-				end #for
+				if client.waitForElement("NATIVE", "xpath=//*[@id='button']", 0, 30000)								
+					client.click("NATIVE", "xpath=//*[@id='button']", 0, 1)
+					client.sleep(15000)
+				end
 			end
+			HistoryPlay.new.playbackCheck(client)
+			HistoryPlay.new.leavingPlayer(client)
 		rescue Exception => e
 			$errMsgHisto = "::MSG:: Exception occurrred while finding ELEMENT " + e.message
 		end
