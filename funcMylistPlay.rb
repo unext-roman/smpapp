@@ -260,6 +260,9 @@ class MyList
 					client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)
 					break
 				else
+					$obj_rtnrs.returnNE
+					$obj_rtnrs.printResult
+					@@comment = "::MSG::「uコインで購入操作まで行わず、一旦SVOD作品にて再度ご確認ください!!!"
 					client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='main_nav_close.png']", 0, 1)					
 					client.sleep(2000)
 				end
