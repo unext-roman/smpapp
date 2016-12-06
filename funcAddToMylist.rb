@@ -239,7 +239,8 @@ class AddToMylist
 	def iaddingToMylist(client)
 
 		begin
-			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリスト' and @class='UNextMobile_Protected.EasyLabel']")
+			#if client.isElementFound("NATIVE", "xpath=//*[@text='マイリスト' and @class='UNextMobile_Protected.EasyLabel']")
+			if client.isElementFound("NATIVE", "xpath=//*[@text='マイリスト' and @class='UNextMobile_Protected.LayoutableLabel']")	#cls changd from 2.11.0~
 				client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='マイリスト']", 0, 1)
@@ -271,7 +272,8 @@ class AddToMylist
 		@cname2 = ""
 
 		begin
-			@cname1 = client.getTextIn2("NATIVE", "xpath=//*[@class='UNextMobile_Protected.LayoutableLabel' and ./parent::*[@class='UITableViewCellContentView'] and ./preceding-sibling::*[@class='UIView'] and @height=58]", 0, "NATIVE", "Inside", 0, 0)
+			#@cname1 = client.getTextIn2("NATIVE", "xpath=//*[@class='UNextMobile_Protected.LayoutableLabel' and ./parent::*[@class='UITableViewCellContentView'] and ./preceding-sibling::*[@class='UIView'] and @height=58]", 0, "NATIVE", "Inside", 0, 0)
+			@cname1 = client.getTextIn2("NATIVE", "xpath=//*[@height=58 and @class='UNextMobile_Protected.LayoutableLabel']", 0, "NATIVE", "Inside", 0, 0)
 			client.sleep(1000)
 			client.click("NATIVE", "xpath=//*[@text='マイリスト' and @class='UIButtonLabel']", 0, 1)
 			client.sleep(1000)
