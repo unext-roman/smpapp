@@ -111,7 +111,7 @@ class FilterSearch
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=(//*[@id='recycler_view' and ./following-sibling::*[@id='error_view']]/*/*/*[@id='thumbnail'])", 0, 1)
 			client.sleep(2000)
-			str = client.getTextIn2("NATIVE", "xpath=//*[@id='textView1' and ./preceding-sibling::*[@id='ratingView']]", 0, "NATIVE", "Inside", 0, 0)
+			str = client.getTextIn2("NATIVE", "xpath=//*[@id='detail']", 0, "NATIVE", "Inside", 0, 0)	#id chnaged from 2.11.0~
 			str1 = str.scan(/\d+/).first
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動' and ./preceding-sibling::*[@class='android.widget.FrameLayout']]", 0, 1)
@@ -122,7 +122,7 @@ class FilterSearch
 			client.sleep(2000)
 			client.click("NATIVE", "xpath=(//*[@id='recycler_view' and ./following-sibling::*[@id='error_view']]/*/*/*[@id='thumbnail'])", 0, 1)
 			client.sleep(2000)
-			str2 = client.getTextIn2("NATIVE", "xpath=//*[@id='textView1' and ./preceding-sibling::*[@id='ratingView']]", 0, "NATIVE", "Inside", 0, 0)
+			str2 = client.getTextIn2("NATIVE", "xpath=//*[@id='detail']", 0, "NATIVE", "Inside", 0, 0)	#id chnaged from 2.11.0~
 			str3 = str2.scan(/\d+/).first
 			client.sleep(2000)
 			FilterSearch.new.compareVal(client, str1, str3)
