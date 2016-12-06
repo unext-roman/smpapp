@@ -23,6 +23,7 @@ class KeywordSearch
 
 	def testKeywordSearch(client)
 		client.sleep(2000)
+	
 		@k1 = "lovers"
 		@k2 = "ドラゴンボール"
 		@k3 = "007"
@@ -160,6 +161,7 @@ class KeywordSearch
 
 	def ios_testKeywordSearch(client)
 		client.sleep(2000)
+	
 		@k1 = "lovers"
 		@k2 = "ドラゴンボール"
 		@k3 = "007"
