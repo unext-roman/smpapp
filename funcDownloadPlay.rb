@@ -22,8 +22,6 @@ class DownlaodPlay
 
 	def testDownloadPlay(client)
 		client.sleep(2000)
-		client.setDevice("adb:401SO")
-
 		puts ""
 		puts ""
 		puts "::MSG::[ANDROID] STARTING TEST DOWNLOAD PLAY@単話ダウンロード再生機能"
@@ -208,8 +206,6 @@ class DownlaodPlay
 
 	def ios_testDownloadPlay(client)
 		client.sleep(2000)
-		client.setDevice("ios_app:autoIpad")
-
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST DOWNLOAD PLAY@単話ダウンロード再生機能"
