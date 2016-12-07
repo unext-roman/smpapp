@@ -196,7 +196,7 @@ class EditMylist
 			client.click("NATIVE", "xpath=//*[@text='マイリスト']", 0, 1)
 			client.sleep(2000)
 
-			if client.isElementFound("NATIVE", "text=マイリストがありません")
+			if client.isElementFound("NATIVE", "text=マイリストに作品がありません")
 				@@mres = @@mres.push(false)
 				$errMsgEditm = "::MSG:: マイリスト一覧に編集するの項目がありませんでした、作品を用意してから又ご確認下さい"
 				@@flag = "false"
@@ -243,7 +243,7 @@ class EditMylist
 				client.sleep(2000)
 				client.click("NATIVE", "xpath=//*[@text='マイリスト']", 0, 1)
 				client.sleep(2000)						
-				if client.isElementFound("NATIVE", "xpath=//*[@text='マイリストがありません']", 0)
+				if client.isElementFound("NATIVE", "xpath=//*[@text='マイリストに作品がありません']", 0)
 					@@mres = @@mres.push(true)
 					$obj_edith.returnResult(@@mres)
 				else
