@@ -118,7 +118,7 @@ class PlayEpisodeFromPlayer
 					client.sleep(1000)
 					client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", 0, 1)
 					client.sleep(2000)
-					client.swipe2("Down", 500, 500)
+					client.swipe2("Down", 600, 1000)
 					client.sleep(2000)
 				end
 				client.sleep(2000)
@@ -314,7 +314,7 @@ class PlayEpisodeFromPlayer
 				for i in 0..2
 					client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekSlider']", 0, 1)
 					client.sleep(200)
-					eps = client.getTextIn2("NATIVE", "xpath=//*[@class='UILabel' and @height=36 and @top='true' and @alpha=1]", 0, "NATIVE", "Inside", 0, 0)
+					eps = client.getTextIn2("NATIVE", "xpath=//*[@class='UILabel' and @height=36 and @top='true' and @alpha=1 and @onScreen='true']", 0, "NATIVE", "Inside", 0, 0)
 					puts "::MSG:: Episode name is :#{eps}"
 					@@epnm = @@epnm.push(eps)
 					startTime = client.elementGetText("NATIVE", "xpath=//*[@class='UNextMobile_Protected.UNSeekControl']/*[@alpha='0.6000000238418579']", 0)
