@@ -192,7 +192,7 @@ class ItemRatings
 		@comment = @@comment
 
 		puts ($obj_snddb.insertIntoReleaseTestEachFunc(@exetime, @testcase_num, @testcase_summary, @test_result, @capture_url, @err_message, @comment))
-	
+		
 	end
 
 	####################################################
