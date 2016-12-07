@@ -162,7 +162,7 @@ class ChangeJifukiFromPlayer
 
 	def ios_testChangingJifukiFromPlayer(client)
 		client.sleep(2000)
-
+	
 		puts ""
 		puts ""
 		puts "::MSG::[iOS] STARTING TEST CHANGING JIFUKI FORM PLAYER@再生中字幕・吹替動作機能"
