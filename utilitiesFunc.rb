@@ -269,4 +269,26 @@ class Utility
 		file = Dir.glob("*.ipa").max_by {|f| File.mtime(f)}
 		return file
 	end
+
+	def supportLoggedOut(client)
+		begin
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@class='UNextMobile_Protected.HamburgerButton']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='設定・サポート']", 0, 1)
+			client.sleep(2000)
+			if client.isElementFound("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0)
+				client.click("NATIVE", "xpath=//*[@accessibilityLabel='ログアウト']", 0, 1)
+				client.sleep(1000)
+				client.click("NATIVE", "xpath=//*[@text='ログアウト' and @class='UIButtonLabel']", 0, 1)
+				client.sleep(2000)
+			end
+			client.click("NATIVE", "xpath=//*[@accessibilityIdentifier='player_button_back']", 0, 1)
+			client.sleep(2000)
+			client.click("NATIVE", "xpath=//*[@text='ホーム']", 0, 1)
+			client.sleep(2000)
+		rescue Exception => e
+			$errMsgLogot = "::MSG:: Exception occurrred, could not logout..: " + e.message
+		end	
+	end
 end
