@@ -1039,10 +1039,12 @@ class SelectiveTest
 							end	
 						end
 					elsif x[i] == "36"
-						puts ($obj_plwlg.ios_testPlayWithoutLogin(client, "qa00001", "qatest1"))		#OK		
-						puts ($obj_utili.calculateRatio($finishedTest))				
+						puts ($obj_utili.supportLoggedOut(client))
+						puts ($obj_plwlg.ios_testPlayWithoutLogin(client, "#{@logid}","#{@passw}"))		#OK		
+						puts ($obj_utili.calculateRatio($finishedTest))
 					elsif x[i] == "37"
-						puts ($obj_dlwlg.ios_testDownloadWithoutLogin(client, "qa00001", "qatest1"))	#PENDING
+						puts ($obj_utili.supportLoggedOut(client))
+						puts ($obj_dlwlg.ios_testDownloadWithoutLogin(client, "#{@logid}","#{@passw}"))	
 						puts ($obj_utili.calculateRatio($finishedTest))
 					else
 						puts "::MSG:: Nothing to execute"
