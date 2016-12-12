@@ -23,7 +23,6 @@ class Login
 
 	def testLogin(client,user,pass)
 		client.sleep(2000)
-
 		puts ""
 		puts ""
 		s = "ログイン"
@@ -77,7 +76,7 @@ class Login
 						$obj_rtnrs.returnNG
 						$obj_rtnrs.printResult
 						@flag = false
-						$obj_slctv.checkFlagValue(@flag)				
+						$obj_slctv.checkFlagValue(@flag)
 						client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 						client.sleep(1000)
 					end
@@ -126,6 +125,7 @@ class Login
 	def ios_testLogin(client, user, pass)
 		client.sleep(2000)	
 
+
 		puts ""
 		puts ""
 		s1 = "ログイン"
@@ -157,9 +157,13 @@ class Login
 			else
 				client.click("NATIVE", "xpath=//*[@accessibilityLabel='ログイン']", 0, 1)
 				client.sleep(2000)
+				#client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='ログインID']]", 0, 1)
+				#client.sendText(user)
 				client.elementSendText("NATIVE", "xpath=//*[@class='UITextFieldBorderView' and ./parent::*[@class='UITextField' and ./preceding-sibling::*[@text='ログインID']]]", 0, user)
 				client.sleep(2000)
+				#client.click("NATIVE", "xpath=//*[@class='UITextField' and ./preceding-sibling::*[@text='パスワード']]", 0, 1)
 				client.elementSendText("NATIVE", "xpath=//*[@class='UITextFieldBorderView' and ./parent::*[@class='UITextField' and ./preceding-sibling::*[@text='パスワード']]]", 0, pass)
+				#client.sendText(pass)
 				client.sleep(1000)
 				client.closeKeyboard()
 				client.sleep(2000)
