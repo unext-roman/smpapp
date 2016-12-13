@@ -14,7 +14,7 @@ class PlayEpisodeFromPlayer
 	@@eres = []
 	@@epnm = []
 	@@comment = ""
-	@@chkres = ""
+	@@chkres = true
 
 	####################################################
 	#Target Device: Android
@@ -81,32 +81,17 @@ class PlayEpisodeFromPlayer
 			if client.isElementFound("NATIVE", "xpath=//*[@id='search_kind_selector']")
 				client.click("NATIVE", "text=見放題", 0, 1)
 				client.sleep(2000)
-				strtext = client.getAllValues("NATIVE", "xpath=(//*[@id='recycler_view']/*/*[@id='title'])", "text")
-				if strtext.include?("こちら葛飾区亀有公園前派出所")
-					client.click("NATIVE", "text=こちら葛飾区亀有公園前派出所")
-					client.sleep(2000)
-					client.swipe2("Down", 500, 500)
+				client.swipeWhileNotFound2("Down", 300, 2000, "NATIVE", "xpath=//*[@text='こちら葛飾区亀有公園前派出所']", 0, 1000, 5, true)
+				client.sleep(2000)
+				@chkres = true
+
+				if @chkres == true
+					client.swipe2("Down", 500, 1000)
 					client.sleep(2000)
 				else
-					for j in 0..3
-						client.click("NATIVE", "xpath=(//*[@id='recycler_view']/*/*/*[@id='thumbnail'])", j, 1)
-						client.sleep(2000)
-						client.swipe2("Down", 500, 500)
-						client.sleep(2000)
-						geteno = client.getTextIn2("NATIVE", "xpath=//*[@id='textView2' and ./preceding-sibling::*[@id='imageView']]", 0, "NATIVE", "Inside", 0, 0)
-						puts "No of Episode in this Title is : #{geteno}"
-						noe = geteno.scan(/\d+/).first
-						puts "No of Episode in this Title is : #{noe}"
-						if noe.to_i > 4
-							@@chkres = true
-							break
-						else
-							client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
-							client.sleep(2000)
-							@@chkres = false
-						end
-					end				
+					@chkres = false
 				end
+
 				if @@chkres == false
 					client.click("NATIVE", "xpath=//*[@contentDescription='上へ移動']", 0, 1)
 					client.sleep(2000)
@@ -262,33 +247,16 @@ class PlayEpisodeFromPlayer
 			if client.isElementFound("NATIVE", "xpath=//*[@class='UISegmentedControl']")
 				client.click("NATIVE", "text=見放題", 0, 1)
 				client.sleep(2000)
-				strtext = client.getAllValues("NATIVE", "xpath=//*[@class='UNextMobile_Protected.LayoutableLabel' and @x>1100 and @height=32]", "text")
-				if strtext.include?("こちら葛飾区亀有公園前派出所")
-					#client.click("NATIVE", "text=こちら葛飾区亀有公園前派出所")
-					client.click("NATIVE", "xpath=//*[@text='こちら葛飾区亀有公園前派出所' and @class='UNextMobile_Protected.LayoutableLabel']")					
-					client.sleep(2000)
-					client.swipe2("Down", 1000, 1000)
+				client.swipeWhileNotFound2("Down", 300, 2000, "NATIVE", "xpath=//*[@text='こちら葛飾区亀有公園前派出所' and @top='true']", 0, 1000, 5, true)
+				client.sleep(2000)
+				@chkres = true
+				if @chkres == true
+					client.swipe2("Down", 500, 1000)
 					client.sleep(2000)
 				else
-					for j in 0..3
-						client.click("NATIVE", "xpath=//*[@class='UIView' and @height>0 and ./parent::*[@class='UNextMobile_Protected.ThumbPlayButton']]", j, 1)
-						client.sleep(2000)
-						client.swipe2("Down", 1000, 1000)
-						client.sleep(2000)
-						geteno = client.getTextIn2("NATIVE", "xpath=//*[@class='UILabel' and @x>1100 and @height=42]", 0, "NATIVE", "Inside", 0, 0)
-						puts "No of Episode in this Title is : #{geteno}"
-						noe = geteno.scan(/\d+/).first
-						puts "No of Episode in this Title is : #{noe}"
-						if noe.to_i > 4
-							@@chkres = true
-							break
-						else
-							client.click("NATIVE", "xpath=//*[@class='UIImageView' and @height>0 and ./parent::*[@accessibilityLabel='main nav close']]", 0, 1)
-							client.sleep(2000)
-							@@chkres = false
-						end
-					end
+					@chkres = false
 				end
+
 				if @@chkres == false
 					client.click("NATIVE", "xpath=//*[@accessibilityLabel='戻る' and @top='true']", 0, 1)
 					client.sleep(2000)
