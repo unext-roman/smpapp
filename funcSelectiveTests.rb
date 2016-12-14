@@ -36,18 +36,18 @@ class SelectiveTest
 					elsif x[i] == "3"
 						if $execFlag == false							
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
-							$mark = true
+							#$mark = true
 							if $loginFlag == true
 								puts ($obj_snglp.testSinglePlay(client))
-								puts ($obj_utili.calculateRatio($finishedTest))
-								$tcCountFlag = false
+								#puts ($obj_utili.calculateRatio($finishedTest))
+								#$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
 							end
 						else
 							if $loginFlag == true
 								puts ($obj_snglp.testSinglePlay(client))
-								puts ($obj_utili.calculateRatio($finishedTest))
+								#puts ($obj_utili.calculateRatio($finishedTest))
 							else
 								SelectiveTest.new.authFailedMsg
 							end
@@ -74,18 +74,18 @@ class SelectiveTest
 					elsif x[i] == "5"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))	
-							$mark = true
+							#$mark = true
 							if $loginFlag == true
 								puts ($obj_contp.testContinuePlay(client))	
-								puts ($obj_utili.calculateRatio($finishedTest))
-								$tcCountFlag = false
+								#puts ($obj_utili.calculateRatio($finishedTest))
+								#$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
 							end
 						else
 							if $loginFlag == true
 								puts ($obj_contp.testContinuePlay(client))
-								puts ($obj_utili.calculateRatio($finishedTest))
+								#puts ($obj_utili.calculateRatio($finishedTest))
 							else
 								SelectiveTest.new.authFailedMsg
 							end	
