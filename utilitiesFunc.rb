@@ -61,17 +61,18 @@ class Utility
 	def calculateRatio(finishedtc)
 
 		@ftc_val = finishedtc
+
 		if $tcCountFlag == false
 			@totalTC = $total_tc + 1
 		else
 			@totalTC = $total_tc
 		end
 
-		#if $mark == true
+		if $mark == true
 			rat_val = ((@ftc_val - 1) * 100 ) / @totalTC #$tcs #$totalTest
-		#else
-		#	rat_val = (@ftc_val * 100 ) / @totalTC #$tcs #$totalTest
-		#end
+		else
+			rat_val = (@ftc_val * 100 ) / @totalTC #$tcs #$totalTest
+		end
 
 		begin
 			puts "Progress ratio : #{rat_val}%"
