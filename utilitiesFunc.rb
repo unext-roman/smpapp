@@ -67,7 +67,11 @@ class Utility
 			@totalTC = $total_tc
 		end
 
-		rat_val = (@ftc_val * 100 ) / @totalTC #$tcs #$totalTest
+		if $mark == true
+			rat_val = ((@ftc_val - 1) * 100 ) / @totalTC #$tcs #$totalTest
+		else
+			rat_val = (@ftc_val * 100 ) / @totalTC #$tcs #$totalTest
+		end
 
 		begin
 			puts "Progress ratio : #{rat_val}%"
