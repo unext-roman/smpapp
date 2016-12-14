@@ -27,6 +27,7 @@
 	$tstTyp = ""
 	$dev_last_upd_time = Dir.glob("/Users/admin/ownCloud/BuildArtifacts/UNextMobile-iOS-AdHoc-CI/*.ipa").max_by {|f| File.mtime(f)}
 	$tcCountFlag = true
+	$mark = false
 
 
 	#Error Message List
