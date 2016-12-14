@@ -36,9 +36,10 @@ class SelectiveTest
 					elsif x[i] == "3"
 						if $execFlag == false							
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_snglp.testSinglePlay(client))
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -54,9 +55,10 @@ class SelectiveTest
 					elsif x[i] == "4"
 						if $execFlag == false							
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_logot.testLogout(client))	
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -72,9 +74,10 @@ class SelectiveTest
 					elsif x[i] == "5"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))	
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_contp.testContinuePlay(client))	
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -90,9 +93,10 @@ class SelectiveTest
 					elsif x[i] == "6"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_buypv.testBuyingPPV(client))								#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -108,9 +112,10 @@ class SelectiveTest
 					elsif x[i] == "7"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_histp.testHistoryPlay(client))							#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -126,9 +131,10 @@ class SelectiveTest
 					elsif x[i] == "8"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_prcsp.testPurchasedItemPlay(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -144,9 +150,10 @@ class SelectiveTest
 					elsif x[i] == "9"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_mylst.testMylistContent(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -162,9 +169,10 @@ class SelectiveTest
 					elsif x[i] == "10"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_dwnld.testSingleDownload(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -180,9 +188,10 @@ class SelectiveTest
 					elsif x[i] == "11"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_epsdp.testSVODEpisodePlay(client))						#OK (no comment msg)
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -198,9 +207,10 @@ class SelectiveTest
 					elsif x[i] == "12"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_keysh.testKeywordSearch(client))							#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -216,9 +226,10 @@ class SelectiveTest
 					elsif x[i] == "13"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_gener.testGenericSearch(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -234,9 +245,10 @@ class SelectiveTest
 					elsif x[i] == "14"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_fltrs.testFilterSearch(client))							#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -252,9 +264,10 @@ class SelectiveTest
 					elsif x[i] == "15"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_dwnpl.testDownloadPlay(client))							#OK	
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -271,9 +284,10 @@ class SelectiveTest
 					elsif x[i] == "16"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_adtml.testAddtoMylist(client))							#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -289,9 +303,10 @@ class SelectiveTest
 					elsif x[i] == "17"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_lnbck.testLeanbackOperation(client))					#PENDING
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -323,9 +338,10 @@ class SelectiveTest
 					elsif x[i] == "19"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_edith.testEditHistoryList(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -342,9 +358,10 @@ class SelectiveTest
 						if $execFlag == false
 							$ratioFlag = false							
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK	
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_editd.testEditDownloadList(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -360,9 +377,10 @@ class SelectiveTest
 					elsif x[i] == "21"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_editm.testEditFavoriteList(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -378,9 +396,10 @@ class SelectiveTest
 					elsif x[i] == "22"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_rtngs.testSakuhinRatings(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -412,9 +431,10 @@ class SelectiveTest
 					elsif x[i] == "24"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_plfel.testEpisodePlayFromPlayer(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -430,9 +450,10 @@ class SelectiveTest
 					elsif x[i] == "25"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_chnjf.testChangingJifukiFromPlayer(client))				#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -448,9 +469,10 @@ class SelectiveTest
 					elsif x[i] == "26"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_vqual.testVQualityFromPlayer(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -466,9 +488,10 @@ class SelectiveTest
 					elsif x[i] == "27"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_trick.testTrickPlayFromPlayer(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -516,9 +539,10 @@ class SelectiveTest
 					elsif x[i] == "30"
 						if $execFlag == false
 							puts ($obj_login.testLogin(client,"#{@logid}","#{@passw}"))			#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_ccast.testConnectingCast(client))						#OK	
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -606,9 +630,10 @@ class SelectiveTest
 					elsif x[i] == "3"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))	#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_snglp.ios_testSinglePlay(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -625,9 +650,10 @@ class SelectiveTest
 					elsif x[i] == "4"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_logot.ios_testLogout(client))							#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -643,9 +669,10 @@ class SelectiveTest
 					elsif x[i] == "5"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_contp.ios_testContinuePlay(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -661,9 +688,10 @@ class SelectiveTest
 					elsif x[i] == "6"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_buypv.ios_testBuyingPPV(client))							#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -679,9 +707,10 @@ class SelectiveTest
 					elsif x[i] == "7"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_histp.ios_testHistoryPlay(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -697,9 +726,10 @@ class SelectiveTest
 					elsif x[i] == "8"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_prcsp.ios_testPurchasedItemPlay(client))				#OK	
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -715,9 +745,10 @@ class SelectiveTest
 					elsif x[i] == "9"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_mylst.ios_testMylistContent(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -733,9 +764,10 @@ class SelectiveTest
 					elsif x[i] == "10"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_dwnld.ios_testSingleDownload(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -751,9 +783,10 @@ class SelectiveTest
 					elsif x[i] == "11"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_epsdp.ios_testSVODEpisodePlay(client))					#OK (no comment msg)
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -769,9 +802,10 @@ class SelectiveTest
 					elsif x[i] == "12"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_keysh.ios_testKeywordSearch(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -787,9 +821,10 @@ class SelectiveTest
 					elsif x[i] == "13"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_gener.ios_testGenericSearch(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -805,9 +840,10 @@ class SelectiveTest
 					elsif x[i] == "14"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_fltrs.ios_testFilterSearch(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -823,9 +859,10 @@ class SelectiveTest
 					elsif x[i] == "15"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_dwnpl.ios_testDownloadPlay(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -841,9 +878,10 @@ class SelectiveTest
 					elsif x[i] == "16"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_adtml.ios_testAddtoMylist(client))						#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -869,9 +907,10 @@ class SelectiveTest
 					elsif x[i] == "19"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_edith.ios_testEditHistoryList(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -887,9 +926,10 @@ class SelectiveTest
 					elsif x[i] == "20"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_editd.ios_testEditDownloadList(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -905,9 +945,10 @@ class SelectiveTest
 					elsif x[i] == "21"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_editm.ios_testEditFavoriteList(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -923,9 +964,10 @@ class SelectiveTest
 					elsif x[i] == "22"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_rtngs.ios_testSakuhinRatings(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -951,9 +993,10 @@ class SelectiveTest
 					elsif x[i] == "24"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_plfel.ios_testEpisodePlayFromPlayer(client))				#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -969,9 +1012,10 @@ class SelectiveTest
 					elsif x[i] == "25"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_chnjf.ios_testChangingJifukiFromPlayer(client))			#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -987,9 +1031,10 @@ class SelectiveTest
 					elsif x[i] == "26"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_vqual.ios_testVQualityFromPlayer(client))				#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -1005,9 +1050,10 @@ class SelectiveTest
 					elsif x[i] == "27"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_trick.ios_testTrickPlayFromPlayer(client))				#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
@@ -1023,9 +1069,10 @@ class SelectiveTest
 					elsif x[i] == "31"
 						if $execFlag == false
 							puts ($obj_login.ios_testLogin(client,"#{@logid}","#{@passw}"))		#OK
+							$mark = true
 							if $loginFlag == true
 								puts ($obj_ccast.ios_testConnectingCast(client))					#OK
-								puts ($obj_utili.calculateRatio($finishedTest - 1))
+								puts ($obj_utili.calculateRatio($finishedTest))
 								$tcCountFlag = false
 							else
 								SelectiveTest.new.authFailedMsg
