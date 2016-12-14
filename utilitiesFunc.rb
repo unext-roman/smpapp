@@ -61,18 +61,17 @@ class Utility
 	def calculateRatio(finishedtc)
 
 		@ftc_val = finishedtc
-		
-		#if $tcCountFlag == false
-		#	@totalTC = $total_tc + 1
-		#else
-		#	@totalTC = $total_tc
-		#end
-
-		if $mark == true
-			rat_val = ((@ftc_val - 1) * 100 ) / $totalTest #@totalTC #$tcs #$totalTest
+		if $tcCountFlag == false
+			@totalTC = $total_tc + 1
 		else
-			rat_val = (@ftc_val * 100 ) / $totalTest #@totalTC #$tcs #$totalTest
+			@totalTC = $total_tc
 		end
+
+		#if $mark == true
+			rat_val = ((@ftc_val - 1) * 100 ) / @totalTC #$tcs #$totalTest
+		#else
+		#	rat_val = (@ftc_val * 100 ) / @totalTC #$tcs #$totalTest
+		#end
 
 		begin
 			puts "Progress ratio : #{rat_val}%"
@@ -102,6 +101,7 @@ class Utility
 				when 100
 					setProgressValue("progress", "100")
 			else
+				setProgressValue("progress", "100")
 				puts "Can not update progress ratio!!!"
 			end
 		rescue Exception => e
