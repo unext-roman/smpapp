@@ -595,8 +595,8 @@ class SelectiveTest
 				puts ($obj_trick.testTrickPlayFromPlayer(client))								#OK
 				puts ($obj_ccast.testConnectingCast(client))									#OK	
 				puts ($obj_logot.testLogout(client))											#OK
-				puts ($obj_plwlg.testPlayWithoutLogin(client, "roman", "qatest1"))				#OK
-				puts ($obj_dlwlg.testDownloadWithoutLogin(client, "roman", "qatest1"))			#OK
+				puts ($obj_plwlg.testPlayWithoutLogin(client, "#{@logid}","#{@passw}"))				#OK
+				puts ($obj_dlwlg.testDownloadWithoutLogin(client, "#{@logid}","#{@passw}"))			#OK
 				puts ($obj_utili.calculateRatio($finishedTest))
 			else
 				SelectiveTest.new.authFailedMsg
@@ -1127,8 +1127,8 @@ class SelectiveTest
 				puts ($obj_trick.ios_testTrickPlayFromPlayer(client))							#OK
 				puts ($obj_ccast.ios_testConnectingCast(client))								#OK
 				puts ($obj_logot.ios_testLogout(client))										#OK
-				puts ($obj_plwlg.ios_testPlayWithoutLogin(client, "qa00001", "qatest1"))		#OK
-				puts ($obj_dlwlg.ios_testDownloadWithoutLogin(client, "qa00001", "qatest1"))	#PENDING
+				puts ($obj_plwlg.ios_testPlayWithoutLogin(client, "#{@logid}","#{@passw}"))		#OK
+				puts ($obj_dlwlg.ios_testDownloadWithoutLogin(client, "#{@logid}","#{@passw}"))	#PENDING
 				puts ($obj_utili.calculateRatio($finishedTest))
 			else
 				SelectiveTest.new.authFailedMsg
