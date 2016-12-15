@@ -556,10 +556,10 @@ class SelectiveTest
 							end		
 						end
 					elsif x[i] == "36"
-						puts ($obj_plwlg.testPlayWithoutLogin(client, "roman", "qatest1"))	#OK		
+						puts ($obj_plwlg.testPlayWithoutLogin(client, "#{@logid}","#{@passw}"))	#OK		
 						puts ($obj_utili.calculateRatio($finishedTest))				
 					elsif x[i] == "37"
-						puts ($obj_dlwlg.testDownloadWithoutLogin(client, "roman", "qatest1"))			#OK		
+						puts ($obj_dlwlg.testDownloadWithoutLogin(client, "#{@logid}","#{@passw}"))			#OK		
 						puts ($obj_utili.calculateRatio($finishedTest))				
 					else
 						puts "::MSG:: Nothing to execute"
